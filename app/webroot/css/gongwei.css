@@ -1,0 +1,278 @@
+@charset "utf-8";
+/* CSS Document */
+/*header start*/
+header {
+	height:2.3rem;
+	background-color:#252525;
+	border-top:solid 0.1rem #252525;
+	}
+header img {
+	height:1.1rem;
+	margin-top:0.6rem;
+	padding-left:0.8rem;
+	border-left:solid 1px #585858;
+	}
+header i {
+	height:0.9rem;
+	width:1.2rem;
+	background:url(../img/%E5%B7%A5%E4%BD%8D%E5%9B%BE2-%E6%8B%B7%E8%B4%9D_10.jpg);
+	background-size:100%;
+	-webkit-background-size:100%;
+	-moz-background-size:100%;
+	-o-background-size:100%;
+	float:left;
+	margin-left:0.9rem;
+	margin-top:0.7rem;
+	margin-right:0.9rem;
+	}
+/*header end*/
+/*home start*/
+.home {
+	background-color:#e2eff3;
+	}
+.homeTop {
+	padding:1.2rem 2% 0.3rem 2%;
+	}
+.homeTop img {
+	width:3.6%;
+	margin-left:0.56%;
+	margin-bottom:0.1rem;
+	}
+.homeMain {
+	padding-left:2.5%;
+	}
+.homeMain aside.left {
+	padding-top:0.3rem;
+	width:8.9%;
+	float:left;
+	}
+.homeMain aside.left img {
+	width:37.5%;
+	margin-right:6.25%;
+	margin-bottom:0.15rem;
+	}
+.homeMain article {
+	width:64%;
+	float:left;
+	}
+.homeMain article i {
+	float:left;
+	width:2.2%;
+	height:1rem;
+	}
+.homeMain article .three img {
+	width:11%;
+	margin-right:0.7%;
+	margin-bottom:0.4rem;
+	margin-top:0.3rem;
+	}
+.homeMain article .huiyishi {
+	width:100%;
+	}
+.homeMain article .huiyishi img {
+	display:block;
+	width:100%;
+	}
+.homeMain article .jifang {
+	float:right;
+	width:24%;
+	}
+.homeMain article .jifang img {
+	width:100%;
+	margin:0;
+	padding:0;
+	}
+.homeMain aside.right　{
+	width:100%;
+	float:right;
+	}
+.homeMain aside.right img.dayinshi {
+	width:100%;
+	}
+.home_right_left {
+	width:58%;
+	float:left;
+	}
+.home_right_left img {
+	width:100%;
+	}
+.home_right_right {
+	width:35%;
+	padding-left:5%;
+	padding-top:0.5rem;
+	float:left;
+	}
+.home_right_right img {
+	width:37.5%;
+	float:left;
+	margin-left:6.25%;
+	margin-bottom:0.3rem;
+	}
+.homeBottom {
+	padding-top:0.2rem;
+	padding-left:2.5%;
+	}
+.homeBottom h2 {
+	float:left;
+	width:17%;
+	}
+.homeBottom h2 img {
+	width:21.55%;
+	margin-right:3.45%;
+	margin-bottom:0.1rem;
+	}
+.zhanwei {
+	height:1.5rem;
+	}
+/*home end*/
+/*footer start*/
+.footer {
+	background-color:#fff;
+	padding-bottom:1.5rem;
+	}
+.footer h2 {
+	line-height:2rem;
+	font-size:0.7rem;
+	padding-left:8%;
+	}
+.footer h3 ul {
+	width:49%;
+	float:left;
+	}
+.footer h3 ul.ul_1 {
+	border-right:1px #cdcdcd dashed;
+	}
+.footer h3 ul li {
+	padding-left:16%;
+	line-height:1.5rem;
+	padding-top:0.3rem;
+	}
+.footer h3 ul li i,.footer h3 ul li span {
+	display:block;
+	float:left;
+	}
+.footer h3 ul li i {
+	width:39%;
+	}
+.footer h3 ul li i .img_1 {
+	width:18%;
+	margin-top:0.5rem;
+	}
+.footer h3 ul li i .img_2 {
+	width:66%;
+	}
+.footer h3 ul li i .img_3 {
+	width:85%;
+	}
+.footer h3 ul li i .img_4 {
+	width:34%;
+	}
+.footer h3 ul li i .img_5 {
+	width:66%;
+	}
+.footer h3 ul li span {
+	font-size:0.7rem;
+	}
+/*footer end*/
+/*座位选中和未选中状态*/
+img.active {
+	border:solid #0f0 2px;
+	}
+img.waring {
+	border:solid #f00 2px;
+	}
+/*弹框*/
+.layer {
+	font-size:0.7rem;
+	line-height:1.2rem;
+	font-weight:normal;
+	position:fixed;
+	bottom:-10rem;
+	left:0;
+	width:96%;
+	padding:0 2%;
+	z-index:99;
+	background-color:#fff;
+	border-top:solid 1px #ddd;
+	padding-bottom:0.5rem;
+	}
+.layer h2 {
+	word-wrap:break-word;
+	}
+.layer h5 p {
+	font-size:0.6rem;
+	color:#f00;
+	}
+.layer h6 {
+	width:60%;
+	text-align:center;
+	height:1.2rem;
+	font-size:0.7rem;
+	background-color:#f90;
+	margin:0 auto;
+	border-radius:0.3rem;
+	-webkit-border-radius:0.3rem;
+	-moz-border-radius:0.3rem;
+	-o-border-radius:0.3rem;
+	}
+.layer h3 {
+	position:relative;
+	}
+.layer h3 span {
+	display:block;
+	height:0.5rem;
+	width:0.5rem;
+	position:absolute;
+	top:0.35rem;
+	left:3.5rem;
+	}
+.layer h3 span.kongxian {
+	background-color:#039;
+	}
+.layer h3 span.zhanyong {
+	background-color:#f00;
+	}
+.layer h4 input {
+	height:0.5rem;
+	width:0.5rem;
+	}
+.layer h5 select {
+	height:0.7rem;
+	line-height:0.7rem;
+	font-size:0.6rem;
+	}
+.layer .stop_timer_two {
+	display:none;
+	}
+/*遮罩层*/
+.zhezhaoceng {
+	background:rgba(0,0,0,0.4);
+	position:fixed;
+	height:100%;
+	width:100%;
+	z-index:50;
+	top:0;
+	left:0;
+	display:none;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

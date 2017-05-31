@@ -1,0 +1,145 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: "微软雅黑",Helvetica,"Microsoft YaHei", Arial, Helvetica, sans-serif;
+	color: #323a38;
+	background-color: #efefef;
+	-webkit-text-size-adjust: none ;
+}
+ul, li , dl , dd {list-style-type: none;}
+ul, li, p, h1, h2, h3, h4, h5, h6, form ,dl,dd {margin:0;padding:0;}
+h1, h2, h3, h4, h5, h6 {font-size:inherit;font-weight:normal;}
+em ,i {font-style:normal;font-weight:normal;}
+img {
+	border:none;
+	margin:0;
+	padding:0;
+    max-width: 100%;
+}
+a {text-decoration:none;color:#666666;}
+/*---------------------------页面部分---------------------------*/
+.mobile {
+	background-color:#efefef;
+	min-width: 320px;
+	margin:0 auto;
+}
+.w {
+	float: left;	
+	width: 100%;
+	background-color:#efefef;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+.clearfix:after {content:'';display:block;height:0;visibility:hidden;clear:both;}
+
+
+
+html {
+	font-size:250%;
+	}
+@media screen and (max-device-width:400px) {
+	html {
+	font-size:125%;
+	}
+	}
+@media screen and (min-device-width:400px) and (max-device-width:500px) {
+	html {
+	font-size:150%;
+	}
+	}
+@media screen and (min-device-width:500px) and (max-device-width:600px) {
+	html {
+	font-size:180%;
+	}
+	}
+@media screen and (min-device-width:600px) and (max-device-width:800px) {
+	html {
+	font-size:200%;
+	}
+	}
+@media screen and (min-device-width:800px) and (max-device-width:1000px) {
+	html {
+	font-size:230%;
+	}
+	}
+@media screen and (min-device-width:1000px) {
+	html {
+	font-size:250%;
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
