@@ -90,6 +90,8 @@ Cache::config('default', array('engine' => 'File'));
  *
  * ));
  */
+require('../Lib/Utility.php');
+
 Configure::write('Dispatcher.filters', array(
 	'AssetDispatcher',
 	'CacheDispatcher'

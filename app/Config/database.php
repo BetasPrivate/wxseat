@@ -66,29 +66,29 @@
  */
 class DATABASE_CONFIG {
 
-	// public $default = array(
-	// 	'datasource' => 'Database/Mysql',
-	// 	'persistent' => false,
-	// 	'host' => 'bdm28488438.my3w.com',
-	// 	'login' => 'bdm28488438',
-	// 	'password' => '0987654321',
-	// 	'database' => 'bdm28488438_db',
-	// 	'prefix' => '',
-	// 	'encoding' => 'utf8',
-	// 	'port' => 3306,
-	// );
-
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'root',
-		'password' => 'win1011',
+		'login' => 'cary',
+		'password' => '1',
 		'database' => 'wxseats',
 		'prefix' => '',
 		'encoding' => 'utf8',
 		'port' => 3306,
 	);
+
+	// public $default = array(
+	// 	'datasource' => 'Database/Mysql',
+	// 	'persistent' => false,
+	// 	'host' => 'localhost',
+	// 	'login' => 'root',
+	// 	'password' => 'win1011',
+	// 	'database' => 'wxseats',
+	// 	'prefix' => '',
+	// 	'encoding' => 'utf8',
+	// 	'port' => 3306,
+	// );
 
 	public $test = array(
 		'datasource' => 'Database/Mysql',
