@@ -82,11 +82,19 @@ class Utility {
         return $ticket;
     }
 
-    public function getToken()
+    public function getAccessToken()
     {
         $url = sprintf("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s", APP_ID, APP_SECRET);
         $result = $this->getFileGetContents($url);
         
+        return $result;
+    }
+
+    public function getJsApiTicket($token)
+    {
+        $url = sprintf("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi", $token);
+        $result = $this->getFileGetContents($url);
+
         return $result;
     }
 
@@ -97,46 +105,19 @@ class Utility {
           $data = [
             'button' => [
                 0 => [
-                    "name" => urlencode('小玩子'),
+                    "name" => urlencode('用户'),
                     'type' => 'click',
                     'key' => 'DO_NOTHING',
                     'sub_button' => [
                         0 => [
-                            'name' => urlencode('玩子报名'),
+                            'name' => urlencode('选座页面'),
                             'type' => 'view',
-                            'url' => 'http://childwelfare.zhanshen1.com/registration',
+                            'url' => 'http://rentoffice.zhanshen1.com',
                         ],
                         1 => [
-                            'name' => urlencode('陪伴打卡'),
+                            'name' => urlencode('个人中心'),
                             'type' => 'view',
-                            'url' => 'http://childwelfare.zhanshen1.com/pic1.jpg',
-                        ],
-                    ],
-                ],
-                1 => [
-                    "name" => urlencode('玩趣活动'),
-                    'type' => 'view',
-                    'url' => 'http://childwelfare.zhanshen1.com/pic2.jpg',
-                ],
-                2 => [
-                    "name" => urlencode('联系我们'),
-                    'type' => 'click',
-                    'key' => 'DO_NOTHING',
-                    'sub_button' => [
-                        0 => [
-                            'name' => urlencode('公司简介'),
-                            'type' => 'view',
-                            'url' => 'http://childwelfare.zhanshen1.com/pic5.jpg',
-                        ],
-                        1 => [
-                            'name' => urlencode('岗位招聘'),
-                            'type' => 'view',
-                            'url' => 'http://childwelfare.zhanshen1.com/pic3.jpg',
-                        ],
-                        2 => [
-                            'name' => urlencode('合作洽谈'),
-                            'type' => 'view',
-                            'url' => 'http://childwelfare.zhanshen1.com/pic4.jpg',
+                            'url' => 'http://rentoffice.zhanshen1.com/users/',
                         ],
                     ],
                 ],

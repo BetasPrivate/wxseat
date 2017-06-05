@@ -92,6 +92,29 @@ Cache::config('default', array('engine' => 'File'));
  */
 require('../Lib/Utility.php');
 
+//dev
+// define('APP_ID', 'wx59ba851ee8a8feb0');
+// define('APP_SECRET', '461f3b9bce3fe284d8d7ead55f0d846a');
+define("ROOT_URL", isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'rentoffice.zhanshen1.com');
+
+//选择当前环境
+if (ROOT_URL == 'enhancing.com') {
+	define("ENV_OPT", "dev");
+	define("DB_LOGIN", "cary");
+	define("DB_PWD", "1");
+	//dev
+	define('APP_ID', 'wx59ba851ee8a8feb0');
+	define('APP_SECRET', '461f3b9bce3fe284d8d7ead55f0d846a');
+} else {
+	define("ENV_OPT", "online");
+	define("IS_DEV", false);
+	define("DB_LOGIN", "root");
+	define("DB_PWD", "win1011");
+	//online
+	define('APP_ID', 'wx69bc4bff81bd4153');
+	define('APP_SECRET', 'da8156f2bf72e055c1e1f9ebf1d1ec67');
+}
+
 Configure::write('Dispatcher.filters', array(
 	'AssetDispatcher',
 	'CacheDispatcher'

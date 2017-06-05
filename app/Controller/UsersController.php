@@ -5,6 +5,11 @@ class UsersController extends AppController
 		'User',
 	];
 
+	public function index()
+	{
+		$this->set('title_for_layout', '个人中心');
+	}
+
 	public function login()
 	{
 		$this->set('title_for_layout', '用户登录');

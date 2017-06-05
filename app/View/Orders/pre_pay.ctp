@@ -133,7 +133,23 @@ body {
     <a onclick="payOrder()" class="submit">立即付款</a>
 </body>
 <script src="/js/jquery-3.2.1.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
+	wx.config({
+
+	    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+
+	    appId: <?php echo $result['appId'];?>, // 必填，公众号的唯一标识
+
+	    timestamp: <?php echo $result['timeStamp'];?>, // 必填，生成签名的时间戳
+
+	    nonceStr: <?php echo $result['nonceStr'];?>, // 必填，生成签名的随机串
+
+	    signature: <?php echo $result['signature'];?>,// 必填，签名，见附录1
+
+	    jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+
+	});
 	$(document).ready(function(e){
         $(".home h4 em").click(function() {
 			if($(this).hasClass("active")){

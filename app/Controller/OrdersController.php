@@ -4,6 +4,7 @@ class OrdersController extends AppController {
 		'Order',
 		'Seat',
 		'Trade',
+		'Token',
 	];
 
 	public function createNewOrder()
@@ -91,10 +92,30 @@ class OrdersController extends AppController {
 	{
 		$this->set('title_for_layout', '支付订单');
 		$dataStr = $this->request->data['seatInfo'];
-		$data = json_decode($dataStr, true);
 
+		$data = json_decode($dataStr, true);
 		$result['totalFee'] = $data['totalFee'];
 		$result['seatInfos'] = $data['seatInfo'];
+
+		$noncestr = 'zhanshenkeji';
+		$jsApiTicket = $this->Token->getToken(\Token::JS_API_TICKET);
+		$timeStamp = time();
+		$url = ROOT_URL.'/orders/pre_pay';
+
+		$tmpArr = [
+			'noncestr' => $noncestr,
+			'jsapi_ticket' => $jsApiTicket,
+			'timestamp' => $timeStamp,
+			'url' => $url,
+		];
+
+		$signature = $this->Token->getSignature($tmpArr);
+
+		$result['nonceStr'] = $noncestr;
+		$result['jsApiTicket'] = $jsApiTicket;
+		$result['timeStamp'] = $timeStamp;
+		$result['signature'] = $signature;
+		$result['appId'] = APP_ID;
 
 		$this->set(compact('result'));
 	}
@@ -102,7 +123,6 @@ class OrdersController extends AppController {
 	public function payOrder($weixinResult)
 	{
 		if (true) {
-			
 			$this->Order->query($query);
 		}
 	}
