@@ -92,6 +92,7 @@ class OrdersController extends AppController {
 	{
 		$this->set('title_for_layout', '支付订单');
 		$dataStr = $this->request->data['seatInfo'];
+		$util = new Utility();
 
 		$data = json_decode($dataStr, true);
 		$result['totalFee'] = $data['totalFee'];
@@ -100,7 +101,7 @@ class OrdersController extends AppController {
 		$noncestr = 'zhanshenkeji';
 		$jsApiTicket = $this->Token->getToken(\Token::JS_API_TICKET);
 		$timeStamp = time();
-		$url = ROOT_URL.'/orders/pre_pay';
+		$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
 		$tmpArr = [
 			'noncestr' => $noncestr,
@@ -109,7 +110,9 @@ class OrdersController extends AppController {
 			'url' => $url,
 		];
 
-		$signature = $this->Token->getSignature($tmpArr);
+		ksort($tmpArr);
+		$tmpStr = $util->ToUrlParams($tmpArr);
+		$signature = sha1($tmpStr);
 
 		$result['nonceStr'] = $noncestr;
 		$result['jsApiTicket'] = $jsApiTicket;

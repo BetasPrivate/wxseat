@@ -150,4 +150,18 @@ class Utility {
 
         var_dump($this->customizeCurl($postUrl, 1, $data));
     }
+
+    public function ToUrlParams($urlObj)
+    {
+        $buff = "";
+        foreach ($urlObj as $k => $v)
+        {
+            if($k != "sign"){
+                $buff .= $k . "=" . $v . "&";
+            }
+        }
+        
+        $buff = trim($buff, "&");
+        return $buff;
+    }
 }

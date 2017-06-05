@@ -46,13 +46,4 @@ class Token extends AppModel
 
 	    return $token;
 	}
-
-	public function getSignature($tmpArr)
-	{
-        sort($tmpArr, SORT_STRING);
-        $tmpStr = implode($tmpArr);
-        $tmpStr = sha1($tmpStr);
-
-        return $tmpStr;
-	}
 }
