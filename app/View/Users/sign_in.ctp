@@ -88,8 +88,8 @@ input[type=submit]{
 	<div class="home">
     	<form>
         	<input type="text" id="userName" placeholder="用户名"/>
-            <h2><input type="tel" id="phoneNum" placeholder="手机号码"/><i class="get_number" onclick="getVerficationCode()">获取验证码</i></h2>
-            <input type="text" id="verficationCode" placeholder="验证码" class="yanzhengma"/>
+            <h2><input type="tel" id="phoneNum" placeholder="手机号码"/><!-- <i class="get_number" onclick="getVerficationCode()">获取验证码</i> --></h2>
+            <!-- <input type="text" id="verficationCode" placeholder="验证码" class="yanzhengma"/> -->
         </form>
     </div>
     <div class="h28"></div>
@@ -137,15 +137,15 @@ input[type=submit]{
     	}
 
     	function verifyCode() {
-    		var inputCode = document.getElementById('verficationCode').value.trim();
-    		if (inputCode == '') {
-    			a.innerText = '请输入验证码!';
-    			return;
-    		}
-    		if (code != inputCode) {
-    			a.innerText = '验证码输入有误!';
-    			return;
-    		}
+    		// var inputCode = document.getElementById('verficationCode').value.trim();
+    		// if (inputCode == '') {
+    		// 	a.innerText = '请输入验证码!';
+    		// 	return;
+    		// }
+    		// if (code != inputCode) {
+    		// 	a.innerText = '验证码输入有误!';
+    		// 	return;
+    		// }
     		var phoneNum = document.getElementById('phoneNum').value.trim();
     		var userName = document.getElementById('userName').value.trim();
     		var data = {
