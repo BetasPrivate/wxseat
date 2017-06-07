@@ -178,7 +178,7 @@ header i {
 img.active {
 	border:solid #0f0 2px;
 	}
-img.waring {
+img.warning {
 	border:solid #f00 2px;
 	}
 /*弹框*/
@@ -237,8 +237,8 @@ img.waring {
 	width:0.5rem;
 	}
 .layer h5 select {
-	height:0.7rem;
-	line-height:0.7rem;
+	height:1rem;
+	line-height:1rem;
 	font-size:0.6rem;
 	}
 .layer .stop_timer_two {

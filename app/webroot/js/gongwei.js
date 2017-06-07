@@ -30,7 +30,7 @@ $(document).ready(function(e) {
 	$(".homeTop img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("waring")){
+		if($(this).hasClass("warning")){
 			$(".layer h3 span").removeClass("kongxian");
 			$(".layer h3 span").addClass("zhanyong");
 			$(".layer h3 i").text("占用");
@@ -99,7 +99,7 @@ $(document).ready(function(e) {
 	$(".homeMain aside.left img").click(function(){
 		$(".layer h2 span").text("开放空间");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("waring")){
+		if($(this).hasClass("warning")){
 			$(".layer h3 span").removeClass("kongxian");
 			$(".layer h3 span").addClass("zhanyong");
 			$(".layer h3 i").text("占用");
@@ -149,7 +149,7 @@ $(document).ready(function(e) {
 	$(".homeMain article .threeOne img").click(function(){
 		$(".layer h2 span").text("三人间");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("waring")){
+		if($(this).hasClass("warning")){
 			$(".layer h3 span").removeClass("kongxian");
 			$(".layer h3 span").addClass("zhanyong");
 			$(".layer h3 i").text("占用");
@@ -200,7 +200,7 @@ $(document).ready(function(e) {
 		if(this.index){
 		$(".layer h2 span").text("三人间");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("waring")){
+		if($(this).hasClass("warning")){
 			$(".layer h3 span").removeClass("kongxian");
 			$(".layer h3 span").addClass("zhanyong");
 			$(".layer h3 i").text("占用");
@@ -269,7 +269,7 @@ $(document).ready(function(e) {
 	$(".home_right_right img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("waring")){
+		if($(this).hasClass("warning")){
 			$(".layer h3 span").removeClass("kongxian");
 			$(".layer h3 span").addClass("zhanyong");
 			$(".layer h3 i").text("占用");
@@ -332,7 +332,7 @@ $(document).ready(function(e) {
 	$(".homeBottom h2 img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("waring")){
+		if($(this).hasClass("warning")){
 			$(".layer h3 span").removeClass("kongxian");
 			$(".layer h3 span").addClass("zhanyong");
 			$(".layer h3 i").text("占用");
@@ -392,7 +392,7 @@ $(document).ready(function(e) {
 			$(".layer h2 span").text("八人间");
 			}
 		$(".layer h3 i").text("");
-		if($(this).hasClass("waring")){
+		if($(this).hasClass("warning")){
 			$(".layer h3 span").removeClass("kongxian");
 			$(".layer h3 span").addClass("zhanyong");
 			$(".layer h3 i").text("占用");
@@ -440,43 +440,56 @@ $(document).ready(function(e) {
 		$(".layer").css({bottom:-400});
 		});
 	//给当前已租用的座位加红框
-	var a=["s2","1","v2","54","86","100"];
 	var oimg=$("img");
 	var olen=oimg.length;
-	for(var i=0;i<olen;i++){
+	for (var i = 0; i< olen; i++){
 		var b=oimg[i].index;
-		if(oimg[i].index==a[0]){
-			var ohei=$(oimg[i]).width();
-			ohei=ohei-4;
-			$(oimg[i]).width(ohei);
-			$(oimg[i]).addClass("waring");
-		}else if(oimg[i].index==a[1]){
-			var ohei=$(oimg[i]).width();
-			ohei=ohei-4;
-			$(oimg[i]).width(ohei);
-			$(oimg[i]).addClass("waring");
-		}else if(oimg[i].index==a[2]){
-			var ohei=$(oimg[i]).width();
-			ohei=ohei-4;
-			$(oimg[i]).width(ohei);
-			$(oimg[i]).addClass("waring");
-		}else if(oimg[i].index==a[3]){
-			var ohei=$(oimg[i]).width();
-			ohei=ohei-4;
-			$(oimg[i]).width(ohei);
-			$(oimg[i]).addClass("waring");
-		}else if(oimg[i].index==a[4]){
-			var ohei=$(oimg[i]).width();
-			ohei=ohei-4;
-			$(oimg[i]).width(ohei);
-			$(oimg[i]).addClass("waring");
-		}else if(oimg[i].index==a[5]){
-			var ohei=$(oimg[i]).width();
-			ohei=ohei-4;
-			$(oimg[i]).width(ohei);
-			$(oimg[i]).addClass("waring");
+		for (var j= 0; j < seats.length; j++) {
+			if (seats[j].Seat.status == 1 && seats[j].Seat.real_id == b) {
+				var ohei=$(oimg[i]).width();
+				ohei=ohei-4;
+				$(oimg[i]).width(ohei);
+				$(oimg[i]).addClass("warning");
+			}
 		}
-		}
+	}
+	// var a=["s2","1","v2","54","86","100"];
+	// var oimg=$("img");
+	// var olen=oimg.length;
+	// for(var i=0;i<olen;i++){
+	// 	var b=oimg[i].index;
+	// 	if(oimg[i].index==a[0]){
+	// 		var ohei=$(oimg[i]).width();
+	// 		ohei=ohei-4;
+	// 		$(oimg[i]).width(ohei);
+	// 		$(oimg[i]).addClass("warning");
+	// 	}else if(oimg[i].index==a[1]){
+	// 		var ohei=$(oimg[i]).width();
+	// 		ohei=ohei-4;
+	// 		$(oimg[i]).width(ohei);
+	// 		$(oimg[i]).addClass("warning");
+	// 	}else if(oimg[i].index==a[2]){
+	// 		var ohei=$(oimg[i]).width();
+	// 		ohei=ohei-4;
+	// 		$(oimg[i]).width(ohei);
+	// 		$(oimg[i]).addClass("warning");
+	// 	}else if(oimg[i].index==a[3]){
+	// 		var ohei=$(oimg[i]).width();
+	// 		ohei=ohei-4;
+	// 		$(oimg[i]).width(ohei);
+	// 		$(oimg[i]).addClass("warning");
+	// 	}else if(oimg[i].index==a[4]){
+	// 		var ohei=$(oimg[i]).width();
+	// 		ohei=ohei-4;
+	// 		$(oimg[i]).width(ohei);
+	// 		$(oimg[i]).addClass("warning");
+	// 	}else if(oimg[i].index==a[5]){
+	// 		var ohei=$(oimg[i]).width();
+	// 		ohei=ohei-4;
+	// 		$(oimg[i]).width(ohei);
+	// 		$(oimg[i]).addClass("warning");
+	// 	}
+	// 	}
 //tips添加弹出层起止年月日
     var h=2017,i=1,j=1;
 	for (var m=0;m<5;m++){

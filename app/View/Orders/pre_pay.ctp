@@ -7,120 +7,120 @@
 <title>支付订单</title>
 <link rel="stylesheet" href="/css/common.css" type="text/css"/>
 <style>
-body {
-	background-color:#f4f4f4;
-	color:#333;
-	}
-.home {
-	width:100%;
-	max-width:750px;
-	min-width:320px;
-	margin:0 auto;
-	background-color:#fff;
-	}
-.home h2,.home h3,.home h4 {
-	width:87%;
-	margin:0 auto;
-	}
-.home h2 {
-	font-size:0.7rem;
-	color:#666;
-	line-height:2.75rem;
-	padding-top:0.5rem;
-	}
-.home h2 em {
-	font-size:1.1rem;
-	color:#ff462d;
-	}
-.home h3 {
-	color:#999;
-	font-size:0.7rem;
-	line-height:1rem;
-	padding-bottom:1.5rem;
-	border-bottom:solid 1px #d7d7d7;
-	}
-.home h2 span,.home h3 span {
-	float:left;
-	width:25%;
-	}
-.home h2 em,.home h3 em {
-	float:left;
-	width:75%;
-	}
-.home h4 {
-	font-size:0.8rem;
-	line-height:2.1rem;
-	padding-bottom:0.75rem;
-	}
-.home h4 em {
-	float:right;
-	height:1.2rem;
-	width:1.2rem;
-	border:solid 1px #d7d7d7;
-	border-radius:0.15rem;
-	-webkit-border-radius:0.15rem;
-	-moz-border-radius:0.15rem;
-	-o-border-radius:0.15rem;
-	margin-top:0.45rem;
-	}
-.chengnuo {
-	padding-left:3%;
-	}
-.chengnuo em {
-	float:left;
-	height:0.8rem;
-	width:0.8rem;
-	margin-right:0.8rem;
-	border:solid 1px #d7d7d7;
-	border-radius:0.15rem;
-	-webkit-border-radius:0.15rem;
-	-moz-border-radius:0.15rem;
-	-o-border-radius:0.15rem;
-	margin-top:0.95rem;
-	}
-.home h4 em.active,.chengnuo em.active {
-	background:url(/img/qrzf_one_duihao.png);
-	background-size:100%;
-	-webkit-background-size:100%;
-	-moz-background-size:100%;
-	-o-background-size:100%;
-	}
-.chengnuo {
-	font-size:0.7rem;
-	line-height:2.7rem;
-	}
-.chengnuo span {
-	color:#ff462d;
-	}
-.submit {
-	width:100%;
-	height:2.2rem;
-	line-height:2.2rem;
-	text-align:center;
-	color:#333;
-	position:fixed;
-	left:0;
-	bottom:0;
-	font-size:0.8rem;
-	background-color:#ffceb0;
-	}
-@media screen and (max-device-width:340px) {
-	.home h2 span,.home h3 span {
-		width:27%;
+	body {
+		background-color:#f4f4f4;
+		color:#333;
 		}
-	.home h2 em,.home h3 em {
-		width:73%;
+	.home {
+		width:100%;
+		max-width:750px;
+		min-width:320px;
+		margin:0 auto;
+		background-color:#fff;
 		}
-	}
-@media screen and (min-device-width:340px) {
+	.home h2,.home h3,.home h4 {
+		width:87%;
+		margin:0 auto;
+		}
+	.home h2 {
+		font-size:0.7rem;
+		color:#666;
+		line-height:2.75rem;
+		padding-top:0.5rem;
+		}
+	.home h2 em {
+		font-size:1.1rem;
+		color:#ff462d;
+		}
+	.home h3 {
+		color:#999;
+		font-size:0.7rem;
+		line-height:1rem;
+		padding-bottom:1.5rem;
+		border-bottom:solid 1px #d7d7d7;
+		}
 	.home h2 span,.home h3 span {
+		float:left;
 		width:25%;
 		}
 	.home h2 em,.home h3 em {
+		float:left;
 		width:75%;
 		}
-	}
-</style>
+	.home h4 {
+		font-size:0.8rem;
+		line-height:2.1rem;
+		padding-bottom:0.75rem;
+		}
+	.home h4 em {
+		float:right;
+		height:1.2rem;
+		width:1.2rem;
+		border:solid 1px #d7d7d7;
+		border-radius:0.15rem;
+		-webkit-border-radius:0.15rem;
+		-moz-border-radius:0.15rem;
+		-o-border-radius:0.15rem;
+		margin-top:0.45rem;
+		}
+	.chengnuo {
+		padding-left:3%;
+		}
+	.chengnuo em {
+		float:left;
+		height:0.8rem;
+		width:0.8rem;
+		margin-right:0.8rem;
+		border:solid 1px #d7d7d7;
+		border-radius:0.15rem;
+		-webkit-border-radius:0.15rem;
+		-moz-border-radius:0.15rem;
+		-o-border-radius:0.15rem;
+		margin-top:0.95rem;
+		}
+	.home h4 em.active,.chengnuo em.active {
+		background:url(/img/qrzf_one_duihao.png);
+		background-size:100%;
+		-webkit-background-size:100%;
+		-moz-background-size:100%;
+		-o-background-size:100%;
+		}
+	.chengnuo {
+		font-size:0.7rem;
+		line-height:2.7rem;
+		}
+	.chengnuo span {
+		color:#ff462d;
+		}
+	.submit {
+		width:100%;
+		height:2.2rem;
+		line-height:2.2rem;
+		text-align:center;
+		color:#333;
+		position:fixed;
+		left:0;
+		bottom:0;
+		font-size:0.8rem;
+		background-color:#ffceb0;
+		}
+	@media screen and (max-device-width:340px) {
+		.home h2 span,.home h3 span {
+			width:27%;
+			}
+		.home h2 em,.home h3 em {
+			width:73%;
+			}
+		}
+	@media screen and (min-device-width:340px) {
+		.home h2 span,.home h3 span {
+			width:25%;
+			}
+		.home h2 em,.home h3 em {
+			width:75%;
+			}
+		}
+	</style>
 </head>
 
 <body>

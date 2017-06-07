@@ -8,6 +8,15 @@ class SeatsController extends AppController {
 	function index()
 	{
 		$this->set('title_for_layout', '预订工位');
+		
+		$seats = $this->Seat->find('all', [
+			'conditions' => [
+				'is_deleted' => 0,
+			],
+		]);
+
+		$result['seats'] = $seats;
+		$this->set(compact('result'));
 	}
 
 	function checkSeatsAvailable()
