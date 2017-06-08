@@ -1,4 +1,9 @@
 <?php
+ini_set('date.timezone','Asia/Shanghai');
+//error_reporting(E_ERROR);
+require_once WX_PAY . "/lib/WxPay.Api.php";
+require_once WX_PAY . "/example/WxPay.JsApiPay.php";
+require_once WX_PAY . "/example/log.php";
 class OrdersController extends AppController {
 	public $uses = [
 		'Order',
@@ -92,12 +97,17 @@ class OrdersController extends AppController {
 	{
 		$this->set('title_for_layout', '支付订单');
 		$dataStr = $this->request->data['seatInfo'];
-		$util = new Utility();
 
 		$data = json_decode($dataStr, true);
 		$result['totalFee'] = $data['totalFee'];
 		$result['seatInfos'] = $data['seatInfo'];
 
+		$this->set(compact('result'));
+	}
+
+	public function payOrder($price)
+	{
+		$util = new Utility();
 		$noncestr = 'zhanshenkeji';
 		$jsApiTicket = $this->Token->getToken(\Token::JS_API_TICKET);
 		$timeStamp = time();
@@ -119,14 +129,54 @@ class OrdersController extends AppController {
 		$result['timeStamp'] = $timeStamp;
 		$result['signature'] = $signature;
 		$result['appId'] = APP_ID;
+		$jsParams = $this->getJsApiParameters();
+		$result['jsApiParameters'] = $jsParams['jsApiParameters'];
+		$result['editAddress'] = $jsParams['editAddress'];
 
 		$this->set(compact('result'));
 	}
 
-	public function payOrder($weixinResult)
+	// public function payOrder($weixinResult)
+	// {
+	// 	if (true) {
+	// 		$this->Order->query($query);
+	// 	}
+	// }
+
+
+	public function getJsApiParameters()
 	{
-		if (true) {
-			$this->Order->query($query);
-		}
+		//①、获取用户openid
+		$tools = new JsApiPay();
+		$openId = $tools->GetOpenid();
+
+		//②、统一下单
+		$input = new WxPayUnifiedOrder();
+		$input->SetBody("test");
+		$input->SetAttach("test");
+		$input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
+		$input->SetTotal_fee("1");
+		$input->SetTime_start(date("YmdHis"));
+		$input->SetTime_expire(date("YmdHis", time() + 600));
+		$input->SetGoods_tag("test");
+		$input->SetNotify_url("http://rentoffice.zhanshen1.com/callback/wxPayCallback");
+		$input->SetTrade_type("JSAPI");
+		$input->SetOpenid($openId);
+		$order = WxPayApi::unifiedOrder($input);
+		echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
+		$this->printf_info($order);
+		$jsApiParameters = $tools->GetJsApiParameters($order);
+		$editAddress = $tools->GetEditAddressParameters();
+
+		return ['jsApiParameters' => $jsApiParameters,
+			'editAddress' => $editAddress,
+		];
+	}
+
+	function printf_info($data)
+	{
+	    foreach($data as $key=>$value){
+	        echo "<font color='#00ff55;'>$key</font> : $value <br/>";
+	    }
 	}
 }

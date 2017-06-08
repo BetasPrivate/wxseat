@@ -27,6 +27,17 @@ class CallbackController extends AppController
         }
     }
 
+    function wxPayCallback()
+    {
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $this->WxLog->create();
+        $result = $this->WxLog->save(['data' => $postStr]);
+        if ($result) {
+            echo 'success';
+        }
+        exit;
+    }
+
     function sendTextMsg($obj, $msg)
     {
         $toUserName = (string)$obj->ToUserName;
@@ -95,5 +106,10 @@ class CallbackController extends AppController
             </xml>";
         echo sprintf($textTpl, $fromUsername, $toUserName, $mediaId);
         exit();
+    }
+
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('wxPayCallback', 'entrance');
     }
 }

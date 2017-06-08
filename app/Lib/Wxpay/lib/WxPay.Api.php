@@ -523,23 +523,23 @@ class WxPayApi
 	 */
 	private static function postXmlCurl($xml, $url, $useCert = false, $second = 30)
 	{		
-		$ch = curl_init();
-		//设置超时
-		curl_setopt($ch, CURLOPT_TIMEOUT, $second);
+		// $ch = curl_init();
+		// //设置超时
+		// curl_setopt($ch, CURLOPT_TIMEOUT, $second);
 		
-		//如果有配置代理这里就设置代理
-		if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0" 
-			&& WxPayConfig::CURL_PROXY_PORT != 0){
-			curl_setopt($ch,CURLOPT_PROXY, WxPayConfig::CURL_PROXY_HOST);
-			curl_setopt($ch,CURLOPT_PROXYPORT, WxPayConfig::CURL_PROXY_PORT);
-		}
-		curl_setopt($ch,CURLOPT_URL, $url);
-		curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,TRUE);
-		curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,2);//严格校验
-		//设置header
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		//要求结果为字符串且输出到屏幕上
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		// //如果有配置代理这里就设置代理
+		// if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0" 
+		// 	&& WxPayConfig::CURL_PROXY_PORT != 0){
+		// 	curl_setopt($ch,CURLOPT_PROXY, WxPayConfig::CURL_PROXY_HOST);
+		// 	curl_setopt($ch,CURLOPT_PROXYPORT, WxPayConfig::CURL_PROXY_PORT);
+		// }
+		// curl_setopt($ch,CURLOPT_URL, $url);
+		// curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,TRUE);
+		// curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,2);//严格校验
+		// //设置header
+		// curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		// //要求结果为字符串且输出到屏幕上
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 	
 		if($useCert == true){
 			//设置证书
@@ -550,17 +550,26 @@ class WxPayApi
 			curl_setopt($ch,CURLOPT_SSLKEY, WxPayConfig::SSLKEY_PATH);
 		}
 		//post提交方式
-		curl_setopt($ch, CURLOPT_POST, TRUE);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
-		//运行curl
-		$data = curl_exec($ch);
+		// curl_setopt($ch, CURLOPT_POST, TRUE);
+		// curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+		// //运行curl
+		// $data = curl_exec($ch);
+		$opts = array('http' => array(
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $xml,
+            ),
+        );
+
+        $context = stream_context_create($opts);
+        $data = file_get_contents($url, false, $context);
 		//返回结果
 		if($data){
-			curl_close($ch);
+			// curl_close($ch);
 			return $data;
 		} else { 
-			$error = curl_errno($ch);
-			curl_close($ch);
+			// $error = curl_errno($ch);
+			// curl_close($ch);
 			throw new WxPayException("curl出错，错误码:$error");
 		}
 	}
