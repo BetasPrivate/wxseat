@@ -86,6 +86,7 @@ class OrdersController extends AppController {
 
 			$result = [
 				'status' => 1,
+				'tradeId' => $tradeId,
 			];
 		}
 
@@ -96,19 +97,22 @@ class OrdersController extends AppController {
 	public function prePay()
 	{
 		$this->set('title_for_layout', '支付订单');
-		$dataStr = $this->request->data['seatInfo'];
-
-		$data = json_decode($dataStr, true);
-		$result['totalFee'] = $data['totalFee'];
-		$result['seatInfos'] = $data['seatInfo'];
+		$tradeId = isset($this->request->query['tradeId']) ? $this->request->query['tradeId'] : null;
+		if ($tradeId) {
+			$result = $this->initPayOrder($tradeId);
+		} else {
+			echo "wrong trade";
+			exit();
+		}
 
 		$this->set(compact('result'));
 	}
 
-	public function payOrder($price)
+	public function initPayOrder($tradeId)
 	{
 		$util = new Utility();
 		$noncestr = 'zhanshenkeji';
+
 		$jsApiTicket = $this->Token->getToken(\Token::JS_API_TICKET);
 		$timeStamp = time();
 		$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -129,11 +133,13 @@ class OrdersController extends AppController {
 		$result['timeStamp'] = $timeStamp;
 		$result['signature'] = $signature;
 		$result['appId'] = APP_ID;
-		$jsParams = $this->getJsApiParameters();
+
+		$jsParams = $this->getJsApiParameters($tradeId);
 		$result['jsApiParameters'] = $jsParams['jsApiParameters'];
 		$result['editAddress'] = $jsParams['editAddress'];
+		$result['totalFee'] = $jsParams['totalFee'];
 
-		$this->set(compact('result'));
+		return $result;
 	}
 
 	// public function payOrder($weixinResult)
@@ -144,18 +150,19 @@ class OrdersController extends AppController {
 	// }
 
 
-	public function getJsApiParameters()
+	public function getJsApiParameters($tradeId)
 	{
 		//①、获取用户openid
 		$tools = new JsApiPay();
 		$openId = $tools->GetOpenid();
+		$totalFee = 1;
 
 		//②、统一下单
 		$input = new WxPayUnifiedOrder();
 		$input->SetBody("test");
 		$input->SetAttach("test");
 		$input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
-		$input->SetTotal_fee("1");
+		$input->SetTotal_fee($totalFee);
 		$input->SetTime_start(date("YmdHis"));
 		$input->SetTime_expire(date("YmdHis", time() + 600));
 		$input->SetGoods_tag("test");
@@ -163,14 +170,21 @@ class OrdersController extends AppController {
 		$input->SetTrade_type("JSAPI");
 		$input->SetOpenid($openId);
 		$order = WxPayApi::unifiedOrder($input);
-		echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
-		$this->printf_info($order);
 		$jsApiParameters = $tools->GetJsApiParameters($order);
 		$editAddress = $tools->GetEditAddressParameters();
 
+		$tradeInfo = json_decode($jsApiParameters, true);
+		$this->Trade->save(['id' => $tradeId, 'pay_sign' => $tradeInfo['paySign']]);
+
 		return ['jsApiParameters' => $jsApiParameters,
 			'editAddress' => $editAddress,
+			'totalFee' => $totalFee,
 		];
+	}
+
+	public function paySuccess()
+	{
+		$this->set('title_for_layout', '支付成功！');
 	}
 
 	function printf_info($data)

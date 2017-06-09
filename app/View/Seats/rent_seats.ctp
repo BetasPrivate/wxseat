@@ -158,16 +158,17 @@ h6 i {
     		success: function(response) {
     			console.log(response);
     			if (response.status == 1) {
-    				var mapForm = document.createElement("form");
-				    mapForm.method = "POST"; // or "post" if appropriate
-				    mapForm.action = "/orders/prePay";
-				    var mapInput = document.createElement("input");
-				    mapInput.type = "text";
-				    mapInput.name = "seatInfo";
-				    mapInput.value = JSON.stringify(data);
-				    mapForm.appendChild(mapInput);
-				    document.body.appendChild(mapForm);
-				    mapForm.submit();
+    				// var mapForm = document.createElement("form");
+				    // mapForm.method = "POST"; // or "post" if appropriate
+				    // mapForm.action = "/orders/prePay";
+				    // var mapInput = document.createElement("input");
+				    // mapInput.type = "text";
+				    // mapInput.name = "seatInfo";
+				    // mapInput.value = JSON.stringify(data);
+				    // mapForm.appendChild(mapInput);
+				    // document.body.appendChild(mapForm);
+				    // mapForm.submit();
+				    window.location.href = '/orders/prePay?tradeId=' + response.tradeId;
     			} else {
     				document.getElementById('warningMsg').innerHTML = response.msg;
     			}

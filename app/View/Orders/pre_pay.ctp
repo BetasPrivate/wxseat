@@ -121,6 +121,96 @@
 			}
 		}
 	</style>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script>
+	    wx.config({
+
+	        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+
+	        appId: "<?php echo $result['appId'];?>", // 必填，公众号的唯一标识
+
+	        timestamp: <?php echo $result['timeStamp'];?>, // 必填，生成签名的时间戳
+
+	        nonceStr: "<?php echo $result['nonceStr'];?>", // 必填，生成签名的随机串
+
+	        signature: "<?php echo $result['signature'];?>",// 必填，签名，见附录1
+
+	        jsApiList: ['chooseWXPay', 'checkJsApi'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+
+	    });
+
+
+	    wx.checkJsApi({
+	        jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+	        success: function(res) {
+	            console.log(res);
+	        }
+	    });
+	</script>
+	<script type="text/javascript">
+	    //调用微信JS api 支付
+	    function jsApiCall()
+	    {
+	        WeixinJSBridge.invoke(
+	            'getBrandWCPayRequest',
+	            <?php echo $result['jsApiParameters']; ?>,
+	            function(res){
+	                WeixinJSBridge.log(res.err_msg);
+	                alert(res.err_code+res.err_desc+res.err_msg);
+	                if (res.err_msg == 'get_brand_wc_pay_request:ok') {
+	                	window.location.href = '/orders/paySuccess';
+	                }
+	            }
+	        );
+	    }
+
+	    function callpay()
+	    {
+	        if (typeof WeixinJSBridge == "undefined"){
+	            if( document.addEventListener ){
+	                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+	            }else if (document.attachEvent){
+	                document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+	                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+	            }
+	        }else{
+	            jsApiCall();
+	        }
+	    }
+	</script>
+	<script type="text/javascript">
+	    //获取共享地址
+	    function editAddress()
+	    {
+	        WeixinJSBridge.invoke(
+	            'editAddress',
+	            <?php echo $result['editAddress']; ?>,
+	            function(res){
+	                var value1 = res.proviceFirstStageName;
+	                var value2 = res.addressCitySecondStageName;
+	                var value3 = res.addressCountiesThirdStageName;
+	                var value4 = res.addressDetailInfo;
+	                var tel = res.telNumber;
+	                
+	                alert(value1 + value2 + value3 + value4 + ":" + tel);
+	            }
+	        );
+	    }
+	    
+	    window.onload = function(){
+	        if (typeof WeixinJSBridge == "undefined"){
+	            if( document.addEventListener ){
+	                document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+	            }else if (document.attachEvent){
+	                document.attachEvent('WeixinJSBridgeReady', editAddress); 
+	                document.attachEvent('onWeixinJSBridgeReady', editAddress);
+	            }
+	        }else{
+	            editAddress();
+	        }
+	    };
+	    
+	</script>
 </head>
 
 <body>
@@ -130,11 +220,11 @@
         <h4>开具发票<em></em></h4>
     </div>
     <div class="chengnuo"><em></em>确认<span>“协议”</span>和<span>“承诺书”</span></div>
-    <!-- <a onclick="payOrder()" class="submit">立即付款</a> -->
-    <a href="/orders/payOrder/1">立即付款</a>
+    <a onclick="callpay()" class="submit">立即付款</a>
+    <!-- <a href="/orders/payOrder/1">立即付款</a> -->
 </body>
 <script src="/js/jquery-3.2.1.min.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+
 <script>
 	$(document).ready(function(e){
         $(".home h4 em").click(function() {
