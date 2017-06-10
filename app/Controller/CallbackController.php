@@ -4,6 +4,7 @@ class CallbackController extends AppController
     public $uses = [
         'User',
         'WxLog',
+        'Trade',
     ];
 
     function entrance()
@@ -33,8 +34,12 @@ class CallbackController extends AppController
         $this->WxLog->create();
         $result = $this->WxLog->save(['data' => $postStr]);
         if ($result) {
-            echo 'success';
+            echo "<xml>
+                <return_code><![CDATA[SUCCESS]]></return_code>
+                <return_msg><![CDATA[OK]]></return_msg>
+                </xml>";
         }
+        $this->Trade->parseTradePayReturnData($postStr);
         exit;
     }
 

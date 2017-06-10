@@ -3,11 +3,16 @@ class UsersController extends AppController
 {
     public $uses = [
         'User',
+        'Trade',
     ];
 
     public function index()
     {
         $this->set('title_for_layout', '个人中心');
+
+        $trades = $this->Trade->getTradeDetailByUserId(AuthComponent::user('id'));
+
+        $this->set(compact('trades'));
     }
 
     public function login()

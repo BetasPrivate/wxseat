@@ -20,7 +20,8 @@ class OrdersController extends AppController {
 		$dates = $data['dates'];
 		$startDate = $dates['startDate'];
 		$endDate = $dates['endDate'];
-		$userId = 1;
+		$totalFee = $data['totalFee'];
+		$userId = AuthComponent::user('id');
 
 		$result = [
 			'status' => 0,
@@ -57,9 +58,6 @@ class OrdersController extends AppController {
 				$hasChanged = true;
 				break;
 			}
-
-			$query = sprintf("INSERT INTO `orders` (`seat_id`, `user_id`, `status`, `is_deleted`, `start_date`, `end_date`) VALUES ('%s', %s, 0, 0, '%s', '%s')", $seatId, $userId, $startDate, $endDate);
-			$newOrderQuerys[] = $query;
 		}
 
 		if (!$hasChanged) {
@@ -69,9 +67,10 @@ class OrdersController extends AppController {
 			$this->Seat->query($query);
 			
 			$this->Trade->create();
-			$this->Trade->save(['user_id' => $userId]);
+			$this->Trade->save(['user_id' => $userId, 'total_fee' => $totalFee]);
 			$tradeId = $this->Trade->getLastInsertId();
 
+			//生成订单
 			foreach ($seatInfos as $seatInfo) {
 				$seatRealId = $seatInfo['seatId'];
 				$this->Order->create();
@@ -83,6 +82,8 @@ class OrdersController extends AppController {
 				];
 				$this->Order->save($saveData);
 			}
+
+			$this->Seat->setSeatOccupied($seatInfos);
 
 			$result = [
 				'status' => 1,
@@ -161,7 +162,8 @@ class OrdersController extends AppController {
 		$input = new WxPayUnifiedOrder();
 		$input->SetBody("test");
 		$input->SetAttach("test");
-		$input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
+		$platformTradeId = WxPayConfig::MCHID.$this->Trade->getTradeNo();
+		$input->SetOut_trade_no($platformTradeId);
 		$input->SetTotal_fee($totalFee);
 		$input->SetTime_start(date("YmdHis"));
 		$input->SetTime_expire(date("YmdHis", time() + 600));
@@ -173,8 +175,7 @@ class OrdersController extends AppController {
 		$jsApiParameters = $tools->GetJsApiParameters($order);
 		$editAddress = $tools->GetEditAddressParameters();
 
-		$tradeInfo = json_decode($jsApiParameters, true);
-		$this->Trade->save(['id' => $tradeId, 'pay_sign' => $tradeInfo['paySign']]);
+		$this->Trade->save(['id' => $tradeId, 'platform_trade_id' => $platformTradeId, 'open_id' => $openId]);
 
 		return ['jsApiParameters' => $jsApiParameters,
 			'editAddress' => $editAddress,

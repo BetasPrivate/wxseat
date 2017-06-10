@@ -125,7 +125,7 @@
 	<script>
 	    wx.config({
 
-	        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 
 	        appId: "<?php echo $result['appId'];?>", // 必填，公众号的唯一标识
 
@@ -156,8 +156,8 @@
 	            <?php echo $result['jsApiParameters']; ?>,
 	            function(res){
 	                WeixinJSBridge.log(res.err_msg);
-	                alert(res.err_code+res.err_desc+res.err_msg);
-	                if (res.err_msg == 'get_brand_wc_pay_request:ok') {
+	                // alert(res.err_code+res.err_desc+res.err_msg);
+	                if (res.err_msg == 'get_brand_wcpay_request:ok') {
 	                	window.location.href = '/orders/paySuccess';
 	                }
 	            }
@@ -192,7 +192,7 @@
 	                var value4 = res.addressDetailInfo;
 	                var tel = res.telNumber;
 	                
-	                alert(value1 + value2 + value3 + value4 + ":" + tel);
+	                // alert(value1 + value2 + value3 + value4 + ":" + tel);
 	            }
 	        );
 	    }

@@ -26,6 +26,7 @@ class SeatsController extends AppController {
 		$startDate = $data['startDate'];
 		$endDate = $data['endDate'];
 		$result['status'] = 1;
+		$result['room_id'] = 1;
 
 		$checkResult = $this->getUnavaliableIdInfos($seatIds, $startDate, $endDate);
 		if (sizeof($checkResult['unavaliableIdInfos']) != 0) {
@@ -82,6 +83,7 @@ class SeatsController extends AppController {
 		$seatInfos = $this->Seat->find('all', [
 			'conditions' => [
 				'Seat.real_id' => $seatIds,
+				'Seat.is_deleted' => 0,
 			],
 		]);
 

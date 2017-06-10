@@ -1,5 +1,5 @@
 <?php
-class SeatModel extends AppModel {
+class Seat extends AppModel {
 	var $hasMany = [
 		'Order',
 	];
@@ -39,5 +39,32 @@ class SeatModel extends AppModel {
 		];
 
 		return $result;
+	}
+
+	public function getSeatStrBySeatIds($seatIds)
+	{
+		$seatIdStr = '';
+		foreach ($seatIds as $id) {
+			$seatIdStr .= ','.$id;
+		}
+
+		$seatIdStr = substr($seatIdStr, 1);
+
+		return $seatIdStr;
+	}
+
+	public function setSeatOccupied($seatInfos)
+	{
+		foreach ($seatInfos as $seatInfo) {
+			$seatRealId = $seatInfo['seatId'];
+			$this->updateAll(
+				[
+					'status' => 1,
+				],
+				[
+					'real_id' => $seatRealId,
+				]
+			);
+		}
 	}
 }
