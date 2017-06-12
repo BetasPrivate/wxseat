@@ -6,15 +6,11 @@
 <meta name="format-detection" content="telephone=no" />
 <title>工位租赁</title>
 <link rel="stylesheet" href="/css/common.css" type="text/css"/>
-<link rel="stylesheet" href="/css/gongwei.css?12" type="text/css"/>
+<link rel="stylesheet" href="/css/gongwei.css?s2" type="text/css"/>
 </head>
 
 <body>
 <section class="mobile">
-	<header>
-    	<i></i>
-        <img src="/img/工位图2-拷贝_07.jpg" alt="工位租赁"/>
-    </header>
     <section class="home">
     	<section class="homeTop"></section>
         <section class="homeMain clearfix">
@@ -81,6 +77,7 @@
 </section>
 <section class="zhezhaoceng"></section>
 <section class="layer">
+    <i class="iconfont">&#xe604;</i>
 	<h2>工&nbsp;&nbsp;位&nbsp;&nbsp;号：<!--<span>开放空间</span>--><i></i></h2>
   	<h3>租赁状态：<span class="kongxian"></span>&nbsp;&nbsp;&nbsp;<i>空闲</i></h3>
     <h4 class="zuqi">租&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期：
@@ -110,6 +107,15 @@
 <script type="text/javascript">
     var seats = <?php echo json_encode($result['seats']);?>;
 </script>
-<script src="/js/gongwei.js?aasg"></script>
+<script src="/js/gongwei.js?aassag"></script>
+<script>
+    window.onresize=function(){
+        window.location.reload();
+    }
+    $(".iconfont").click(function(){
+        $(".zhezhaoceng").css({display:"none"});
+        $(".layer").css({bottom:-400});
+    })
+</script>
 </body>
 </html>

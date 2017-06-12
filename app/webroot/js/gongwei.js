@@ -723,6 +723,12 @@ $(document).ready(function(e) {
 			}
 		function  panduantimer(){
 			//判断终止时间大于起始时间
+			startnian=Number(startnian);
+			stopnian=Number(stopnian);
+			startyue=Number(startyue);
+			stopyue=Number(stopyue);
+			startri=Number(startri);
+			stopri=Number(stopri);
 			if(startnian>stopnian){
 				alert("您输入的日期有误，请重新输入");
 			}else if(startnian==stopnian){

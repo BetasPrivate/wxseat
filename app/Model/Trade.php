@@ -10,11 +10,27 @@ class Trade extends AppModel {
 		self::CLOSED_BY_SYSETM => '超时关闭',
 	];
 
+	public static $classes = [
+		self::NO_PAY => 'info',
+		self::PAID => 'success',
+		self::CLOSED_BY_SYSETM => 'warning',
+	];
+
 	public static function text($index)
 	{
 		$result = '未知';
 		if (isset(self::$texts[$index])) {
 			$result = self::$texts[$index];
+		}
+
+		return $result;
+	}
+
+	public static function className($index)
+	{
+		$result = 'active';
+		if (isset(self::$classes[$index])) {
+			$result = self::$classes[$index];
 		}
 
 		return $result;

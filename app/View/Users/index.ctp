@@ -33,6 +33,15 @@ body {
 	margin:1.1rem auto 0;
 	display:block;
 	}
+/*改动开始*/
+.header a {
+	font-size:0.7rem;
+	display: block;
+	text-align: center;
+	color:#333333;
+	margin-top:0.5rem;
+}
+/*改动结束*/
 .change {
 	padding-left:5.5%;
 	line-height:2.5rem;
@@ -117,8 +126,10 @@ body {
 <div class="home">
 	<div class="header">
     	<img src="/img/touxiang.jpg" alt="头像"/>
+    	<a href="nickname_change.html">昵称</a>
     </div>
     <div class="change">修改密码</div>
+    <div class="change"><a href="/users/logout">退出登录</a></div>
     <div class="time">
     	<p>租用记录</p>
         <hr class="mini">
@@ -142,7 +153,7 @@ body {
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script>
 	$(document).ready(function(e){
-		$(".change").click(function(){
+		$(".header img").click(function(){
 			$(".zhezhaoceng").css({display:"block"});
 			$(".layer").css({display:"block"});
 			});

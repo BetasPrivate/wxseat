@@ -83,7 +83,7 @@ class OrdersController extends AppController {
 				$this->Order->save($saveData);
 			}
 
-			$this->Seat->setSeatOccupied($seatInfos);
+			// $this->Seat->setSeatOccupied($seatInfos);
 
 			$result = [
 				'status' => 1,
