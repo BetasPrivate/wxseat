@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/css/common.css" type="text/css"/>
 <title>个人中心</title>
 <style>
+<style>
 body {
 	background-color:#fff;
 	}
@@ -23,7 +24,8 @@ body {
 	border-top:solid 1px #ffceb0;
 	background-color:#ffceb0;
 	}
-.header img {
+/*头像换图片改动*/
+/*.header img {
 	height:3.25rem;
 	width:3.25rem;
 	border-radius:50%;
@@ -32,7 +34,30 @@ body {
 	-o-border-radius:50%;
 	margin:1.1rem auto 0;
 	display:block;
-	}
+	}*/
+.header {
+	position: relative;
+}
+.header p {
+	height:3.25rem;
+	width:3.25rem;
+	border-radius:50%;
+	-webkit-border-radius:50%;
+	-moz-border-radius:50%;
+	-o-border-radius:50%;
+	overflow: hidden;
+	background:url(/img/touxiang.jpg);
+	background-size:100%;
+	-webkit-background-size:100%;
+	margin:1.1rem auto 0;
+}
+.header p.active {
+	opacity:0;
+	position:absolute;
+	top:0;
+	left:50%;
+	margin-left:-1.625rem;
+}
 /*改动开始*/
 .header a {
 	font-size:0.7rem;
@@ -119,14 +144,33 @@ body {
 	-moz-background-size:100%;
 	-o-background-size:100%;
 	}
+/*点击拍照改动*/
+.layer li {
+	position: relative;
+}
+.layer li input {
+	position:absolute;
+	border:none;
+	outline: none;
+	box-sizing: border-box;
+	width:100%;
+	height:100%;
+	opacity:0;
+	top:0;
+	left:0;
+	z-index: 3;
+}
+</style>
 </style>
 </head>
 
 <body>
 <div class="home">
 	<div class="header">
-    	<img src="/img/touxiang.jpg" alt="头像"/>
-    	<a href="nickname_change.html">昵称</a>
+    	<!-- <img src="/img/touxiang.jpg" alt="头像"/> -->
+    	<p id="imagePreview"></p>
+    	<p id="imagePreview1" class="active"></p>
+    	<a href="nickname_change.html"><?php echo AuthComponent::user('username');?></a>
     </div>
     <div class="change">修改密码</div>
     <div class="change"><a href="/users/logout">退出登录</a></div>
@@ -146,22 +190,43 @@ body {
 <div class="layer">
 	<ul>
     	<li class="li_1">修改头像</li>
-        <li class="li_2"><i></i>相册</li>
-        <li><em></em>拍照</li>
+        <li class="li_2">
+        	<i></i>相册
+        	<input type="file" id="imageInput" onchange="loadImageFile();"/>
+        </li>
+        <li>
+        	<em></em>拍照
+        	<input type="file" accept="image/*" id="imageInput1" onchange="loadImageFile1();"/>
+        </li>
     </ul>
 </div>
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script>
 	$(document).ready(function(e){
-		$(".header img").click(function(){
+		//改动 header img
+		$(".header p").click(function(){
 			$(".zhezhaoceng").css({display:"block"});
 			$(".layer").css({display:"block"});
-			});
 		});
 		$(".zhezhaoceng").click(function(){
 			$(".zhezhaoceng").css({display:"none"});
 			$(".layer").css({display:"none"});
 			});
+		//更改头像改动
+		$(".layer li input").click(function(){
+			$(".zhezhaoceng").css({display:"none"});
+			$(".layer").css({display:"none"});
+		})
+		$("#imageInput").click(function(){
+			$(".header p").removeClass("active");
+			$("#imagePreview1").addClass("active");
+		})
+		$("#imageInput1").click(function(){
+			$(".header p").removeClass("active");
+			$("#imagePreview").addClass("active");
+		})
+		});
 </script>
+<script src="/js/file_image.js"></script>
 </body>
 </html>

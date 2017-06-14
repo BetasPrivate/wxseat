@@ -6,21 +6,25 @@
 <meta name="format-detection" content="telephone=no" />
 <title>支付订单</title>
 <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+<link rel="stylesheet" href="/css/LArea.css">
 <style>
 	body {
-		background-color:#f4f4f4;
-		color:#333;
-		}
+	background-color:#f4f4f4;
+	color:#333;
+	max-width:750px;
+	min-width:320px;
+	margin:0 auto;
+	}
 	.home {
 		width:100%;
-		max-width:750px;
-		min-width:320px;
-		margin:0 auto;
 		background-color:#fff;
 		}
 	.home h2,.home h3,.home h4 {
 		width:87%;
 		margin:0 auto;
+		}
+	.home h4.active {
+		border-top:solid #d7d7d7 1px;
 		}
 	.home h2 {
 		font-size:0.7rem;
@@ -63,6 +67,18 @@
 		-o-border-radius:0.15rem;
 		margin-top:0.45rem;
 		}
+	.home h4.active {
+		display:none;
+		}
+	.home h4.active input {
+		border:none;
+		outline:none;
+		box-sizing:border-box;
+		height:2.1rem;
+		font-size:0.8rem;
+		width:75%;
+		float:right;
+		}
 	.chengnuo {
 		padding-left:3%;
 		}
@@ -88,6 +104,7 @@
 	.chengnuo {
 		font-size:0.7rem;
 		line-height:2.7rem;
+		margin-bottom:1rem;
 		}
 	.chengnuo span {
 		color:#ff462d;
@@ -104,6 +121,45 @@
 		font-size:0.8rem;
 		background-color:#ffceb0;
 		}
+	.post_msg {
+		display:none;
+		}
+	.post_msg h2 {
+		height:1.8rem;
+		line-height:1.8rem;
+		font-size:0.7rem;
+		color:#999;
+		padding:0 5.5%;
+		}
+	.post_msg h3 {
+		background-color:#fff;
+		padding:0 5.5%;
+		}
+	.post_msg h3 li {
+		line-height:2.2rem;
+		font-size:0.8rem;
+		color:#333;
+		border-bottom:solid 1px #d7d7d7;
+		}
+	.post_msg h3 li.last{
+		border-bottom:none;
+		}
+	.post_msg h3 li input {
+		border:none;
+		outline:none;
+		box-sizing:border-box;
+		height:2.1rem;
+		font-size:0.8rem;
+		width:75%;
+		float:right;
+		}
+	::-webkit-input-placeholder{color:#999;}    /* 使用webkit内核的浏览器 */
+	:-moz-placeholder{color:#999;}                  /* Firefox版本4-18 */
+	::-moz-placeholder{color:#999;}                  /* Firefox版本19+ */
+	:-ms-input-placeholder{color:#999;}
+	.h28 {
+		height:1.4rem;	
+		} 
 	@media screen and (max-device-width:340px) {
 		.home h2 span,.home h3 span {
 			width:27%;
@@ -120,6 +176,26 @@
 			width:75%;
 			}
 		}
+	/*地址选择改动*/
+	.area_ctrl {
+		background-color:#ffffff;
+	}
+	.larea_cancel {
+		color:#999999;
+		font-family:"DFPHannotateW5-GB";
+		font-size:0.8rem;
+	}
+	.larea_finish {
+		color:#ff553e;
+		font-family:"DFPHannotateW5-GB";
+		font-size:0.8rem;
+	}
+	.area_btn_box {
+		background-color: #ffffff;
+	}
+	.area_roll>div {
+		font-size: 0.7rem;
+	}
 	</style>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 	<script>
@@ -218,30 +294,66 @@
     	<h2><span>实际支付：</span><em> ¥ <?php echo $result['totalFee'];?></em></h2>
         <h3 class="clearfix"><span>温馨提示：</span><em>保证金作为押金以防办公设施破坏，租期结束后五个工作日内线下返还。</em></h3>
         <h4>开具发票<em></em></h4>
+        <h4 class="active">发票抬头<input type="text" name="header" placeholder="填写公司抬头"/></h4>
+    </div>
+    <div class="post_msg">
+    	<h2>收件信息</h2>
+        <h3>
+        	<ul>
+            	<li>收件人<input type="text" name="person" placeholder="填写收件人"/></li>
+                <li>联系电话<input type="tel" name="phone" placeholder="填写联系电话"/></li>
+                <!--地址选择改动-->
+                <li  class="content-block">所在地区<input id="demo1" type="text" name="area" readonly="readonly" value="请选择，请选择，请选择"/></li>
+                <li class="last">详细地址<input type="text" name="address" placeholder="填写详细地址"/></li>
+            </ul>
+        </h3>
     </div>
     <div class="chengnuo"><em></em>确认<span>“协议”</span>和<span>“承诺书”</span></div>
     <a onclick="callpay()" class="submit">立即付款</a>
     <!-- <a href="/orders/payOrder/1">立即付款</a> -->
 </body>
 <script src="/js/jquery-3.2.1.min.js"></script>
-
 <script>
 	$(document).ready(function(e){
         $(".home h4 em").click(function() {
 			if($(this).hasClass("active")){
 				$(this).removeClass("active");
+				$(".home h4").css({paddingBottom:"0.75rem"});
+				$(".home h4.active").css({display:"none"});
+				$(".post_msg").css({display:"none"});
 			}else{
 				$(this).addClass("active");
+				$(".home h4").css({paddingBottom:"0"});
+				$(".home h4.active").css({display:"block"});
+				$(".post_msg").css({display:"block"});
 				};
 			});
 		$(".chengnuo em").click(function() {
 			if($(this).hasClass("active")){
 				$(this).removeClass("active");
+				$(".post_msg").css({display:"none"});
 			}else{
 				$(this).addClass("active");
+				$(".post_msg").css({display:"block"});
 				};
 			});
     });
-
+</script>
+<!--地址选择改动-->
+<script src="/js/LAreaData1.js"></script>
+<script src="/js/LArea.js"></script>
+<script>
+    var area1 = new LArea();
+    area1.init({
+        'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+        'valueTo': '#value1', //选择完毕后id属性输出到该位置
+        'keys': {
+            id: 'id',
+            name: 'name'
+        }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+        'type': 1, //数据源类型
+        'data': LAreaData //数据源
+    });
+    area1.value=[27,13,3];//控制初始位置，注意：该方法并不会影响到input的value
 </script>
 </html>

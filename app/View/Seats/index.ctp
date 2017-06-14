@@ -6,7 +6,7 @@
 <meta name="format-detection" content="telephone=no" />
 <title>工位租赁</title>
 <link rel="stylesheet" href="/css/common.css" type="text/css"/>
-<link rel="stylesheet" href="/css/gongwei.css?s2" type="text/css"/>
+<link rel="stylesheet" href="/css/gongwei.css?s2s" type="text/css"/>
 </head>
 
 <body>
@@ -107,7 +107,7 @@
 <script type="text/javascript">
     var seats = <?php echo json_encode($result['seats']);?>;
 </script>
-<script src="/js/gongwei.js?aassag"></script>
+<script src="/js/gongwei.js?aasdsag"></script>
 <script>
     window.onresize=function(){
         window.location.reload();

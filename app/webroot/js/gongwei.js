@@ -60,7 +60,7 @@ $(document).ready(function(e) {
 			$(".layer").animate({bottom:0},300);
 			var green_array=[];
 			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active")){
+				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
 					var onew=oimg[j].index;
 					green_array.push(onew);
 					}
@@ -129,7 +129,7 @@ $(document).ready(function(e) {
 			$(".layer").animate({bottom:0},300);
 			var green_array=[];
 			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active")){
+				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
 					var onew=oimg[j].index;
 					green_array.push(onew);
 					}
@@ -179,7 +179,7 @@ $(document).ready(function(e) {
 			$(".layer").animate({bottom:0},300);
 			var green_array=[];
 			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active")){
+				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
 					var onew=oimg[j].index;
 					green_array.push(onew);
 					}
@@ -230,7 +230,7 @@ $(document).ready(function(e) {
 			$(".layer").animate({bottom:0},300);
 			var green_array=[];
 			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active")){
+				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
 					var onew=oimg[j].index;
 					green_array.push(onew);
 					}
@@ -277,26 +277,28 @@ $(document).ready(function(e) {
 			$(".zhezhaoceng").css({display:"block"});
 			$(".layer").animate({bottom:0},300);
 			$(".layer h2 i").text(this.index);
-		}else if($(this).hasClass("active")){
+		}else if($(this).hasClass("active1")){
 			$(".layer h3 span").removeClass("zhanyong");
 			$(".layer h3 span").addClass("kongxian");
 			$(".layer h3 i").text("空闲");
 			$(".layer h5 p").css({opacity:0});
-			var m=$(this).width();
-			m=m+4;
-			var n=$(this).height();
-			n=n+4;
-			$(this).width(m);
-			$(this).height(n);
-			$(this).removeClass("active");
+//			var m=$(this).width();
+//			m=m+4;
+//			var n=$(this).height();
+//			n=n+4;
+//			$(this).width(m);
+//			$(this).height(n);
+			$(this).removeClass("active1");
+			$(this).attr("src","/img/one_seat.jpg");
 		}else{
-			$(this).addClass("active");
-			var m=$(this).width();
-			m=m-4;
-			var n=$(this).height();
-			n=n-4;
-			$(this).width(m);
-			$(this).height(n);
+			$(this).attr("src","/img/checked.jpg");
+			$(this).addClass("active1");
+//			var m=$(this).width();
+//			m=m-4;
+//			var n=$(this).height();
+//			n=n-4;
+//			$(this).width(m);
+//			$(this).height(n);
 			$(".layer h3 span").removeClass("zhanyong");
 			$(".layer h3 span").addClass("kongxian");
 			$(".layer h3 i").text("空闲");
@@ -305,7 +307,7 @@ $(document).ready(function(e) {
 			$(".layer").animate({bottom:0},300);
 			var green_array=[];
 			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active")){
+				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
 					var onew=oimg[j].index;
 					green_array.push(onew);
 					}
@@ -368,7 +370,7 @@ $(document).ready(function(e) {
 			$(".layer").animate({bottom:0},300);
 			var green_array=[];
 			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active")){
+				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
 					var onew=oimg[j].index;
 					green_array.push(onew);
 					}
@@ -422,7 +424,7 @@ $(document).ready(function(e) {
 			$(".layer").animate({bottom:0},300);
 			var green_array=[];
 			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active")){
+				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
 					var onew=oimg[j].index;
 					green_array.push(onew);
 					}
@@ -662,7 +664,7 @@ $(document).ready(function(e) {
 		//获取当前被选中的座位号
 		var green_array=[];
 		for(var j=0;j<olen;j++){
-			if($(oimg[j]).hasClass("active")){
+			if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
 				var onew=oimg[j].index;
 				green_array.push(onew);
 				}
