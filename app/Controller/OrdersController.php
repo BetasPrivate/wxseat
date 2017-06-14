@@ -63,6 +63,7 @@ class OrdersController extends AppController {
 		if (!$hasChanged) {
 			$seatIdStr = '('.substr($seatIdStr, 1).')';
 
+			//set seat occupied.
 			$query = sprintf("update seats set status = 1 where real_id in %s", $seatIdStr);
 			$this->Seat->query($query);
 			
@@ -82,8 +83,6 @@ class OrdersController extends AppController {
 				];
 				$this->Order->save($saveData);
 			}
-
-			// $this->Seat->setSeatOccupied($seatInfos);
 
 			$result = [
 				'status' => 1,

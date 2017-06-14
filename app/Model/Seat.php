@@ -52,19 +52,4 @@ class Seat extends AppModel {
 
 		return $seatIdStr;
 	}
-
-	public function setSeatOccupied($seatInfos)
-	{
-		foreach ($seatInfos as $seatInfo) {
-			$seatRealId = $seatInfo['seatId'];
-			$this->updateAll(
-				[
-					'status' => 1,
-				],
-				[
-					'real_id' => $seatRealId,
-				]
-			);
-		}
-	}
 }
