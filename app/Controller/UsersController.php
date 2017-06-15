@@ -103,22 +103,43 @@ class UsersController extends AppController
         $phoneNum = $data['phoneNum'];
         $passwd = $data['passwd'];
         $result = [];
+        $isSaveUser = true;
 
-        $this->User->create();
+        $user = $this->User->find('first', [
+            'conditions' => [
+                'username' => $userName,
+            ],
+        ]);
 
-        $saveData = [
-            'username' => $userName,
-            'phone' => $phoneNum,
-            'password' => $passwd,
-        ];
-
-        $saveResult = $this->User->save($saveData);
-
-        if ($saveResult) {
-            $result['status'] = 1;
+        if ($user) {
+            if (!$user['User']['password']) {
+                $this->User->id = $user['User']['id'];
+            } else {
+                $result = [
+                    'status' => 0,
+                    'msg' => '已有该用户名的注册信息，请联系管理员',
+                ];
+                $isSaveUser = false;
+            }
         } else {
-            $result['status'] = 0;
-            $result['msg'] = '服务器忙，请稍后重试';
+            $this->User->create();
+        }
+
+        if ($isSaveUser) {
+            $saveData = [
+                'username' => $userName,
+                'phone' => $phoneNum,
+                'password' => $passwd,
+            ];
+
+            $saveResult = $this->User->save($saveData);
+
+            if ($saveResult) {
+                $result['status'] = 1;
+            } else {
+                $result['status'] = 0;
+                $result['msg'] = '服务器忙，请稍后重试';
+            }
         }
 
         $this->layout = 'ajax';

@@ -82,6 +82,7 @@ class OrdersController extends AppController {
 					'end_date' => $endDate,
 				];
 				$this->Order->save($saveData);
+				$this->Seat->setSeatOcuppiedProvisionally($seatRealId);
 			}
 
 			$result = [

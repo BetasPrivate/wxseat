@@ -24,8 +24,9 @@ class User extends AppModel {
         )
     );
 
-	var $hasMany = [
+	public $hasMany = [
 		'Trade',
+        'Order',
 	];
 
 	public function beforeSave($options = array()) {

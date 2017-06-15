@@ -11,71 +11,82 @@ body {
     max-width:750px;
     min-width:320px;
     margin:0 auto;
-    background-color:#f4f4f4;
-    }
-form {
-    padding:0 5.5%;
     background-color:#fff;
     }
-form span {
-    width:25%;
-    float:left;
+.home {
+    padding: 0 5.5%;
     }
-form input {
-    width:70%;
-    float:left;
-    height:2.6rem;
-    border:0;
-    outline:none;
-    box-sizing:border-box;
-    appearance:none;
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    -o-appearance:none;
-    font-size:0.7rem;
-    }
-h2 {
+.top {
+    text-indent:35%;
+    position:relative;
+    line-height:4.9rem;
     border-bottom:solid 1px #d7d7d7;
     }
-h2,h3 {
+.top i {
+    height:2.5rem;
+    width:2.5rem;
+    background:url(images/success.jpg);
+    background-size:100%;
+    -webkit-background-size:100%;
+    -moz-background-size:100%;
+    -o-background-size:100%;
+    position:absolute;
+    top:1.2rem;
+    left:16%;
+    }
+.main li {
+    padding-left:4%;
+    }
+.main li h2 {
+    font-size:0.7rem;
+    color:#999;
+    line-height:2.2rem;
+    padding-top:0.2rem;
+    }
+.main li h3 {
     font-size:0.8rem;
-    line-height:2.6rem;
-    }
-.h28 {
-    height:1.4rem;
-    width:100%;
-    }
-input[type=submit]{
-    width:89%;
-    display:block;
-    margin:0 auto;
-    height:2rem;
-    line-height:2rem;
-    text-align:2rem;
-    background-color:#ffceb0;
     color:#333;
-    border:0;
-    outline:none;
-    box-sizing:border-box;
-    appearance:none;
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    -o-appearance:none;
-    font-size:0.8rem;
-    border-radius:0.15rem;
-    -webkit-border-radius:0.15rem;
-    -moz-border-radius:0.15rem;
-    -o-border-radius:0.15rem;
     }
-::-webkit-input-placeholder{color:#999;}    /* 使用webkit内核的浏览器 */
-:-moz-placeholder{color:#999;}                  /* Firefox版本4-18 */
-::-moz-placeholder{color:#999;}                  /* Firefox版本19+ */
-:-ms-input-placeholder{color:#999;} 
+ul {
+    padding-bottom:1.25rem;
+    }
+.main {
+    border-bottom:solid 1px #d7d7d7;
+    }
+.footer h2 {
+    font-size:0.7rem;
+    line-height:2.5rem;
+    text-align:center;
+    color:#999;
+    }
+.footer h3 {
+    text-align:center;
+    font-size:0.8rem;
+    color:#333;
+    padding-bottom:0.75rem;
+    }
+.footer h3 span {
+    padding:0 0.8rem;
+    }
+.footer h4 {
+    font-size:0.7rem;
+    color:#999;
+    line-height:2.2rem;
+    text-align:center;
+    }
+.footer h5 img {
+    width:39%;
+    margin:0 auto;
+    display:block;
+    }
 </style>
 </head>
 
 <body>
     <div class="home">
+        <div class="top">
+            <i></i>恭喜您预定成功！
+        </div>
         <span id="msg" style="color: green;">支付成功！正在前往个人中心</span>
     </div>
 </body>

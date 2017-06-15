@@ -102,11 +102,11 @@ h6 i {
         </div>
         <div class="zujin">
         	<h2>保证金</h2>
-            <h4>￥100.00</h4>
+            <h4>￥<?php echo $result['deposit'];?></h4>
         </div>
         <div class="srartdate">
-        	<h2>起始日期</h2>
-            <h5>2017-03-11</h5>
+        	<h2>起止日期</h2>
+            <h5><?php echo $result['dates']['startDate'];?> 至 <?php echo $result['dates']['endDate'];?></h5>
         </div>
         <div class="gongweihao">
         	<h2>工位数</h2>

@@ -759,7 +759,6 @@ $(document).ready(function(e) {
 	            dataType:"json",
 	            data:{json},
 	            success:function (response) {
-	            	console.log(response);
 	            	if (response.status != 1) {
 	            		$(".layer h5 p").css({opacity:1});
 	            		document.getElementById('warningMsg').innerHTML = response.msg;
@@ -769,7 +768,7 @@ $(document).ready(function(e) {
 					    mapForm.method = "POST"; // or "post" if appropriate
 					    mapForm.action = "/seats/rentSeats";
 					    var mapInput = document.createElement("input");
-					    mapInput.type = "text";
+					    mapInput.type = "hidden";
 					    mapInput.name = "seatInfo";
 					    mapInput.value = JSON.stringify(response);
 					    mapForm.appendChild(mapInput);

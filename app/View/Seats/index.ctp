@@ -65,11 +65,11 @@
             <ul>
             	<li class="clearfix">
                 	<i><img src="/img/sanrenjian.png" alt="三人间" class="img_4"/></i>
-                    <span>开放工位</span>
+                    <span>三人间</span>
                 </li>
                 <li class="clearfix">
                 	<i><img src="/img/liurenjian.png" alt="六人间" class="img_5"/></i>
-                    <span>五人间</span>
+                    <span>六人间</span>
                 </li>
             </ul>
         </h3>

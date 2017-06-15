@@ -51,4 +51,31 @@ class SuController extends AppController{
 
 		$this->set(compact('trades'));
 	}
+
+	public function seatManager()
+	{
+		$this->set('title_for_layout', '座位管理');
+
+		$seats = $this->Seat->find('all', [
+			'contain' => [
+				'Order',
+				'Order.User',
+			],
+			'conditions' => [
+				'Seat.is_deleted' => 0,
+			],
+		]);
+
+		foreach ($seats as $key => $seat) {
+			$seats[$key]['seat_status_text'] = '空闲';
+			$seats[$key]['seat_type_text'] = '开放工位';
+			if (sizeof($seat['Order']) == 0) {
+				$seats[$key]['Order']['start_date'] = '无';
+				$seats[$key]['Order']['end_date'] = '无';
+				$seats[$key]['Order']['User']['username'] = '无';
+			}
+		}
+
+		$this->set(compact('seats'));
+	}
 }

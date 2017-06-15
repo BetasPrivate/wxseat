@@ -5,12 +5,11 @@ class SeatsController extends AppController {
 		'SeatTypePriceRelation',
 	];
 
-	const FREE = 0;
-	const OCCUPIED = 1;
-
 	function index()
 	{
 		$this->set('title_for_layout', '预订工位');
+		
+		$this->Seat->releaseSeats();
 		
 		$seats = $this->Seat->find('all', [
 			'conditions' => [
@@ -18,7 +17,6 @@ class SeatsController extends AppController {
 			],
 		]);
 
-		// $this->Seat->releaseSeats();
 
 		$result['seats'] = $seats;
 		$this->set(compact('result'));
@@ -28,8 +26,8 @@ class SeatsController extends AppController {
 	{
 		$data = $this->request->data['json'];
 		$seatIds = $data['seatIds'];
-		$startDate = $data['startDate'];
-		$endDate = $data['endDate'];
+		$startDate = date('Y-m-d', strtotime($data['startDate']));
+		$endDate = date('Y-m-d', strtotime($data['endDate']));
 		$result['status'] = 1;
 		$result['room_id'] = 1;
 
@@ -136,12 +134,16 @@ class SeatsController extends AppController {
 		//总金额
 		$price = $this->getSeatPrices($seatIdStr);
 
+		//总押金
+		$deposit = $this->Seat->getDeposit($seatIdStr);
+
 		$result = [
 			'idInfo' => $seatIds,
 			'price' => $price,
 			'seatInfo' => $idInfos,
-			'totalFee' => $price +100,
+			'totalFee' => $price + $deposit,
 			'dates' => $dates,
+			'deposit' => $deposit,
 		];
 
 		$this->set(compact('result'));
@@ -159,34 +161,4 @@ class SeatsController extends AppController {
 
 		return $price;
 	}
-
-	public function releaseSeats()
-	{
-		$seats = $this->find('all', [
-			'conditions' => [
-				'status' => self::OCCUPIED,
-			],
-		]);
-
-		$seatStr = '';
-		foreach ($seats as $seat) {
-			$seatId = $seat['Seat']['id'];
-			$freeTime = $seat['Seat']['free_time'];
-
-			//no free time, means no order.
-			if (!$freeTime) {
-				$seatIdStr .= ','.$seatId;
-				//time exceed, means can free.
-			} elseif (strtotime($freeTime) < time()) {
-				$seatIdStr .= ','.$seatId;
-			}
-		}
-
-		if (strlen($seatIdStr) > 0) {
-			$seatIdStr = '('.substr($seatIdStr, 1).')';
-			$query  = sprintf('update seats set status = %d where id in %s', self::FREE, $seatIdStr);
-			$this->query($query);
-		}
-	}
-
 }
