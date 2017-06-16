@@ -1,4 +1,5 @@
 <?php
+App::uses('Seat', 'Model');
 class SuController extends AppController{
 	public $uses = [
 		'Trade',
@@ -58,8 +59,16 @@ class SuController extends AppController{
 
 		$seats = $this->Seat->find('all', [
 			'contain' => [
-				'Order',
+				'Order' => [
+					'conditions' => [
+						'Order.is_deleted' => 0,
+					],
+					'order' => [
+						'Order.id desc',
+					],
+				],
 				'Order.User',
+				'SeatType',
 			],
 			'conditions' => [
 				'Seat.is_deleted' => 0,
@@ -67,15 +76,19 @@ class SuController extends AppController{
 		]);
 
 		foreach ($seats as $key => $seat) {
-			$seats[$key]['seat_status_text'] = '空闲';
-			$seats[$key]['seat_type_text'] = '开放工位';
-			if (sizeof($seat['Order']) == 0) {
-				$seats[$key]['Order']['start_date'] = '无';
-				$seats[$key]['Order']['end_date'] = '无';
-				$seats[$key]['Order']['User']['username'] = '无';
-			}
+			$seats[$key]['seat_status_text']  = \Seat::text($seat['Seat']['status']);
+			$seats[$key]['clz_name'] = \Seat::className($seat['Seat']['status']);
+			$seats[$key]['seat_type_text'] = $seat['SeatType']['name'];
 		}
 
 		$this->set(compact('seats'));
+	}
+
+	public function userManager()
+	{
+		$this->set('title_for_layout', '用户管理');
+
+		$users = $this->User->find('all', [
+		]);
 	}
 }

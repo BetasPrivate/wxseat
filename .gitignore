@@ -1,2 +1,3 @@
 app/tmp/*
 app/Lib/Wxpay/cert/*
+app/webroot/test/*

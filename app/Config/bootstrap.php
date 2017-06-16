@@ -92,8 +92,8 @@ Cache::config('default', array('engine' => 'File'));
  */
 
 define('WX_PAY', ROOT . DS . APP_DIR . DS .'Lib'. DS . 'Wxpay');
-require('../Lib/Utility.php');
 
+// require('../Lib/Utility.php');
 //dev
 // define('APP_ID', 'wx59ba851ee8a8feb0');
 // define('APP_SECRET', '461f3b9bce3fe284d8d7ead55f0d846a');

@@ -1,4 +1,4 @@
 <?php
-class SeatTypePriceRelationModel extends AppModel {
+class SeatTypePriceRelation extends AppModel {
 
 }

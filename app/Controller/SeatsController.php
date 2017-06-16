@@ -161,4 +161,41 @@ class SeatsController extends AppController {
 
 		return $price;
 	}
+
+	public function editSeatInfo()
+	{
+		$data = $this->request->data;
+
+		// $startDate = $data['start_date'];
+		// $endDate = $data['end_date'];
+		// $username = $data['username'];
+		$price = $data['price'];
+		$deposit = $data['deposit'];
+		$seatId = $data['seat_id'];
+		$freeTime = isset($data['free_time']) ? $data['free_time'] : null;
+
+		$saveData = [
+			'price' => $price,
+			'deposit' => $deposit,
+		];
+		if ($freeTime) {
+			$saveData['status'] = $this->Seat->getOccupiedStatus();
+			$saveData['free_time'] = $freeTime;
+		}
+		$this->Seat->id = $seatId;
+		$saveResult = $this->Seat->save($saveData);
+
+		if ($saveResult) {
+			$result = [
+				'status' => 1,
+			];
+		} else {
+			$result = [
+				'status' => 0,
+				'msg' => '保存失败，请重试',
+			];
+		}
+		echo json_encode($result);
+		exit();
+	}
 }

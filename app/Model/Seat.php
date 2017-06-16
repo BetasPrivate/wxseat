@@ -4,10 +4,53 @@ class Seat extends AppModel {
 		'Order',
 	];
 
+	public $belongsTo = [
+		'SeatType' => [
+			'className' => 'SeatType',
+			'foreignKey' => 'type',
+		],
+	];
+
+	//下单后锁定时间为5min
 	const PROVISIONAL_TIME = 5 * 60;
 	const FREE = 0;
 	const OCCUPIED = 1;
 	
+	public static $texts = [
+		self::FREE => "空闲",
+		self::OCCUPIED => "占用",
+	];
+
+	public static $classes = [
+		self::FREE => 'info',
+		self::OCCUPIED => 'warning',
+	];
+
+	public static function text($index)
+	{
+		$result = '未知';
+		if (isset(self::$texts[$index])) {
+			$result = self::$texts[$index];
+		}
+
+		return $result;
+	}
+
+	public static function className($index)
+	{
+		$result = 'active';
+		if (isset(self::$classes[$index])) {
+			$result = self::$classes[$index];
+		}
+
+		return $result;
+	}
+
+	public function getOccupiedStatus()
+	{
+		return self::OCCUPIED;
+	}
+
 	public function getUnavaliableIdInfos($seatIds, $startDate, $endDate)
 	{
 		$seatInfos = $this->find('all', [
@@ -98,6 +141,25 @@ class Seat extends AppModel {
 				'is_deleted' => 0,
 			]
 		);
+	}
+
+	public function formatSeatDate($seat)
+	{
+		if (sizeof($seat['Order']) == 0) {
+			$seat['start_date'] = '';
+			$seat['end_date'] = '';
+		} else {
+			$seat['start_date'] = $seat['Order'][0]['start_date'];
+			$seat['end_date'] = $seat['Order'][0]['end_date'];
+		}
+
+		//座位如果有过期时间，则按照座位的过期时间来展示
+		if ($seat['Seat']['free_time']) {
+			$seat['start_date'] = '';
+			$seat['end_date'] = $seat['Seat']['free_time'];
+		}
+
+		return $seat;
 	}
 
 	public function getDeposit($seatIdStr)

@@ -9,12 +9,6 @@ class User extends AppModel {
                 'message' => 'A username is required'
             )
         ),
-        'password' => array(
-            'required' => array(
-                'rule' => array('notBlank'),
-                'message' => 'A password is required'
-            )
-        ),
         'role' => array(
             'valid' => array(
                 'rule' => array('inList', array('admin', 'author')),
@@ -38,4 +32,20 @@ class User extends AppModel {
 	    }
 	    return true;
 	}
+
+    public function getUserByName($username)
+    {
+        $user = $this->find('first', [
+            'conditions' => [
+                'username' => $username,
+            ],
+        ]);
+
+        if (!$user) {
+            $this->create();
+            $user = $this->save(['username' => $username]);
+        }
+
+        return $user;
+    }
 }
