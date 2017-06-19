@@ -12,7 +12,7 @@ class Seat extends AppModel {
 	];
 
 	//下单后锁定时间为5min
-	const PROVISIONAL_TIME = 5 * 60;
+	const PROVISIONAL_TIME = 300;
 	const FREE = 0;
 	const OCCUPIED = 1;
 	

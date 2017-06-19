@@ -6,7 +6,7 @@
 <meta name="format-detection" content="telephone=no" />
 <title>工位租赁</title>
 <link rel="stylesheet" href="/css/common.css" type="text/css"/>
-<link rel="stylesheet" href="/css/gongwei.css?s2s" type="text/css"/>
+<link rel="stylesheet" href="/css/gongwei.css?ss21s" type="text/css"/>
 </head>
 
 <body>
