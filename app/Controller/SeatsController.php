@@ -10,7 +10,7 @@ class SeatsController extends AppController {
 		$this->set('title_for_layout', '预订工位');
 		
 		$this->Seat->releaseSeats();
-		
+
 		$seats = $this->Seat->find('all', [
 			'conditions' => [
 				'is_deleted' => 0,
@@ -25,23 +25,31 @@ class SeatsController extends AppController {
 	function checkSeatsAvailable()
 	{
 		$data = $this->request->data['json'];
-		$seatIds = $data['seatIds'];
+		$seatIds = isset($data['seatIds']) ? $data['seatIds'] : [];
+		if (sizeof($seatIds) == 0) {
+			$result = [
+				'status' => 0,
+				'msg' => '不可选的座位，请重试',
+			];
+			echo json_encode($result);
+			exit();
+		}
 		$startDate = date('Y-m-d', strtotime($data['startDate']));
 		$endDate = date('Y-m-d', strtotime($data['endDate']));
 		$result['status'] = 1;
 		$result['room_id'] = 1;
 
-		$checkResult = $this->getUnavaliableIdInfos($seatIds, $startDate, $endDate);
+		$checkResult = $this->Seat->getUnavaliableIdInfos($seatIds, $startDate, $endDate);
 		if (sizeof($checkResult['unavaliableIdInfos']) != 0) {
 			$result['status'] = 0;
 			$msg = '';
 			foreach($unavaliableIdInfos as $seatId => $info)
 			{
-				$msg .= '座位号：'.$seatId.'。在'.$info['startDate'].'和'.$info['endDate'].'之间被占用。';
+				$msg .= '座位号：'.$seatId.'。在'.$info['endDate'].'之前被占用。';
 			}
 			$result['msg'] = $msg;
 		} else {
-			$infoResult = $this->getAvaliableSeatInfos($seatIds);
+			$infoResult = $this->Seat->getAvaliableSeatInfos($seatIds);
 			$result['info'] = $infoResult['avaliableIdInfos'];
 			$result['dates'] = [
 				'startDate' => $startDate,
@@ -51,60 +59,6 @@ class SeatsController extends AppController {
 
 		$this->layout = "ajax";
 		$this->set(compact('result'));
-	}
-
-	public function getUnavaliableIdInfos($seatIds, $startDate, $endDate)
-	{
-		$seatIdStr = '';
-		foreach ($seatIds as $id) {
-			$seatIdStr .= ",'".$id."'";
-		}
-		$seatIdStr = '('.substr($seatIdStr, 1).')';
-		$query = sprintf("select * from seats as Seat left join orders `Order` on Seat.id = `Order`.seat_id where Seat.real_id in %s and ((`Order`.start_date between '%s' and '%s') or (`Order`.end_date between '%s' and '%s')) and Seat.is_deleted = 0", $seatIdStr, $startDate, $endDate, $startDate, $endDate);
-		$seatInfos = $this->Seat->query($query);
-
-		$unavaliableIdInfos = [];
-		foreach ($seatInfos as $seatInfo) {
-			$seatId = $seatInfo['Seat']['real_id'];
-			$startDate = $seatInfo['Order']['start_date'];
-			$endDate = $seatInfo['Order']['end_date'];
-			$unavaliableIdInfos[$seatId] = [
-				'startDate' => $startDate,
-				'endDate' => $endDate,
-			];
-		}
-
-		$result = [
-			'unavaliableIdInfos' => $unavaliableIdInfos,
-		];
-
-		return $result;
-	}
-
-	public function getAvaliableSeatInfos($seatIds)
-	{
-		$seatInfos = $this->Seat->find('all', [
-			'conditions' => [
-				'Seat.real_id' => $seatIds,
-				'Seat.is_deleted' => 0,
-			],
-		]);
-
-		$avaliableIdInfos = [];
-		foreach ($seatInfos as $seatInfo) {
-			$version = $seatInfo['Seat']['version'];
-			$id = $seatInfo['Seat']['real_id'];
-			$avaliableIdInfos[] = [
-				'seatId' => $id,
-				'version' => $version,
-			];
-		}
-
-		$result = [
-			'avaliableIdInfos' => $avaliableIdInfos,
-		];
-
-		return $result;
 	}
 
 	public function rentSeats()
@@ -132,7 +86,7 @@ class SeatsController extends AppController {
 		$seatIdStr = '('.substr($seatIdStr, 1).')';
 
 		//总金额
-		$price = $this->getSeatPrices($seatIdStr);
+		$price = $this->Seat->getSeatPrices($seatIdStr);
 
 		//总押金
 		$deposit = $this->Seat->getDeposit($seatIdStr);
@@ -147,19 +101,6 @@ class SeatsController extends AppController {
 		];
 
 		$this->set(compact('result'));
-	}
-
-	public function getSeatPrices($ids)
-	{
-		$price = 0;
-		$query = sprintf("select * from seats Seat left join seat_type_price_relations SeatTypePriceRelation on Seat.type = SeatTypePriceRelation.seat_type_id where Seat.real_id in %s", $ids);
-		$seatInfos = $this->Seat->query($query);
-
-		foreach ($seatInfos as $seatInfo) {
-			$price += $seatInfo['SeatTypePriceRelation']['price'];
-		}
-
-		return $price;
 	}
 
 	public function editSeatInfo()

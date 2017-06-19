@@ -15,8 +15,8 @@ class OrdersController extends AppController {
 	public function createNewOrder()
 	{
 		$data = $this->request->data;
-		//seat_id, version
-		$seatInfos = $data['seatInfo'];
+
+		$seatInfos = $data['seatInfo'];//seat_id, version
 		$dates = $data['dates'];
 		$startDate = $dates['startDate'];
 		$endDate = $dates['endDate'];

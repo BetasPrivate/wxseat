@@ -54,29 +54,18 @@ class Seat extends AppModel {
 	public function getUnavaliableIdInfos($seatIds, $startDate, $endDate)
 	{
 		$seatInfos = $this->find('all', [
-			'contain' => [
-				'Order',
-			],
 			'conditions' => [
-				'Seat.id in' => $seatIds,
-				'or' => [
-					'Order.start_date between ? and ?' => [
-						$startDate, $endDate
-					],
-					'Order.end_date between ? and ?' => [
-						$startDate, $endDate
-					],
-				],
+				'status' => self::OCCUPIED,
+				'free_time >' => $endDate,
+				'Seat.real_id' => $seatIds,
 			],
 		]);
 
 		$unavaliableIdInfos = [];
 		foreach ($seatInfos as $seatInfo) {
-			$seatId = $seatInfo['Seat']['id'];
-			$startDate = $seatInfo['Seat']['start_date'];
-			$endDate = $seatInfo['Seat']['end_date'];
+			$seatId = $seatInfo['Seat']['real_id'];
+			$endDate = $seatInfo['Seat']['free_time'];
 			$unavaliableIdInfos[$seatId] = [
-				'startDate' => $startDate,
 				'endDate' => $endDate,
 			];
 		}
@@ -86,6 +75,45 @@ class Seat extends AppModel {
 		];
 
 		return $result;
+	}
+
+	public function getAvaliableSeatInfos($seatIds)
+	{
+		$seatInfos = $this->find('all', [
+			'conditions' => [
+				'Seat.real_id' => $seatIds,
+				'Seat.is_deleted' => 0,
+			],
+		]);
+
+		$avaliableIdInfos = [];
+		foreach ($seatInfos as $seatInfo) {
+			$version = $seatInfo['Seat']['version'];
+			$id = $seatInfo['Seat']['real_id'];
+			$avaliableIdInfos[] = [
+				'seatId' => $id,
+				'version' => $version,
+			];
+		}
+
+		$result = [
+			'avaliableIdInfos' => $avaliableIdInfos,
+		];
+
+		return $result;
+	}
+
+	public function getSeatPrices($ids)
+	{
+		$price = 0;
+		$query = sprintf("select * from seats Seat left join seat_type_price_relations SeatTypePriceRelation on Seat.type = SeatTypePriceRelation.seat_type_id where Seat.real_id in %s", $ids);
+		$seatInfos = $this->query($query);
+
+		foreach ($seatInfos as $seatInfo) {
+			$price += $seatInfo['SeatTypePriceRelation']['price'];
+		}
+
+		return $price;
 	}
 
 	public function getSeatStrBySeatIds($seatIds)
@@ -134,7 +162,7 @@ class Seat extends AppModel {
 	{
 		$this->updateAll(
 			[
-				'free_time' => self::PROVISIONAL_TIME,
+				'free_time' => "'".date('Y-m-d H:i:s', time() + self::PROVISIONAL_TIME)."'",
 			],
 			[
 				'real_id' => $seatRealId,
