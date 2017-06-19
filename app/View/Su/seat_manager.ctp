@@ -11,7 +11,30 @@
         'jquery-ui-zh',
     ));
 ?>
+<style type="text/css">
+    .tips{
+    position:fixed;
+    padding:10px;
+    font-size:14px;
+    line-height:14px;
+    left:50%;
+    top:200px;
+    -webkit-transform:translate(-50%);
+    transform:translate(-50%);
+    background-color:rgba(0,0,0,.7);
+    text-align:center;
+    color:#fff;
+    z-index:101;
+    box-sizing:content-box;
+    border-radius:5px
+}
+</style>
 <div style="width: 80%;" class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="/su/tradeManager">订单管理</a></li>
+        <li class="active">座位管理</li>
+        <li><a href="/su/userManager">用户管理</a></li>
+    </ol>
     <table class="table table-hover table-condensed">
         <caption>座位信息表</caption>
         <thead class="row">
@@ -61,12 +84,19 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div class="tips" style="display: none;">☺ 复制成功</div>
 </div>
-<div class="tips" style="display: none;">☺ 复制成功</div>
 <script type="text/javascript">
     var seats = <?php echo json_encode($seats);?>;
 
+    function initPanel() {
+        $( "#price" ).val('');
+        $( "#deposit" ).val('');
+        $( "#freeTime" ).val('');
+    }
+
     function showSeatDetailPanel(seatId, index) {
+        initPanel();
         var seat = seats[index];
         // var startDate = seat.Order.start_date;
         // var endDate = seat.Order.end_date;
@@ -135,7 +165,12 @@
             dataType:"json",
             data:data,
             success:function (response) {
-                
+                if (response.status == 1) {
+                    showTips('☺ 修改成功');
+                    $( "#PanelSeatDetail" ).modal('hide');
+                } else {
+                    showTips(response.msg);
+                }
             },
             error:function (data) {
             }
@@ -143,6 +178,6 @@
     }
 
     function showTips(tipNote) {
-        $("body").find(".tips").remove().end().append("<div class='tips'>"+tipNote+"</div>"),setTimeout(function(){$(".tips").fadeOut(300)},500);
+        $("body").find(".tips").remove().end().append("<div class='tips'>"+tipNote+"</div>"),setTimeout(function(){$(".tips").fadeOut(500)},500);
     }
 </script>

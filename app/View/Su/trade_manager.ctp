@@ -9,6 +9,11 @@
     ));
 ?>
 <div style="width: 80%;" class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="active">订单管理</li>
+        <li><a href="/su/seatManager">座位管理</a></li>
+        <li><a href="/su/userManager">用户管理</a></li>
+    </ol>
     <table class="table table-hover table-condensed">
         <caption>当前已下订单</caption>
         <thead class="row">

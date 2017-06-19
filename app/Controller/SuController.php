@@ -5,6 +5,7 @@ class SuController extends AppController{
 		'Trade',
 		'Token',
 		'Seat',
+		'User',
 	];
 
 	public function index()
@@ -90,5 +91,7 @@ class SuController extends AppController{
 
 		$users = $this->User->find('all', [
 		]);
+
+		$this->set(compact('users'));
 	}
 }

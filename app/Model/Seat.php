@@ -125,7 +125,7 @@ class Seat extends AppModel {
 
 		if (strlen($seatIdStr) > 0) {
 			$seatIdStr = '('.substr($seatIdStr, 1).')';
-			$query  = sprintf('update seats set status = %d where id in %s', self::FREE, $seatIdStr);
+			$query  = sprintf('update seats set status = %d, free_time = null where id in %s', self::FREE, $seatIdStr);
 			$this->query($query);
 		}
 	}

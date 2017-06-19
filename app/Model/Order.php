@@ -1,11 +1,5 @@
 <?php
 class Order extends AppModel {
-	public $belongsTo = [
-		'User',
-	];
-
-	public $hasMany = [
-	];
 	const NORMAL = 0;
 	const MANUAL = 1;
 
