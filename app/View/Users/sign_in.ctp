@@ -148,6 +148,14 @@ input[type=submit]{
     		// }
     		var phoneNum = document.getElementById('phoneNum').value.trim();
     		var userName = document.getElementById('userName').value.trim();
+    		if (phoneNum == '') {
+    			a.innerText = '手机号不能为空!';
+    			return;
+    		}
+    		if (userName == '') {
+    			a.innerText = '用户名不能为空!';
+    			return;
+    		}
     		var data = {
     			phoneNum: phoneNum,
     			userName: userName,
