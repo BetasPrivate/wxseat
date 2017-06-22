@@ -30,16 +30,18 @@ h2 {
 	line-height:1.4rem;
 	font-size:0.8rem;
 	text-align:center;
-	border:solid 2px #ffceb0;
+	/*6.21*/
+	border:solid 2px #4bb5c3;
 	margin-left:3%;
 	border-radius:0.5rem;
 	-webkit-border-radius:0.5rem;
 	-moz-border-radius:0.5rem;
 	-o-border-radius:0.5rem;
-	color:#333;
+	color:#333333;
 	}
 .method h3 li.active {
-	background-color:#ffceb0;
+	background-color:#4bb5c3;
+	color:#FFFFFF;
 	}
 h4 {
 	font-size:1.1rem;
@@ -79,12 +81,13 @@ h6 i {
 	height:2.2rem;
 	line-height:2.2rem;
 	text-align:center;
-	color:#333;
 	position:fixed;
 	left:0;
 	bottom:0;
 	font-size:0.8rem;
-	background-color:#ffceb0;
+	/*6.21*/
+	background-color:#4bb5c3;
+	color:#FFFFFF;
 	}
 </style>
 </head>

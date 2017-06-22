@@ -42,12 +42,13 @@
         outline:none;
         display:block;
         margin:1.1rem auto;
-        background-color:#ffceb0;
+        /*6.21改动*/
+        background-color:#4bb5c3;
+        color:#FFFFFF;
         border-radius:0.15rem;
         -webkit-border-radius:0.15rem;
         -moz-border-radius:0.15rem;
         -o-border-radius:0.15rem;
-        color:#333;
         }
     ::-webkit-input-placeholder { /* WebKit browsers */
         color:#333;
@@ -103,7 +104,7 @@
             <div class="submit"><input type="submit" value="确定"></div>
         </form> -->
         <h2>
-            <a href="#" class="a_1">找回密码</a>|<a href="/users/signIn" class="a_2">免费注册</a>
+            <a href="/users/changePasswd" class="a_1">修改密码</a>|<a href="/users/signIn" class="a_2">免费注册</a>
         </h2>
     </div>
 </body>

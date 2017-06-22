@@ -53,8 +53,9 @@ input[type=submit]{
     height:2rem;
     line-height:2rem;
     text-align:2rem;
-    background-color:#ffceb0;
-    color:#333;
+    /*6.21改动*/
+    background-color:#4bb5c3;
+    color:#FFFFFF;
     border:0;
     outline:none;
     box-sizing:border-box;

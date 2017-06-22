@@ -114,12 +114,13 @@
 		height:2.2rem;
 		line-height:2.2rem;
 		text-align:center;
-		color:#333;
 		position:fixed;
 		left:0;
 		bottom:0;
 		font-size:0.8rem;
-		background-color:#ffceb0;
+		/*6.21改动*/
+		background-color:#4bb5c3;
+		color:#FFFFFF;
 		}
 	.post_msg {
 		display:none;
@@ -300,8 +301,8 @@
     	<h2>收件信息</h2>
         <h3>
         	<ul>
-            	<li>收件人<input type="text" name="person" placeholder="填写收件人"/></li>
-                <li>联系电话<input type="tel" name="phone" placeholder="填写联系电话"/></li>
+            	<li>收件人<input type="text" name="person" placeholder="填写收件人" id="recipients"/></li>
+                <li>联系电话<input type="tel" name="phone" placeholder="填写联系电话" id="phone"/></li>
                 <!--地址选择改动-->
                 <li  class="content-block">所在地区<input id="demo1" type="text" name="area" readonly="readonly" value="请选择，请选择，请选择"/></li>
                 <li class="last">详细地址<input type="text" name="address" placeholder="填写详细地址"/></li>
@@ -315,27 +316,51 @@
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script>
 	$(document).ready(function(e){
-        $(".home h4 em").click(function() {
+		//6.14逻辑改动
+		$(".chengnuo em").addClass("active");
+		//点击发票
+		function fapiao(){
 			if($(this).hasClass("active")){
 				$(this).removeClass("active");
 				$(".home h4").css({paddingBottom:"0.75rem"});
 				$(".home h4.active").css({display:"none"});
 				$(".post_msg").css({display:"none"});
 			}else{
-				$(this).addClass("active");
+				$(".home h4 em").addClass("active");
 				$(".home h4").css({paddingBottom:"0"});
 				$(".home h4.active").css({display:"block"});
 				$(".post_msg").css({display:"block"});
-				};
-			});
+			};
+		}
+		//获取信息
+		function bangding(){
+			if($(".home h4 em").hasClass("active")){
+				var company_name=$("#company").val();
+				var person=$("#recipients").val();
+				var phone=$("#phone").val();
+				var arean=$("#demo1").val();
+				var area_details=$("#area_details").val();
+				console.log(company_name,person,phone,arean,area_details);
+			}
+		}
+		
+		$(".home h4 em").bind("click",fapiao);
+		$(".submit").bind("click",bangding);
+		
 		$(".chengnuo em").click(function() {
 			if($(this).hasClass("active")){
 				$(this).removeClass("active");
+				$(".home h4 em").unbind("click");
+				$(".submit").unbind("click");
+				$('.home h4 em').removeClass("active");
+				$(".home h4").css({paddingBottom:"0.75rem"});
+				$(".home h4.active").css({display:"none"});
 				$(".post_msg").css({display:"none"});
 			}else{
 				$(this).addClass("active");
-				$(".post_msg").css({display:"block"});
-				};
+				 $(".home h4 em").bind("click",fapiao);	
+				 $(".submit").bind("click",bangding);
+				}
 			});
     });
 </script>

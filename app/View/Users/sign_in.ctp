@@ -42,13 +42,14 @@ h2 {
 .get_number {
 	height:1.1rem;
 	line-height:1.1rem;
-	color:#333;
 	width:5.3rem;
 	position:absolute;
 	top:0.75rem;
 	right:0;
 	text-align:center;
-	background-color:#ffceb0;
+	/*6.21*/
+	background-color:#4bb5c3;
+	color:#FFFFFF;
 	border-radius:0.55rem;
 	-webkit-border-radius:0.55rem;
 	-moz-border-radius:0.55rem;
@@ -66,8 +67,6 @@ input[type=submit]{
 	height:2rem;
 	line-height:2rem;
 	text-align:2rem;
-	background-color:#bdbdbd;
-	color:#fff;
 	border:0;
 	outline:none;
 	box-sizing:border-box;
@@ -75,6 +74,11 @@ input[type=submit]{
 	-webkit-appearance:none;
 	-moz-appearance:none;
 	-o-appearance:none;
+	/*6.21*/
+	border:solid 1px #4bb5c3;
+	background-color:#FFFFFF;
+	color:#4bb5c3;
+	/*6.12 end*/
 	font-size:0.8rem;
 	border-radius:0.15rem;
 	-webkit-border-radius:0.15rem;
@@ -100,14 +104,15 @@ input[type=submit]{
     <script>
     	var code = 0;
 		var a = document.getElementById('msg');
+    	//6.21
     	$(".get_number").click(function(){
 			$(this).text("60s后重新获取");
-			$(this).css({backgroundColor:"#d7d7d7",color:"#999"});
-			$("input[type='submit']").css({backgroundColor:"#ffceb0",color:"#fff"});
+			$(this).css({backgroundColor:"#d7d7d7",color:"#999999"});
+			$("input[type='submit']").css({backgroundColor:"#4bb5c3",color:"#ffffff"});
 			setTimeout(function(){
 				$(".get_number").text("获取验证码");
-				$(".get_number").css({backgroundColor:"#ffceb0",color:"#333"});
-				$("input[type='submit']").css({backgroundColor:"#bdbdbd",color:"#333"});
+				$(".get_number").css({backgroundColor:"#4bb5c3",color:"#ffffff"});
+				$("input[type='submit']").css({backgroundColor:"#ffffff",color:"#4bb5c3"});
 				},60000);
 			});
     	function getVerficationCode() {

@@ -12,6 +12,14 @@ class OrdersController extends AppController {
 		'Token',
 	];
 
+	public function index()
+	{
+		$this->set('title_for_layout', '我的订单');
+        $trades = $this->Trade->getTradeDetailByUserId(AuthComponent::user('id'));
+
+        $this->set(compact('trades'));
+	}
+
 	public function createNewOrder()
 	{
 		$data = $this->request->data;

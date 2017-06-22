@@ -25,7 +25,7 @@ body {
 .top i {
     height:2.5rem;
     width:2.5rem;
-    background:url(images/success.jpg);
+    background:url(/img/success.jpg);
     background-size:100%;
     -webkit-background-size:100%;
     -moz-background-size:100%;

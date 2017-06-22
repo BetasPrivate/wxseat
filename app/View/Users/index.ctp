@@ -9,7 +9,7 @@
 <style>
 <style>
 body {
-	background-color:#fff;
+	background-color:#f4f4f4;
 	}
 .home {
 	background-color:#f4f4f4;
@@ -21,20 +21,9 @@ body {
 .header {
 	width:100%;
 	height:6.8rem;
-	border-top:solid 1px #ffceb0;
-	background-color:#ffceb0;
+	border-top:solid 1px #4bb5c3;
+	background-color:#4bb5c3;
 	}
-/*头像换图片改动*/
-/*.header img {
-	height:3.25rem;
-	width:3.25rem;
-	border-radius:50%;
-	-webkit-border-radius:50%;
-	-moz-border-radius:50%;
-	-o-border-radius:50%;
-	margin:1.1rem auto 0;
-	display:block;
-	}*/
 .header {
 	position: relative;
 }
@@ -63,7 +52,7 @@ body {
 	font-size:0.7rem;
 	display: block;
 	text-align: center;
-	color:#333333;
+	color:#FFFFFF;
 	margin-top:0.5rem;
 }
 /*改动结束*/
@@ -160,6 +149,45 @@ body {
 	left:0;
 	z-index: 3;
 }
+.main dl dd a {
+	display:block;
+	height:2.5rem;
+	background-color:#FFFFFF;
+	color:#4bb5c3;
+	font-size:0.7rem;
+	margin:0.25rem 0;
+	line-height:2.5rem;
+}
+.main dl dd a span {
+	float:left;
+	height:2.5rem;
+	width:1.1rem;
+	margin-left: 1rem;
+	margin-right: 0.8rem;
+	background: url(/img/personal_pic1.jpg);
+	background-size:100%;
+	-webkit-background-size:100%;
+}
+.main dl dd a em {
+	float:left;
+	height:2.5rem;
+	width:1.1rem;
+	margin-left: 1rem;
+	margin-right: 0.8rem;
+	background: url(/img/personal_pic2.jpg);
+	background-size:100%;
+	-webkit-background-size:100%;
+}
+.main dl dd a i {
+	float:left;
+	height:2.5rem;
+	width:1.1rem;
+	margin-left: 1rem;
+	margin-right: 0.8rem;
+	background: url(/img/personal_pic3.jpg);
+	background-size:100%;
+	-webkit-background-size:100%;
+}
 </style>
 </style>
 </head>
@@ -170,21 +198,16 @@ body {
     	<!-- <img src="/img/touxiang.jpg" alt="头像"/> -->
     	<p id="imagePreview"></p>
     	<p id="imagePreview1" class="active"></p>
-    	<a href="nickname_change.html"><?php echo AuthComponent::user('username');?></a>
+    	<a href="#"><?php echo AuthComponent::user('username');?></a>
     </div>
-    <div class="change">修改密码</div>
+     <div class="main">
+    	<dl>
+	    	<dd><a href="/users/userInfo"><span></span>会员资料</a></dd>
+	    	<dd><a href="/seats"><em></em>我要预约</a></dd>
+	    	<dd><a href="/orders"><i></i>我的订单</a></dd>
+    	</dl>
+    </div>
     <div class="change"><a href="/users/logout">退出登录</a></div>
-    <div class="time">
-    	<p>租用记录</p>
-        <hr class="mini">
-    	<?php foreach($trades as $trade): ?>
-	        <p class="clearfix"><span>租用到期时间</span><em><?php echo $trade['start_date'];?>至<?php echo $trade['end_date'];?></em></p>
-	        <p class="clearfix"><span>租用的工位号/办公室号</span><em><?php echo $trade['seat_id_str'] ?></em></p>
-	        <p class="clearfix"><span>租借费用</span><em><?php echo $trade['Trade']['total_fee'];?></em></p>
-	        <p class="clearfix"><span>订单状态</span><em><?php echo $trade['trade_status_text'];?></em></p>
-	        <hr class="mini">
-    	<?php endforeach;?>
-    </div>
 </div>
 <div class="zhezhaoceng"></div>
 <div class="layer">

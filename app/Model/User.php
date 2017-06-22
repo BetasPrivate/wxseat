@@ -51,4 +51,44 @@ class User extends AppModel {
 
         return $user;
     }
+
+    public function checkPasswd($userName, $passwd)
+    {
+        $checkRes = false;
+        $msg = '';
+        $passwordHasher = new BlowfishPasswordHasher();
+        $user = $this->find('first', [
+            'conditions' => [
+                'username' => $userName,
+            ],
+        ]);
+
+        if (!$user) {
+            $msg = '未找到用户';
+        } elseif (!$passwordHasher->check($passwd, $user['User']['password'])) {
+            $msg = '原始密码错误';
+        } else {
+            $checkRes = true;
+        }
+
+        $result = [
+            'res' => $checkRes,
+            'msg' => $msg,
+        ];
+
+        return $result;
+    }
+
+    public function updatePasswd($userName, $newKey)
+    {
+        $passwordHasher = new BlowfishPasswordHasher();
+        return $this->updateAll(
+            [
+                'password' => "'".$passwordHasher->hash($newKey)."'",
+            ],
+            [
+                'username' => $userName,
+            ]
+        );
+    }
 }

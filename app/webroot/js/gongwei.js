@@ -1,5 +1,5 @@
 // JavaScript Document
-$(document).ready(function(e) {
+window.onload=function(){
 	//前台图片高度与左边一致
 	$(function(){
 	var ohei=$(".homeMain article .huiyishi img").height();
@@ -8,8 +8,7 @@ $(document).ready(function(e) {
 	$(".home_right_left img").height(sum);
 	var m=$(".right .dayinshi").height();
 	var n=$(".homeMain article .threeOne").height();
-	$(".right .dayinshi").height(n);
-	});
+	});	
 	//上方添加图片及效果
 	var a,b,c=1,d=9,e,f;
 	for(var m=0;m<3;m++){
@@ -30,42 +29,23 @@ $(document).ready(function(e) {
 	$(".homeTop img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("warning")){
-			$(".layer h3 span").removeClass("kongxian");
-			$(".layer h3 span").addClass("zhanyong");
-			$(".layer h3 i").text("占用");
-			$(".layer h5 p").css({opacity:1});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
+		if($(this).hasClass("waring")){
 			$(".layer h2 i").text(this.index);
+			var seat = getSeatFromSeats(this.index);
+			console.log(this.index);
+			if (seat.length != 0) {
+				$('#invalidate_seat_end_time').text(seat.Seat.free_time);
+			}
+			cover();
 		}else if($(this).hasClass("active")){
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			var owidth=$(this).width();
-			owidth=owidth+4;
-			$(this).width(owidth);
 			$(this).removeClass("active");
+			$(this).attr("src","/img/one_seat.jpg");
+			seatnum();
 		}else{
 			$(this).addClass("active");
-			var owidth=$(this).width();
-			owidth=owidth-4;
-			$(this).width(owidth);
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
-			var green_array=[];
-			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
-					var onew=oimg[j].index;
-					green_array.push(onew);
-					}
-				}
-			$(".layer h2 i").text(green_array);
+			$(this).attr("src","/img/checked.jpg");
+			add();
+			seatnum();
 			}
 		});
 	//中左添加座位及点击效果
@@ -99,42 +79,23 @@ $(document).ready(function(e) {
 	$(".homeMain aside.left img").click(function(){
 		$(".layer h2 span").text("开放空间");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("warning")){
-			$(".layer h3 span").removeClass("kongxian");
-			$(".layer h3 span").addClass("zhanyong");
-			$(".layer h3 i").text("占用");
-			$(".layer h5 p").css({opacity:1});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
+		if($(this).hasClass("waring")){
 			$(".layer h2 i").text(this.index);
+			var seat = getSeatFromSeats(this.index);
+			console.log(this.index);
+			if (seat.length != 0) {
+				$('#invalidate_seat_end_time').text(seat.Seat.free_time);
+			}
+			cover();
 		}else if($(this).hasClass("active")){
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			var owidth=$(this).width();
-			owidth=owidth+4;
-			$(this).width(owidth);
 			$(this).removeClass("active");
+			$(this).attr("src","/img/one_seat.jpg");
+			seatnum();
 		}else{
 			$(this).addClass("active");
-			var owidth=$(this).width();
-			owidth=owidth-4;
-			$(this).width(owidth);
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
-			var green_array=[];
-			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
-					var onew=oimg[j].index;
-					green_array.push(onew);
-					}
-				}
-			$(".layer h2 i").text(green_array);
+			$(this).attr("src","/img/checked.jpg");
+			add();
+			seatnum();
 			}
 		});
 	//中上三人间添加及点击效果
@@ -149,42 +110,23 @@ $(document).ready(function(e) {
 	$(".homeMain article .threeOne img").click(function(){
 		$(".layer h2 span").text("三人间");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("warning")){
-			$(".layer h3 span").removeClass("kongxian");
-			$(".layer h3 span").addClass("zhanyong");
-			$(".layer h3 i").text("占用");
-			$(".layer h5 p").css({opacity:1});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
+		if($(this).hasClass("waring")){
 			$(".layer h2 i").text(this.index);
+			var seat = getSeatFromSeats(this.index);
+			console.log(this.index);
+			if (seat.length != 0) {
+				$('#invalidate_seat_end_time').text(seat.Seat.free_time);
+			}
+			cover();
 		}else if($(this).hasClass("active")){
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			var owidth=$(this).width();
-			owidth=owidth+4;
-			$(this).width(owidth);
 			$(this).removeClass("active");
+			$(this).attr("src","/img/three.jpg");
+			seatnum();
 		}else{
 			$(this).addClass("active");
-			var owidth=$(this).width();
-			owidth=owidth-4;
-			$(this).width(owidth);
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
-			var green_array=[];
-			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
-					var onew=oimg[j].index;
-					green_array.push(onew);
-					}
-				}
-			$(".layer h2 i").text(green_array);
+			$(this).attr("src","/img/three_checked.jpg");
+			add();
+			seatnum();
 			}
 		});
 	//中下三人间添加及点击效果
@@ -200,45 +142,27 @@ $(document).ready(function(e) {
 		if(this.index){
 		$(".layer h2 span").text("三人间");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("warning")){
-			$(".layer h3 span").removeClass("kongxian");
-			$(".layer h3 span").addClass("zhanyong");
-			$(".layer h3 i").text("占用");
-			$(".layer h5 p").css({opacity:1});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
+		if($(this).hasClass("waring")){
 			$(".layer h2 i").text(this.index);
+			var seat = getSeatFromSeats(this.index);
+			console.log(this.index);
+			if (seat.length != 0) {
+				$('#invalidate_seat_end_time').text(seat.Seat.free_time);
+			}
+			cover();
 		}else if($(this).hasClass("active")){
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			var owidth=$(this).width();
-			owidth=owidth+4;
-			$(this).width(owidth);
 			$(this).removeClass("active");
+			$(this).attr("src","/img/three.jpg");
+			seatnum();
 		}else{
 			$(this).addClass("active");
-			var owidth=$(this).width();
-			owidth=owidth-4;
-			$(this).width(owidth);
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
-			var green_array=[];
-			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
-					var onew=oimg[j].index;
-					green_array.push(onew);
-					}
-				}
-			$(".layer h2 i").text(green_array);
+			$(this).attr("src","/img/three_checked.jpg");
+			add();
+			seatnum();
 		}
 		}
 		});
+	//中右改动开始
 	//中右添加工位及点击效果
 	for (var q=0;q<11;q++){
 		switch(q){
@@ -261,60 +185,31 @@ $(document).ready(function(e) {
 			oimg1.index=e;
 			e+=1;
 			$(".home_right_right").append(oimg1);
-			if(n%2==1){
-				oimg1.style.cssFloat="right";
-				}
 			}
 		}
 	$(".home_right_right img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("warning")){
-			$(".layer h3 span").removeClass("kongxian");
-			$(".layer h3 span").addClass("zhanyong");
-			$(".layer h3 i").text("占用");
-			$(".layer h5 p").css({opacity:1});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
+		if($(this).hasClass("waring")){
 			$(".layer h2 i").text(this.index);
-		}else if($(this).hasClass("active1")){
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-//			var m=$(this).width();
-//			m=m+4;
-//			var n=$(this).height();
-//			n=n+4;
-//			$(this).width(m);
-//			$(this).height(n);
-			$(this).removeClass("active1");
+			var seat = getSeatFromSeats(this.index);
+			console.log(this.index);
+			if (seat.length != 0) {
+				$('#invalidate_seat_end_time').text(seat.Seat.free_time);
+			}
+			cover();
+		}else if($(this).hasClass("active")){
+			$(this).removeClass("active");
 			$(this).attr("src","/img/one_seat.jpg");
+			seatnum();
 		}else{
 			$(this).attr("src","/img/checked.jpg");
-			$(this).addClass("active1");
-//			var m=$(this).width();
-//			m=m-4;
-//			var n=$(this).height();
-//			n=n-4;
-//			$(this).width(m);
-//			$(this).height(n);
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
-			var green_array=[];
-			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
-					var onew=oimg[j].index;
-					green_array.push(onew);
-					}
-				}
-			$(".layer h2 i").text(green_array);
+			$(this).addClass("active");
+			add();
+			seatnum();
 			}
 		});	
+	//中右改动结束
 	//下左开放工位添加及点击效果
 	for (var q=0;q<3;q++){
 		switch(q){
@@ -334,48 +229,23 @@ $(document).ready(function(e) {
 	$(".homeBottom h2 img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
-		if($(this).hasClass("warning")){
-			$(".layer h3 span").removeClass("kongxian");
-			$(".layer h3 span").addClass("zhanyong");
-			$(".layer h3 i").text("占用");
-			$(".layer h5 p").css({opacity:1});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
+		if($(this).hasClass("waring")){
 			$(".layer h2 i").text(this.index);
+			var seat = getSeatFromSeats(this.index);
+			console.log(this.index);
+			if (seat.length != 0) {
+				$('#invalidate_seat_end_time').text(seat.Seat.free_time);
+			}
+			cover();
 		}else if($(this).hasClass("active")){
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			var m=$(this).width();
-			m=m+4;
-			var n=$(this).height();
-			n=n+4;
-			$(this).width(m);
-			$(this).height(n);
 			$(this).removeClass("active");
+			$(this).attr("src","/img/one_seat.jpg");
+			seatnum();
 		}else{
 			$(this).addClass("active");
-			var m=$(this).width();
-			m=m-4;
-			var n=$(this).height();
-			n=n-4;
-			$(this).width(m);
-			$(this).height(n);
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
-			var green_array=[];
-			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
-					var onew=oimg[j].index;
-					green_array.push(onew);
-					}
-				}
-			$(".layer h2 i").text(green_array);
+			$(this).attr("src","/img/checked.jpg");
+			add();
+			seatnum();
 			}
 		});
 	//下右添加三张图片点击效果
@@ -394,46 +264,39 @@ $(document).ready(function(e) {
 			$(".layer h2 span").text("八人间");
 			}
 		$(".layer h3 i").text("");
-		if($(this).hasClass("warning")){
-			$(".layer h3 span").removeClass("kongxian");
-			$(".layer h3 span").addClass("zhanyong");
-			$(".layer h3 i").text("占用");
-			$(".layer h5 p").css({opacity:1});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
+		if($(this).hasClass("waring")){
 			$(".layer h2 i").text(this.index);
+			var seat = getSeatFromSeats(this.index);
+			console.log(this.index);
+			if (seat.length != 0) {
+				$('#invalidate_seat_end_time').text(seat.Seat.free_time);
+			}
+			cover();
 		}else if($(this).hasClass("active")){
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			var owidth=$(this).width();
-			owidth=owidth+4;
-			$(this).width(owidth);
 			$(this).removeClass("active");
+			if(this.index=="s1"){
+				$(this).attr("src","/img/top_six.jpg");
+			}else if(this.index=="s2"){
+				$(this).attr("src","/img/top_five.jpg");
+			}else if(this.index=="s3"){
+				$(this).attr("src","/img/top_eight.jpg");
+			}
+			seatnum();
 		}else{
 			$(this).addClass("active");
-			var owidth=$(this).width();
-			owidth=owidth-4;
-			$(this).width(owidth);
-			$(".layer h3 span").removeClass("zhanyong");
-			$(".layer h3 span").addClass("kongxian");
-			$(".layer h3 i").text("空闲");
-			$(".layer h5 p").css({opacity:0});
-			$(".zhezhaoceng").css({display:"block"});
-			$(".layer").animate({bottom:0},300);
-			var green_array=[];
-			for(var j=0;j<olen;j++){
-				if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
-					var onew=oimg[j].index;
-					green_array.push(onew);
-					}
-				}
-			$(".layer h2 i").text(green_array);
+			if(this.index=="s1"){
+				$(this).attr("src","/img/six_checked.jpg");
+			}else if(this.index=="s2"){
+				$(this).attr("src","/img/five_checked.jpg");
+			}else if(this.index=="s3"){
+				$(this).attr("src","/img/eight_checked.jpg");
+			}
+			add();
+			seatnum();
 			}
 		});
 	//点击遮罩层关闭
-	$("#reset").click(function(){
+	$(".continue").click(function(){
 		$(".zhezhaoceng").css({display:"none"});
 		$(".layer").css({bottom:-400});
 		});
@@ -441,114 +304,159 @@ $(document).ready(function(e) {
 		$(this).css({display:"none"});
 		$(".layer").css({bottom:-400});
 		});
-	//给当前已租用的座位加红框
+	//给当前已租用的座位加红框 6.17改动
 	var oimg=$("img");
 	var olen=oimg.length;
 	for (var i = 0; i< olen; i++){
 		var b=oimg[i].index;
 		for (var j= 0; j < seats.length; j++) {
 			if (seats[j].Seat.status == 1 && seats[j].Seat.real_id == b) {
-				var ohei=$(oimg[i]).width();
-				ohei=ohei-4;
-				$(oimg[i]).width(ohei);
-				$(oimg[i]).addClass("warning");
+				counts(i);
 			}
 		}
 	}
-	// var a=["s2","1","v2","54","86","100"];
-	// var oimg=$("img");
-	// var olen=oimg.length;
-	// for(var i=0;i<olen;i++){
-	// 	var b=oimg[i].index;
-	// 	if(oimg[i].index==a[0]){
-	// 		var ohei=$(oimg[i]).width();
-	// 		ohei=ohei-4;
-	// 		$(oimg[i]).width(ohei);
-	// 		$(oimg[i]).addClass("warning");
-	// 	}else if(oimg[i].index==a[1]){
-	// 		var ohei=$(oimg[i]).width();
-	// 		ohei=ohei-4;
-	// 		$(oimg[i]).width(ohei);
-	// 		$(oimg[i]).addClass("warning");
-	// 	}else if(oimg[i].index==a[2]){
-	// 		var ohei=$(oimg[i]).width();
-	// 		ohei=ohei-4;
-	// 		$(oimg[i]).width(ohei);
-	// 		$(oimg[i]).addClass("warning");
-	// 	}else if(oimg[i].index==a[3]){
-	// 		var ohei=$(oimg[i]).width();
-	// 		ohei=ohei-4;
-	// 		$(oimg[i]).width(ohei);
-	// 		$(oimg[i]).addClass("warning");
-	// 	}else if(oimg[i].index==a[4]){
-	// 		var ohei=$(oimg[i]).width();
-	// 		ohei=ohei-4;
-	// 		$(oimg[i]).width(ohei);
-	// 		$(oimg[i]).addClass("warning");
-	// 	}else if(oimg[i].index==a[5]){
-	// 		var ohei=$(oimg[i]).width();
-	// 		ohei=ohei-4;
-	// 		$(oimg[i]).width(ohei);
-	// 		$(oimg[i]).addClass("warning");
-	// 	}
-	// 	}
+	function counts(m){
+		var count=oimg[i].index;
+		$(oimg[m]).addClass("waring");
+		if(count<23||count>46&&count<89||count>90&&count<163){
+			oimg[m].src="/img/checkout.jpg";
+		}else if(count<'v15'&&count>='v10'||count<='v9'&&count>'v0'){
+			oimg[m].src="/img/three_checkout.jpg";
+		}else if(count=='s1'){
+			oimg[m].src="/img/six_checkout.jpg";
+		}else if(count=="s2"){
+			oimg[m].src="/img/five_checkout.jpg";
+		}else if(count=="s3"){
+			oimg[m].src="/img/eight_checkout.jpg";
+		}
+	}
+
+	function getSeatFromSeats(seatRealId) {
+		for (var i in seats) {
+			var seat = seats[i];
+			if (seat.Seat.real_id == seatRealId) {
+				return seat;
+			}
+		}
+
+		return [];
+	}
+//6.15选择座位时工位号改变函数
+	function seatnum(){
+		var green_array=[];
+		for(var j=0;j<olen;j++){
+			if($(oimg[j]).hasClass("active")){
+				var onew=oimg[j].index;
+				green_array.push(onew);
+				}
+		}
+		$(".layer h2 i").text(green_array.join(" "));
+		if(green_array.length==0){
+			$(".layer").css({bottom:-400});
+		}
+	}
+//占用位弹出层函数
+	function cover(){
+		$(".layer h3 span").removeClass("kongxian");
+		$(".layer h3 span").addClass("zhanyong");
+		$(".layer h3 i").text("占用");
+		$(".layer h5 p").css({display:"block"});
+		$(".layer h4").css({display:"none"});
+		$(".starttime").css({display:"none"});
+		$(".zhezhaoceng").css({display:"block"});
+		$(".layer .stop_timer_one").css({display:"block"});
+		$(".layer .stop_timer_two").css({display:"none"});
+		$(".layer h6.zhantips").css({display:"block"});
+		$(".layer h6.ketips").css({display:"none"});
+		$(".layer").animate({bottom:0},300);
+		
+	}
+//可选弹出层函数
+	function add(){
+		$(".layer h3 span").removeClass("zhanyong");
+		$(".layer h3 span").addClass("kongxian");
+		$(".layer h3 i").text("空闲");
+		$(".layer h5 p").css({display:"none"});
+		$(".layer h4").css({display:"block"});
+		$(".starttime").css({display:"block"});
+		$(".zhezhaoceng").css({display:"block"});
+		$(".layer .stop_timer_one").css({display:"none"});
+		$(".layer .stop_timer_two").css({display:"block"});
+		$(".layer h6.zhantips").css({display:"none"});
+		$(".layer h6.ketips").css({display:"block"});
+		$(".layer").animate({bottom:0},300);	
+		//年租默认执行一次
+		(function(){
+			var nian=$(".startnian").html();
+			var yue=$(".startyue").html();
+			var ri=$(".startri").html();
+			nian++;
+			$(".endnian").val(nian);
+			$(".endyue").val(yue);
+			$(".endri").val(ri);
+		})();
+	}
+}	
+$(document).ready(function(e) {	
 //tips添加弹出层起止年月日
-    var h=2017,i=1,j=1;
+	var nowtime=new Date();
+	$(".startnian").html(nowtime.getFullYear());
+	$(".startyue").html(nowtime.getMonth()+1);
+	$(".startri").html(nowtime.getDate());
+	var beginnian=nowtime.getFullYear();
+    var h=beginnian,i=1,j=1;
 	for (var m=0;m<5;m++){
 		var option=document.createElement("option");
-		var option_1=document.createElement("option");
 		option.innerHTML=h;
-		option_1.innerHTML=h;
 		h++;
-		$(".startnian").append(option);
-		$(".endnian").append(option_1);
+		$(".endnian").append(option);
 	}
 	for (var m=0;m<12;m++){
 		var option=document.createElement("option");
-		var option_1=document.createElement("option");
 		option.innerHTML=i;
-		option_1.innerHTML=i;
 		i++;
-		$(".startyue").append(option);
-		$(".endyue").append(option_1);
+		$(".endyue").append(option);
 	}
 	for (var m=0;m<31;m++){
 		var option=document.createElement("option");
-		var option_1=document.createElement("option");
 		option.innerHTML=j;
-		option_1.innerHTML=j;
 		j++;
-		$(".startri").append(option);
-		$(".endri").append(option_1);
+		$(".endri").append(option);
 	}
 	//默认选择第一种方式确认终止时间
 	//点击年月周日终止日期改变
 	$(".nianzu").click(function(){
-		var nian=$(".startnian").val();
-		var yue=$(".startyue").val();
-		var ri=$(".startri").val();
+		$(".layer h4 i").removeClass("active");
+		$(this).addClass("active");
+		var nian=Number($(".startnian").html());
+		var yue=Number($(".startyue").html());
+		var ri=Number($(".startri").html());
 		nian++;
-		$(".nian").text(nian);
-		$(".yue").text(yue);
-		$(".ri").text(ri);
+		$(".endnian").val(nian);
+		$(".endyue").val(yue);
+		$(".endri").val(ri);
 		});
 	$(".yuezu").click(function(){
-		var nian=$(".startnian").val();
-		var yue=$(".startyue").val();
-		var ri=$(".startri").val();
+		$(".layer h4 i").removeClass("active");
+		$(this).addClass("active");
+		var nian=Number($(".startnian").html());
+		var yue=Number($(".startyue").html());
+		var ri=Number($(".startri").html());
 		yue++;
 		if(yue=="13"){
 			nian++;
 			yue=1;
 			}
-		$(".nian").text(nian);
-		$(".yue").text(yue);
-		$(".ri").text(ri);
+		$(".endnian").val(nian);
+		$(".endyue").val(yue);
+		$(".endri").val(ri);
 		});
 	$(".zhouzu").click(function(){
-		var nian=$(".startnian").val();
-		var yue=$(".startyue").val();
-		var ri=Number($(".startri").val());
+		$(".layer h4 i").removeClass("active");
+		$(this).addClass("active");
+		var nian=Number($(".startnian").html());
+		var yue=Number($(".startyue").html());
+		var ri=Number($(".startri").html());
 		ri=ri+7;
 		if(yue=='1'||yue=='3'||yue=='5'||yue=='7'||yue=='8'||yue=='10'||yue=='12'){
 			if(ri>31){
@@ -592,14 +500,16 @@ $(document).ready(function(e) {
 				}
 				}
 			}
-		$(".nian").text(nian);
-		$(".yue").text(yue);
-		$(".ri").text(ri);
+		$(".endnian").val(nian);
+		$(".endyue").val(yue);
+		$(".endri").val(ri);
 		});
 	$(".rizu").click(function(){
-		var nian=$(".startnian").val();
-		var yue=$(".startyue").val();
-		var ri=$(".startri").val();
+		$(".layer h4 i").removeClass("active");
+		$(this).addClass("active");
+		var nian=Number($(".startnian").html());
+		var yue=Number($(".startyue").html());
+		var ri=Number($(".startri").html());
 		ri++;
 		if(yue=='1'||yue=='3'||yue=='5'||yue=='7'||yue=='8'||yue=='10'||yue=='12'){
 			if(ri>31){
@@ -643,28 +553,28 @@ $(document).ready(function(e) {
 				}
 				}
 			}
-		$(".nian").text(nian);
-		$(".yue").text(yue);
-		$(".ri").text(ri);
-		});
-	//定义一个默认第一种方式变量
-	var fangshi="one";
+		$(".endnian").val(nian);
+		$(".endyue").val(yue);
+		$(".endri").val(ri);
+	});
 	//点击自定义终止日期表单出现选择,第二种方式确认终止时间	
-	$(".zidingyi").click(function(){
-		$(".stop_timer_one").css({display:"none"});
-		$(".stop_timer_two").css({display:"block"});
-		$(".zuqi").css({display:"none"});
-		$(".zidingyi").css({display:"none"});
-		fangshi="two";//选择方式二
-		});
+	$(".custom").click(function(){
+		$(".layer h4 i").removeClass("active");
+		$(this).addClass("active");
+	});
+	$(".stop_timer_two").on("click",function(){
+		$(".layer h4 i").removeClass("active");
+		$(".custom").addClass("active");
+	})
 	//声明一个对象装有工位号，起止日期
 	var json={};
 	//自定义终止日期
 	$(".queding").click(function(){
 		//获取当前被选中的座位号
 		var green_array=[];
-		for(var j=0;j<olen;j++){
-			if($(oimg[j]).hasClass("active1") || $(oimg[j]).hasClass("active")){
+		var oimg=$("img");
+		for(var j=0;j<oimg.length;j++){
+			if($(oimg[j]).hasClass("active")){
 				var onew=oimg[j].index;
 				green_array.push(onew);
 				}
@@ -673,33 +583,18 @@ $(document).ready(function(e) {
 		json["seatIds"]=zuoweihao;
 		//点击年月周日单选框方式获取起始时间，终止时间
 		var startdate,stopdate;
-		if(fangshi=="one"){
 			//获取起始时间
-			var startnian=$(".startnian").val();
-			var startyue=$(".startyue").val();
-			var startri=$(".startri").val();
+			var startnian=$(".startnian").html();
+			var startyue=$(".startyue").html();
+			var startri=$(".startri").html();
 			startdate=startnian+"-"+startyue+"-"+startri;
-			//获取终止时间
-			var stopnian=$(".nian").text();
-			var stopyue=$(".yue").text();
-			var stopri=$(".ri").text();
-			stopdate=stopnian+"-"+stopyue+"-"+stopri;
-		json["startDate"]=startdate;
-		json["endDate"]=stopdate;
-		}else if(fangshi=="two"){
-			//获取起始时间
-			var startnian=$(".startnian").val();
-			var startyue=$(".startyue").val();
-			var startri=$(".startri").val();
-			startdate="起始时间:"+startnian+"-"+startyue+"-"+startri;
 			//获取终止时间
 			var stopnian=$(".endnian").val();
 			var stopyue=$(".endyue").val();
 			var stopri=$(".endri").val();
-			var stopdate="终止时间:"+stopnian+"-"+stopyue+"-"+stopri;
+			var stopdate=stopnian+"-"+stopyue+"-"+stopri;
 			json["startDate"]=startdate;
 			json["endDate"]=stopdate;
-			}
 		//判断2月29日，某些月的31日
 		if(startyue==2||stopyue==2){
 			if(startnian%4==0){
@@ -725,12 +620,12 @@ $(document).ready(function(e) {
 			}
 		function  panduantimer(){
 			//判断终止时间大于起始时间
-			startnian=Number(startnian);
+			startnian=Number(startnian);//改动开始
 			stopnian=Number(stopnian);
 			startyue=Number(startyue);
 			stopyue=Number(stopyue);
 			startri=Number(startri);
-			stopri=Number(stopri);
+			stopri=Number(stopri);//改动结束
 			if(startnian>stopnian){
 				alert("您输入的日期有误，请重新输入");
 			}else if(startnian==stopnian){
@@ -749,8 +644,9 @@ $(document).ready(function(e) {
 					}
 			}else{
 				chuanshu();
-				}
 			}
+			}
+		
 		function chuanshu(){
 			console.log(json);
 			$.ajax({
@@ -782,42 +678,6 @@ $(document).ready(function(e) {
 	            	console.log(data);
 	            }
 	        });
-			}		
+		}		
 		});
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+})

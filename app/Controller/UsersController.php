@@ -10,9 +10,11 @@ class UsersController extends AppController
     {
         $this->set('title_for_layout', '个人中心');
 
-        $trades = $this->Trade->getTradeDetailByUserId(AuthComponent::user('id'));
+    }
 
-        $this->set(compact('trades'));
+    public function userInfo()
+    {
+        $this->set('title_for_layout', '个人资料');
     }
 
     public function login()
@@ -146,10 +148,41 @@ class UsersController extends AppController
         $this->set(compact('result'));
     }
 
+    public function changePasswd()
+    {
+        $this->set('title_for_layout', '修改密码');
+    }
+
+    public function submitEditInfo()
+    {
+        $data = $this->request->data;
+
+        $userName = $data['user_name'];
+        $oldKey = $data['origin_key'];
+        $newKey = $data['new_key'];
+        $result['status'] = 0;
+
+        $checkRes = $this->User->checkPasswd($userName, $oldKey);
+
+        if (!$checkRes['res']) {
+            $result['msg'] = $checkRes['msg'];    
+        } else {
+            $saveResult = $this->User->updatePasswd($userName, $newKey);
+            if ($saveResult) {
+                $result['status'] = 1;
+            } else {
+                $result['msg'] = '修改失败，请稍后重试';
+            }
+        }
+
+        echo json_encode($result);
+        exit();
+    }
+
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.
-        $this->Auth->allow('signIn', 'setPasswd', 'submitRegInfo', 'getVerficationCode', 'login');
+        $this->Auth->allow('signIn', 'setPasswd', 'submitRegInfo', 'getVerficationCode', 'login', 'changePasswd', 'submitEditInfo');
     }
 
     public function logout() {
