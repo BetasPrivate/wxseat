@@ -296,6 +296,7 @@
         <h3 class="clearfix"><span>温馨提示：</span><em>保证金作为押金以防办公设施破坏，租期结束后五个工作日内线下返还。</em></h3>
         <h4>开具发票<em></em></h4>
         <h4 class="active">发票抬头<input type="text" name="header" placeholder="填写公司抬头"/></h4>
+        <h4 class="active">公司税号<input type="text" name="header" placeholder="填写公司税号"/></h4>
     </div>
     <div class="post_msg">
     	<h2>收件信息</h2>

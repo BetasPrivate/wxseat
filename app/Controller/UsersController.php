@@ -19,6 +19,9 @@ class UsersController extends AppController
 
     public function login()
     {
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'mobile') === false && !$this->request->is('post')) {
+            $this->redirect('/users/PCLogin');
+        }
         $this->set('title_for_layout', '用户登录');
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
@@ -26,6 +29,11 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('账号或密码错误，请重试'));
         }
+    }
+
+    public function PCLogin()
+    {
+        $this->set('title_for_layout', '后台登陆');
     }
 
     public function checkLogin()
@@ -182,7 +190,7 @@ class UsersController extends AppController
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.
-        $this->Auth->allow('signIn', 'setPasswd', 'submitRegInfo', 'getVerficationCode', 'login', 'changePasswd', 'submitEditInfo');
+        $this->Auth->allow('signIn', 'setPasswd', 'submitRegInfo', 'getVerficationCode', 'login', 'changePasswd', 'submitEditInfo', 'PCLogin');
     }
 
     public function logout() {
