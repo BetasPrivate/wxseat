@@ -295,8 +295,17 @@
     	<h2><span>实际支付：</span><em> ¥ <?php echo $result['totalFee'];?></em></h2>
         <h3 class="clearfix"><span>温馨提示：</span><em>保证金作为押金以防办公设施破坏，租期结束后五个工作日内线下返还。</em></h3>
         <h4>开具发票<em></em></h4>
-        <h4 class="active">发票抬头<input type="text" name="header" placeholder="填写公司抬头"/></h4>
-        <h4 class="active">公司税号<input type="text" name="header" placeholder="填写公司税号"/></h4>
+        <h4 class="active">
+        	<!--7.5改动-->
+        	<ul>
+        		<li>
+        			发票抬头<input type="text" name="header" placeholder="填写公司抬头" id="company"/>
+        		</li>
+        		<li style="border-top: solid #d7d7d7 1px;">
+        			发票税号<input type="text" name="header" placeholder="填写公司税号" id="tax_payer_id"/>
+        		</li>
+        	</ul>
+        </h4>
     </div>
     <div class="post_msg">
     	<h2>收件信息</h2>
@@ -306,7 +315,7 @@
                 <li>联系电话<input type="tel" name="phone" placeholder="填写联系电话" id="phone"/></li>
                 <!--地址选择改动-->
                 <li  class="content-block">所在地区<input id="demo1" type="text" name="area" readonly="readonly" value="请选择，请选择，请选择"/></li>
-                <li class="last">详细地址<input type="text" name="address" placeholder="填写详细地址"/></li>
+                <li class="last">详细地址<input type="text" name="address" placeholder="填写详细地址" id="address" /></li>
             </ul>
         </h3>
     </div>

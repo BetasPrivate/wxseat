@@ -3,6 +3,8 @@ class Trade extends AppModel {
 	const NO_PAY = 0;
 	const PAID = 1;
 	const CLOSED_BY_SYSETM = 2;
+	//超时关闭时间为15分钟
+	const CLOSE_TIME = 900;
 
 	public static $texts = [
 		self::NO_PAY => '待支付',
@@ -107,5 +109,41 @@ class Trade extends AppModel {
 		}
 
 		return $trades;
+	}
+
+	public function getTradeByTradeId($tradeId)
+	{
+		return $this->find('first', [
+			'conditions' => [
+				'Trade.id' => $tradeId,
+			],
+		]);
+	}
+
+	public function closeTrades()
+	{
+		$trades = $this->find('all', [
+			'fields' => [
+				'Trade.id',
+			],
+			'conditions' => [
+				'Trade.created <' => date('Y-m-d H:i:s', time() - self::CLOSE_TIME),
+			],
+		]);
+
+		$tradeIds = [];
+
+		foreach ($trades as $trade) {
+			array_push($tradeIds, $trade['Trade']['id']);
+		}
+
+		$this->updateAll(
+		[
+			'status' => self::CLOSED_BY_SYSETM,	
+		],
+		[
+			'Trade.id' => $tradeIds,
+		]);
+
 	}
 }

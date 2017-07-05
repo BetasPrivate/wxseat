@@ -19,7 +19,7 @@ class UsersController extends AppController
 
     public function login()
     {
-        if (strpos($_SERVER['HTTP_USER_AGENT'], 'mobile') === false && !$this->request->is('post')) {
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') === false && !$this->request->is('post')) {
             $this->redirect('/users/PCLogin');
         }
         $this->set('title_for_layout', '用户登录');

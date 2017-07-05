@@ -8,7 +8,7 @@
         'bootstrap.min',
     ));
 ?>
-<title>后台登录</title>
+<title>PC端后台登录</title>
 <style type="text/css">
     .form-bg{
     background: #00b4ef;

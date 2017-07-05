@@ -76,7 +76,8 @@ class OrdersController extends AppController {
 			$this->Seat->query($query);
 			
 			$this->Trade->create();
-			$this->Trade->save(['user_id' => $userId, 'total_fee' => $totalFee]);
+			$platformTradeId = WxPayConfig::MCHID.$this->Trade->getTradeNo();
+			$this->Trade->save(['user_id' => $userId, 'total_fee' => $totalFee, 'platform_trade_id' => $platformTradeId]);
 			$tradeId = $this->Trade->getLastInsertId();
 
 			//生成订单
@@ -164,15 +165,18 @@ class OrdersController extends AppController {
 		//①、获取用户openid
 		$tools = new JsApiPay();
 		$openId = $tools->GetOpenid();
-		$totalFee = 1;
+		$trade = $this->Trade->getTradeByTradeId($tradeId);
+		$platformTradeId = $trade['Trade']['platform_trade_id'];
+		$totalFee = $trade['Trade']['total_fee'];
+		$totalFeeWXPay = $totalFee * 100;
+		$totalFeeWXPay = 1;
 
 		//②、统一下单
 		$input = new WxPayUnifiedOrder();
 		$input->SetBody("test");
 		$input->SetAttach("test");
-		$platformTradeId = WxPayConfig::MCHID.$this->Trade->getTradeNo();
 		$input->SetOut_trade_no($platformTradeId);
-		$input->SetTotal_fee($totalFee);
+		$input->SetTotal_fee($totalFeeWXPay);
 		$input->SetTime_start(date("YmdHis"));
 		$input->SetTime_expire(date("YmdHis", time() + 600));
 		$input->SetGoods_tag("test");
@@ -183,7 +187,7 @@ class OrdersController extends AppController {
 		$jsApiParameters = $tools->GetJsApiParameters($order);
 		$editAddress = $tools->GetEditAddressParameters();
 
-		$this->Trade->save(['id' => $tradeId, 'platform_trade_id' => $platformTradeId, 'open_id' => $openId]);
+		$this->Trade->save(['id' => $tradeId, 'open_id' => $openId]);
 
 		return ['jsApiParameters' => $jsApiParameters,
 			'editAddress' => $editAddress,

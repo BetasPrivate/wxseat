@@ -12,13 +12,15 @@ body {
 	min-width:320px;
 	margin:0 auto;
 	}
+	/*7.5*/
 .home {
-	padding:0 5.5%;
-	background-color:#fff;
+	padding:0 10.5%;
+	margin-top:5rem;
 	}
 input[type=text],input[type=tel] {
+	background-color:#fff;
 	width:100%;
-	height:2.6rem;
+	height:1.8rem;
 	border:0;
 	outline:none;
 	box-sizing:border-box;
@@ -26,8 +28,10 @@ input[type=text],input[type=tel] {
 	-webkit-appearance:none;
 	-moz-appearance:none;
 	-o-appearance:none;
-	border-bottom:solid 1px #d7d7d7;
+	/*border-bottom:solid 1px #d7d7d7;*/
 	font-size:0.8rem;
+	margin-bottom: 0.5rem;
+	text-indent: 4.6%;
 	}
 input[type=text].yanzhengma {
 	border:none;
@@ -57,15 +61,15 @@ h2 {
 	font-size:0.6rem;
 	}
 .h28 {
-	height:1.4rem;
+	height:0.75rem;
 	width:100%;
 	}
 input[type=submit]{
-	width:89%;
+	width:64.7%;
 	display:block;
 	margin:0 auto;
-	height:2rem;
-	line-height:2rem;
+	height:1.65rem;
+	line-height:1.65rem;
 	text-align:2rem;
 	border:0;
 	outline:none;
@@ -75,9 +79,8 @@ input[type=submit]{
 	-moz-appearance:none;
 	-o-appearance:none;
 	/*6.21*/
-	border:solid 1px #4bb5c3;
-	background-color:#FFFFFF;
-	color:#4bb5c3;
+	background-color:#4ab5c2;
+	color:#FFFFFF;
 	/*6.12 end*/
 	font-size:0.8rem;
 	border-radius:0.15rem;
@@ -91,8 +94,8 @@ input[type=submit]{
 <body>
 	<div class="home">
     	<form>
-        	<input type="text" id="userName" placeholder="用户名"/>
-            <h2><input type="tel" id="phoneNum" placeholder="手机号码"/><!-- <i class="get_number" onclick="getVerficationCode()">获取验证码</i> --></h2>
+        	<input type="text" name="nicheng" id="userName" placeholder="用户名"/>
+            <h2><input type="tel" name="phone" id="phoneNum" placeholder="手机号码"/><!-- <i class="get_number" onclick="getVerficationCode()">获取验证码</i> --></h2>
             <!-- <input type="text" id="verficationCode" placeholder="验证码" class="yanzhengma"/> -->
         </form>
     </div>

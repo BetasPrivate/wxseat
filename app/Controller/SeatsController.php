@@ -3,6 +3,7 @@ class SeatsController extends AppController {
 	public $uses = [
 		'Seat',
 		'SeatTypePriceRelation',
+		'Trade',
 	];
 
 	function index()
@@ -10,6 +11,7 @@ class SeatsController extends AppController {
 		$this->set('title_for_layout', '预订工位');
 		
 		$this->Seat->releaseSeats();
+		$this->Trade->closeTrades();
 
 		$seats = $this->Seat->find('all', [
 			'conditions' => [
