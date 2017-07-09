@@ -4,6 +4,7 @@ class SeatsController extends AppController {
 		'Seat',
 		'SeatTypePriceRelation',
 		'Trade',
+		'Order',
 	];
 
 	function index()
@@ -72,26 +73,41 @@ class SeatsController extends AppController {
 
 		//info => [], dates => []
 		$postInfos = json_decode($infoStr, true);
-		$idInfos = $postInfos['info'];
 		$dates = $postInfos['dates'];
+		$isConference = isset($postInfos['is_conference']) ? $postInfos['is_conference'] : false;
 
-		//为了在前端展示
-		$seatIds = '';
-		//为了查数据库
-		$seatIdStr = '';
+		if ($isConference) {
+			$conferenceId = $postInfos['conference_id'];
+			$seatIds = $this->Seat->find('first', [
+				'conditions' => [
+					'Seat.id' => $conferenceId,
+				],
+			])['SeatType']['name'];
+			$price = $this->Seat->getConferencePrice($dates, $conferenceId);
+			$deposit = $this->Seat->getDeposit($conferenceId);
 
-		foreach ($idInfos as $idInfo) {
-			$seatIds .= ','.$idInfo['seatId'];
-			$seatIdStr .= ",'".$idInfo['seatId']."'";
+			$idInfos = ['0' => $conferenceId];
+		} else {
+			$idInfos = $postInfos['info'];
+			//为了在前端展示
+			$seatIds = '';
+			//为了查数据库
+			$seatIdStr = '';
+
+			foreach ($idInfos as $idInfo) {
+				$seatIds .= ','.$idInfo['seatId'];
+				$seatIdStr .= ",'".$idInfo['seatId']."'";
+			}
+			$seatIds = substr($seatIds, 1);
+			$seatIdStr = '('.substr($seatIdStr, 1).')';
+
+			//总金额
+			$price = $this->Seat->getSeatPrices($seatIdStr);
+
+			//总押金
+			$deposit = $this->Seat->getDeposit($seatIdStr);
 		}
-		$seatIds = substr($seatIds, 1);
-		$seatIdStr = '('.substr($seatIdStr, 1).')';
 
-		//总金额
-		$price = $this->Seat->getSeatPrices($seatIdStr);
-
-		//总押金
-		$deposit = $this->Seat->getDeposit($seatIdStr);
 
 		$result = [
 			'idInfo' => $seatIds,
@@ -100,6 +116,7 @@ class SeatsController extends AppController {
 			'totalFee' => $price + $deposit,
 			'dates' => $dates,
 			'deposit' => $deposit,
+			'isConference' => $isConference,
 		];
 
 		$this->set(compact('result'));
@@ -140,5 +157,62 @@ class SeatsController extends AppController {
 		}
 		echo json_encode($result);
 		exit();
+	}
+
+	public function rentConference($conferenceName='泛态厅')
+	{
+		$conferenceId = $this->Seat->getConferenceIdByConferenceName($conferenceName);
+		if (!$conferenceId) {
+			$result = [
+				'status' => 0,
+				'msg' => '无效的会议室！',
+			];
+			echo '无效的会议室, 请联系管理员！';
+			exit();
+		}
+
+		if ($this->request->is('post')) {
+			$data = $this->request->data;
+			if (!isset($data['arr']) || sizeof($data['arr']) == 0) {
+				$result = [
+					'status' => 0,
+					'msg' => '请选择正确的座位号',
+				];
+				echo json_encode($result);
+				exit();
+			}
+			if (!$this->Seat->checkConferenceLegal($data)) {
+				$result = [
+					'status' => 0,
+					'msg' => '请符合选会议室的规则',
+				];
+				echo json_encode($result);
+				exit();
+			}
+
+			$dates = $this->Seat->parseConferenceRentData($data['arr']);
+
+			$saveResult = $this->Order->createPendingOrderForConference($conferenceId, $dates);
+
+			if ($saveResult['status'] == 1) {
+				$result = [
+					'status' => 1,
+					'dates' => $dates,
+					'conference_id' => $conferenceId,
+				];
+			} else {
+				$result = [
+					'status' => 0,
+					'dates' => $dates,
+					'conference_id' => $conferenceId,
+				];
+			}
+
+			echo json_encode($result);
+			exit();
+		}
+
+		//得到当前会议室不可以被租赁的时间段
+		$conferenceRentInfos = $this->Seat->getConferenceRentInfos($conferenceId);
 	}
 }

@@ -20,19 +20,26 @@
             <article>
                 <div class="three threeOne"><i></i></div>
                 <div class="huiyishi">
-                    <img src="/img/工位图2-拷贝_28.jpg" alt="会议室"/>
+                    <!--7.8改图片名称-->
+                    <img src="/img/room3.jpg" alt="会议室"/>
                 </div>
                 <div class="three threeTwo">
                     <i></i>
-                    <div class="jifang">
+                    <!--<div class="jifang">
                         <img src="/img/工位图2-拷贝_33.jpg" alt="机房" style="opacity:0;"/>
-                    </div>
+                    </div>-->
                 </div>
             </article>
             <aside class="right" style="width:25.1%;float:right;margin-right:2%;">
-                <img class="dayinshi" src="/img/xiuxishi.jpg" style="height:2rem;"/>
-                <div class="home_right_left" style="">
-                    <img class="qiantai" src="/img/工位图2-拷贝_30.jpg" alt="前台" style=""/>
+                <!--7.8右上会议室-->
+                <div style="position:relative;">
+                    <img class="dayinshi" src="/img/xiuxishi.jpg" style="height:2rem;"/>
+                    <a href="/seats/rentConference/创新厅"><img class="conference2" src="/img/conferance_2.jpg" style="position:absolute;width:47%;left:2.5%;top:28.2%;" /></a>
+                </div>
+                <div class="home_right_left">
+                    <!--7.8右下左会议室-->
+                    <img class="qiantai" src="/img/room1.jpg" alt="前台" style="height:10rem;"/>
+                    <a href="/seats/rentConference/泛态厅"><img src="/img/conferance_1.jpg" class="conference1"></a>
                 </div>
                 <div class="home_right_right"></div>
             </aside>

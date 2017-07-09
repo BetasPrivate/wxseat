@@ -15,17 +15,12 @@ body {
     background-color:#f4f4f4;
     }
 form {
-    padding:0 5.5%;
-    background-color:#fff;
-    }
-form span {
-    width:25%;
-    float:left;
+    padding:0 10.5%;
+    margin-top: 5rem;
     }
 form input {
-    width:70%;
-    float:left;
-    height:2.6rem;
+    width:100%;
+    height:1.8rem;
     border:0;
     outline:none;
     box-sizing:border-box;
@@ -33,27 +28,21 @@ form input {
     -webkit-appearance:none;
     -moz-appearance:none;
     -o-appearance:none;
-    font-size:0.7rem;
-    }
-h2 {
-    border-bottom:solid 1px #d7d7d7;
-    }
-h2,h3 {
     font-size:0.8rem;
-    line-height:2.6rem;
+    margin-bottom: 0.5rem;
+    text-indent: 4.6%;
     }
 .h28 {
-    height:1.4rem;
+    height:0.75rem;
     width:100%;
     }
 input[type=submit]{
-    width:89%;
+    width:64.7%;
     display:block;
     margin:0 auto;
-    height:2rem;
-    line-height:2rem;
+    height:1.65rem;
+    line-height:1.65rem;
     text-align:2rem;
-    /*6.21改动*/
     background-color:#4bb5c3;
     color:#FFFFFF;
     border:0;
@@ -79,8 +68,10 @@ input[type=submit]{
 <body>
     <div class="home">
         <form>
-            <h2 class="clearfix"><span>密码</span><input type="password" id="passwd" placeholder="请输入大于8位数的密码"/></h2>
-            <h3 class="clearfix"><span>再次输入</span><input type="password" id="passwdVerify" placeholder="再次输入密码"/></h3>
+           <!--  <h2 class="clearfix"><span>密码</span><input type="password" id="passwd" placeholder="请输入大于8位数的密码"/></h2>
+            <h3 class="clearfix"><span>再次输入</span><input type="password" id="passwdVerify" placeholder="再次输入密码"/></h3> -->
+            <input type="password" id="passwd" placeholder="请输入大于8位数的密码"/>
+            <input type="password" id="passwdVerify" placeholder="再次输入密码"/>
         </form>
         <div class="h28"></div>
         <a href="#"><input type="submit" value="立即注册" onclick="submitRegInfo()"/></a>

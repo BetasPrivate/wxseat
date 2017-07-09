@@ -14,17 +14,12 @@ body {
 	background-color:#f4f4f4;
 	}
 form {
-	padding:0 5.5%;
-	background-color:#fff;
-	}
-form span {
-	width:25%;
-	float:left;
+	padding:0 10.5%;
+	margin-top:5rem;
 	}
 form input {
-	width:70%;
-	float:left;
-	height:2.6rem;
+	width:100%;
+	height:1.8rem;
 	border:0;
 	outline:none;
 	box-sizing:border-box;
@@ -32,27 +27,21 @@ form input {
 	-webkit-appearance:none;
 	-moz-appearance:none;
 	-o-appearance:none;
-	font-size:0.7rem;
-	}
-h2 {
-	border-bottom:solid 1px #d7d7d7;
-	}
-h2,h3 {
 	font-size:0.8rem;
-	line-height:2.6rem;
+	margin-bottom: 0.5rem;
+	text-indent: 4.6%;
 	}
 .h28 {
-	height:1.4rem;
+	height:0.2rem;
 	width:100%;
 	}
 input[type=submit]{
-	width:89%;
+	width:64.7%;
 	display:block;
 	margin:0 auto;
-	height:2rem;
-	line-height:2rem;
-	text-align:2rem;
-	/*6.21改动*/
+	height:1.65rem;
+	line-height:1.65rem;
+	text-align:center;
 	background-color:#4bb5c3;
 	color:#FFFFFF;
 	border:0;
@@ -78,10 +67,14 @@ input[type=submit]{
 <body>
 	<div class="home">
     	<form>
-        	<h2 class="clearfix"><span>用户名</span><input type="text" id="userName" name="user_name" placeholder="用户名"/></h2>
+        	<!-- <h2 class="clearfix"><span>用户名</span><input type="text" id="userName" name="user_name" placeholder="用户名"/></h2>
         	<h2 class="clearfix"><span>原密码</span><input type="password" id="originKey" name="old_key" placeholder="原密码"/></h2>
             <h2 class="clearfix"><span>新密码</span><input type="password" id="newKey" name="new_key" placeholder="新密码（8位及以上）"/></h2>
-            <h3 class="clearfix"><span>再次输入</span><input type="password" id="newKeyForCheck" name="resetkey" placeholder="再次输入"/></h3>
+            <h3 class="clearfix"><span>再次输入新密码</span><input type="password" id="newKeyForCheck" name="resetkey" placeholder="再次输入"/></h3> -->
+            <input type="text" id="userName" name="user_name" placeholder="用户名"/>
+            <input type="password" name="originKey" placeholder="原密码"/>
+            <input type="password" name="newKey" placeholder="新密码"/>
+            <input type="password" name="newKeyForCheck" placeholder="再次输入新密码"/>
         </form>
         <div class="h28"></div>
         <span id="msg" style="color: red;"></span>

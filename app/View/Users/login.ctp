@@ -17,32 +17,27 @@
         min-width:320px;
         margin:0 auto;
         }
-    .user {
-        background-color:#fff;
-        }
     input[type="text"],input[type="password"] {
-        width:87%;
+        width:100%;
         display:block;
         margin:0 auto;
-        height:2.5rem;
+        margin-bottom: 0.5rem;
+        height:1.8rem;
         border:none;
         outline:none;
         font-size:0.8rem;
-        }
-    input[type="text"] {
-        border-bottom:solid 1px #d7d7d7;
+        text-indent: 4.6%;
         }
     input[type="submit"] {
-        width:86.38%;
-        height:2rem;
+        width:82%;
+        height:1.65rem;
         font-size:0.8rem;
         text-align:center;
-        line-height:2rem;
+        line-height:1.65rem;
         border:none;
         outline:none;
         display:block;
-        margin:1.1rem auto;
-        /*6.21改动*/
+        margin:1.25rem auto 1rem;
         background-color:#4bb5c3;
         color:#FFFFFF;
         border-radius:0.15rem;
@@ -51,16 +46,16 @@
         -o-border-radius:0.15rem;
         }
     ::-webkit-input-placeholder { /* WebKit browsers */
-        color:#333;
+        color:#999;
         }
         :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-        color:#333;
+        color:#999;
         }
         ::-moz-placeholder { /* Mozilla Firefox 19+ */
-        color:#333;
+        color:#999;
         }
         :-ms-input-placeholder { /* Internet Explorer 10+ */
-        color:#333;
+        color:#999;
         }
     h2 {
         text-align:center;
@@ -70,23 +65,28 @@
         color:#333;
         }
     a.a_1 {
-        padding-right:1.5rem;
+        padding-right:0.75rem;
         }
     a.a_2 {
-        padding-left:1.5rem;
+        padding-left:0.75rem;
         }
+    form {
+        margin-top: 5rem;
+        padding: 0 10.5%;
+    }
 </style>
 </head>
 
 <body>
     <div class="home">
         <?php echo $this->Flash->render('auth'); ?>
+        <?php echo $this->Flash->render();?>
         <form action="/users/login" method="post">
             <div class="user">
-            <input type="text" name="data[User][username]" placeholder="账户"/>
+            <input type="text" name="data[User][username]" placeholder="用户名"/>
             <input type="password" name="data[User][password]" placeholder="密码"/>
             </div>
-            <input type="submit" value="确定"/>
+            <input type="submit" value="立即登录"/>
         </form>
       <!--   <form action="/users/login" id="UserLoginForm" method="post" accept-charset="utf-8">
             <div style="display:none;">

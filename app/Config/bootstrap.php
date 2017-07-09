@@ -92,6 +92,7 @@ Cache::config('default', array('engine' => 'File'));
  */
 
 define('WX_PAY', ROOT . DS . APP_DIR . DS .'Lib'. DS . 'Wxpay');
+define('CONFERENCE_DATA_DS', '-');
 
 require('../Lib/Utility.php');
 //dev

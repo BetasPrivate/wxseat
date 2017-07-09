@@ -107,14 +107,26 @@ h6 i {
         	<h2>保证金</h2>
             <h4>￥<?php echo $result['deposit'];?></h4>
         </div>
+        <?php if (!$result['isConference']):?>
         <div class="srartdate">
         	<h2>起止日期</h2>
             <h5><?php echo $result['dates']['startDate'];?> 至 <?php echo $result['dates']['endDate'];?></h5>
         </div>
+    	<?php endif;?>
+    	<?php if ($result['isConference']):?>
+        <div class="srartdate">
+        	<h2>已选时间段</h2>
+        	<?php foreach ($result['dates'] as $date):?>
+            <h5><?php echo $date['start_date'];?> 至 <?php echo $date['end_date'];?></h5>
+        	<?php endforeach;?>
+        </div>
+    	<?php endif;?>
+    	<?php if (!$result['isConference']):?>
         <div class="gongweihao">
         	<h2>工位数</h2>
             <h6 class="clearfix"><em class="number"><?php echo sizeof($result['seatInfo']);?></em></h6>
         </div>
+    	<?php endif;?>
         <div class="total">
         	<h2>总计</h2>
             <h4>￥<?php echo $result['totalFee'];?></h4>
@@ -153,8 +165,12 @@ h6 i {
     	postData.seatInfo = data.seatInfo;
     	postData.totalFee = data.totalFee;
     	postData.dates = data.dates;
+    	var url = '/orders/createNewOrder';
+    	<?php if($result['isConference']):?>
+    	url = '/orders/createOrderForConference';
+    	<?php endif;?> 
     	$.ajax({
-    		url: '/orders/createNewOrder',
+    		url: url,
     		method: 'post',
     		dataType: 'json',
     		data: postData,

@@ -74,13 +74,22 @@ body {
 .homeMain aside.right img.dayinshi {
 	width:100%;
 	}
+/*7.8改动*/
 .home_right_left {
 	width:58%;
 	float:left;
+	position:relative;
 	}
 .home_right_left img {
 	width:100%;
 	}
+.home_right_left img.conference1 {
+	width:82%;
+	position: absolute;
+	left:5%;
+	bottom: 0;
+}
+/*7.8改动结束*/
 .home_right_right {
 	width:35%;
 	padding-left:5%;

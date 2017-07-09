@@ -104,6 +104,14 @@ class OrdersController extends AppController {
 		$this->set(compact('result'));
 	}
 
+	public function createOrderForConference()
+	{
+		//待完善内容，需要判断orders是否可以被update
+		$data = $this->request->data;
+		var_dump($data);
+		exit();
+	}
+
 	public function prePay()
 	{
 		$this->set('title_for_layout', '支付订单');
