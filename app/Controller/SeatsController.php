@@ -29,6 +29,16 @@ class SeatsController extends AppController {
 	{
 		$data = $this->request->data['json'];
 		$seatIds = isset($data['seatIds']) ? $data['seatIds'] : [];
+
+		if (AuthComponent::user('is_activated') == 0) {
+			$result = [
+				'status' => 0,
+				'msg' => '当前账号已被禁用，请联系管理员激活',
+			];
+			echo json_encode($result);
+			exit();
+		}
+
 		if (sizeof($seatIds) == 0) {
 			$result = [
 				'status' => 0,

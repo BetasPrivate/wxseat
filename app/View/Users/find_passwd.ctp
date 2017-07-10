@@ -5,19 +5,19 @@
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no,width=device-width,height=device-height" />
 <meta name="format-detection" content="telephone=no" />
 <link rel="stylesheet" href="/css/common.css" type="text/css"/>
-<title>修改密码</title>
+<title>找回密码</title>
 <style>
 body {
 	max-width:750px;
 	min-width:320px;
 	margin:0 auto;
-	background-color:#f4f4f4;
 	}
 form {
-	padding:0 10.5%;
+	/*background-color:#fff;*/
 	margin-top:5rem;
+	padding:0 10.5%;
 	}
-form input {
+input[type=text],input[type=password] {
 	width:100%;
 	height:1.8rem;
 	border:0;
@@ -31,6 +31,10 @@ form input {
 	margin-bottom: 0.5rem;
 	text-indent: 4.6%;
 	}
+::-webkit-input-placeholder{color:#999;}    /* 使用webkit内核的浏览器 */
+:-moz-placeholder{color:#999;}                  /* Firefox版本4-18 */
+::-moz-placeholder{color:#999;}                  /* Firefox版本19+ */
+:-ms-input-placeholder{color:#999;} 
 .h28 {
 	height:0.2rem;
 	width:100%;
@@ -57,38 +61,31 @@ input[type=submit]{
 	-moz-border-radius:0.15rem;
 	-o-border-radius:0.15rem;
 	}
-::-webkit-input-placeholder{color:#999;}    /* 使用webkit内核的浏览器 */
-:-moz-placeholder{color:#999;}                  /* Firefox版本4-18 */
-::-moz-placeholder{color:#999;}                  /* Firefox版本19+ */
-:-ms-input-placeholder{color:#999;} 
 </style>
 </head>
 
 <body>
 	<div class="home">
     	<form>
-        	<!-- <h2 class="clearfix"><span>用户名</span><input type="text" id="userName" name="user_name" placeholder="用户名"/></h2>
-        	<h2 class="clearfix"><span>原密码</span><input type="password" id="originKey" name="old_key" placeholder="原密码"/></h2>
-            <h2 class="clearfix"><span>新密码</span><input type="password" id="newKey" name="new_key" placeholder="新密码（8位及以上）"/></h2>
-            <h3 class="clearfix"><span>再次输入新密码</span><input type="password" id="newKeyForCheck" name="resetkey" placeholder="再次输入"/></h3> -->
-            <!-- <input type="text" id="userName" name="user_name" placeholder="用户名"/> -->
-            <input type="password" id="originKey" placeholder="原密码"/>
-            <input type="password" id="newKey" placeholder="新密码"/>
+    		<input type="text" id="userName" name="user_name" placeholder="用户名"/>
+        	<input type="password" id="newKey" placeholder="新密码"/>
             <input type="password" id="newKeyForCheck" placeholder="再次输入新密码"/>
         </form>
         <div class="h28"></div>
+        <a onclick="findPasswd()"><input type="submit" value="确定"/></a>
         <span id="msg" style="color: red;"></span>
-        <a href="#" onclick="changePasswd()"><input type="submit" value="确认修改"/></a>
     </div>
 </body>
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-	function changePasswd() {
-		var a = document.getElementById('msg');
-		// var userName = $('#userName').val();
-		var originKey = $('#originKey').val();
+	var a = document.getElementById('msg');
+	function findPasswd() {
+		var data = <?php echo json_encode($result);?>;
+
 		var newKey = $('#newKey').val();
 		var newKeyForCheck = $('#newKeyForCheck').val();
+		var userName = $('#userName').val();
+
 		if (newKey.length < 8) {
 			alert('密码长度小于8！');
 			return;
@@ -97,30 +94,29 @@ input[type=submit]{
 			alert('两次输入的密码不一致！');
 			return;
 		}
-		var data = {
-			// user_name:userName,
-			origin_key:originKey,
-			new_key: newKey,
-			new_key_for_check:newKeyForCheck,
-		};
+
+		data.newKey = newKey;
+		data.userName = userName;
+
 		$.ajax({
-			url: '/users/submitEditInfo',
-			type:'POST',
-			dataType:'json',
-			data: data,
+			'url': '/users/findPasswd',
+			'type': 'POST',
+			'dataType': 'json',
+			'data': data,
 			success:function(response) {
 				if (response.status == 1) {
-					a.innerText = '修改成功，正在返回个人中心';
-                    a.style = 'color: green;';
-                    setTimeout("window.location.href='/users'", 3000);
+					a.innerText = '找回成功，3S后会跳往登录页面';
+	                a.style = 'color: green;';
+	                setTimeout("window.location.href='/'", 3000);
 				} else {
 					a.innerText = response.msg;
 				}
 			},
-			error:function(response) {
-				console.log(response);
+			error:function(res) {
+				console.log(res);
 			}
 		})
 	}
+
 </script>
 </html>

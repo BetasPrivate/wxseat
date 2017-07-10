@@ -1,5 +1,6 @@
 <?php
 App::uses('Seat', 'Model');
+App::uses('User', 'Model');
 class SuController extends AppController{
 	public $uses = [
 		'Trade',
@@ -28,6 +29,9 @@ class SuController extends AppController{
 			'contain' => [
 				'User',
 				'Order',
+			],
+			'order' => [
+				'Trade.created DESC',
 			],
 		]);
 
@@ -90,7 +94,14 @@ class SuController extends AppController{
 		$this->set('title_for_layout', '用户管理');
 
 		$users = $this->User->find('all', [
+			'order' => [
+				'is_activated DESC',
+			],
 		]);
+
+		foreach ($users as &$user) {
+			$user['clz_name'] = \User::className($user['User']['is_activated']);
+		}
 
 		$this->set(compact('users'));
 	}

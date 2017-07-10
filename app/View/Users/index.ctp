@@ -207,6 +207,7 @@ body {
 	    	<dd><a href="/orders"><i></i>我的订单</a></dd>
     	</dl>
     </div>
+    <div class="change"><a href="/users/changePasswd">修改密码</a></div>
     <div class="change"><a href="/users/logout">退出登录</a></div>
 </div>
 <div class="zhezhaoceng"></div>

@@ -1,9 +1,12 @@
 <?php
+require_once WX_PAY . "/example/WxPay.JsApiPay.php";
+App::uses('Token', 'Model');
 class UsersController extends AppController
 {
     public $uses = [
         'User',
         'Trade',
+        'Token',
     ];
 
     public function index()
@@ -55,7 +58,64 @@ class UsersController extends AppController
 
     public function signIn()
     {
+        $tools = new JsApiPay();
+        $openId = $tools->GetOpenid();
 
+        $this->set(compact('openId'));
+    }
+
+    public function findPasswd()
+    {
+        if (!$this->request->is('post')) {
+            $util = new Utility();
+            $tools = new JsApiPay();
+            $openId = $tools->GetOpenid();
+            $token = $this->Token->getToken(\Token::ACCESS_TOKEN);
+            $userDetail = $util->getUserDetailInfo($token, $openId);
+            $result = [
+                'open_id' => $openId,
+                'user_detail' => $userDetail,
+            ];
+        } else {
+            $data = $this->request->data;
+
+            $userName = $data['userName'];
+            $openId = $data['open_id'];
+            $newKey = $data['newKey'];
+            $nickName = $data['user_detail']['nickname'];
+
+            $user = $this->User->getUserByName($userName);
+            if (!$user) {
+                $result = [
+                    'status' => 0,
+                    'msg' => '没有找到该用户，请重新注册',
+                ];
+            } else {
+                if ($user['User']['open_id'] == $openId) {
+                    $this->User->id = $user['User']['id'];
+                    $saveResult = $this->User->save(['passwd' => $newKey]);
+                    if ($saveResult) {
+                        $result = [
+                            'status' => 1,
+                        ];
+                    } else {
+                        $result = [
+                            'status' => 0,
+                            'msg' => '找回密码失败，请重试',
+                        ];
+                    }
+                } else {
+                    $result = [
+                        'status' => 0,
+                        'msg' => '请使用注册账号时候的微信号'.$nickName.'来找回密码',
+                    ];
+                }
+                echo json_encode($result);
+                exit();
+            }
+
+        }
+        $this->set(compact('result'));
     }
 
     public function getVerficationCode()
@@ -96,10 +156,12 @@ class UsersController extends AppController
         $data = (array)json_decode($data['userInfo']);
         $phoneNum = $data['phoneNum'];
         $userName = $data['userName'];
+        $openId = $data['openId'];
 
         $result = [
             'phoneNum' => $phoneNum,
             'userName' => $userName,
+            'openId' => $openId,
         ];
         $this->layout = 'ajax';
         $this->set(compact('result'));
@@ -112,6 +174,7 @@ class UsersController extends AppController
         $userName = $data['userName'];
         $phoneNum = $data['phoneNum'];
         $passwd = $data['passwd'];
+        $openId = $data['openId'];
         $result = [];
         $isSaveUser = true;
 
@@ -127,7 +190,7 @@ class UsersController extends AppController
             } else {
                 $result = [
                     'status' => 0,
-                    'msg' => '已有该用户名的注册信息，请联系管理员',
+                    'msg' => '已有该用户名的注册信息，请尝试登陆或找回密码',
                 ];
                 $isSaveUser = false;
             }
@@ -140,6 +203,7 @@ class UsersController extends AppController
                 'username' => $userName,
                 'phone' => $phoneNum,
                 'password' => $passwd,
+                'open_id' => $openId,
             ];
 
             $saveResult = $this->User->save($saveData);
@@ -165,7 +229,7 @@ class UsersController extends AppController
     {
         $data = $this->request->data;
 
-        $userName = $data['user_name'];
+        $userName = AuthComponent::user('username');
         $oldKey = $data['origin_key'];
         $newKey = $data['new_key'];
         $result['status'] = 0;
@@ -187,10 +251,36 @@ class UsersController extends AppController
         exit();
     }
 
+    public function editUser()
+    {
+        $data = $this->request->data;
+
+        $userId = $data['user_id'];
+        $type = $data['type'];
+
+        $this->User->id = $userId;
+        $saveResult = $this->User->save(['is_activated' => $type]);
+
+        if ($saveResult) {
+            $result = [
+                'status' => 1,
+            ];
+        } else {
+            $result = [
+                'status' => 0,
+                'msg' => '保存失败，请稍后重试',
+            ];
+        }
+
+        echo json_encode($result);
+        exit();
+
+    }
+
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.
-        $this->Auth->allow('signIn', 'setPasswd', 'submitRegInfo', 'getVerficationCode', 'login', 'changePasswd', 'submitEditInfo', 'PCLogin');
+        $this->Auth->allow('signIn', 'setPasswd', 'submitRegInfo', 'getVerficationCode', 'login', 'submitEditInfo', 'PCLogin', 'findPasswd');
     }
 
     public function logout() {

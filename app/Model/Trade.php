@@ -128,6 +128,7 @@ class Trade extends AppModel {
 			],
 			'conditions' => [
 				'Trade.created <' => date('Y-m-d H:i:s', time() - self::CLOSE_TIME),
+				'Trade.status' => self::NO_PAY,
 			],
 		]);
 

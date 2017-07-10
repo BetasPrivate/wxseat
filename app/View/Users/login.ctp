@@ -104,7 +104,7 @@
             <div class="submit"><input type="submit" value="确定"></div>
         </form> -->
         <h2>
-            <a href="/users/changePasswd" class="a_1">修改密码</a>|<a href="/users/signIn" class="a_2">免费注册</a>
+            <a href="/users/findPasswd" class="a_1">找回密码</a>|<a href="/users/signIn" class="a_2">免费注册</a>
         </h2>
     </div>
 </body>

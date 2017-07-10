@@ -98,6 +98,13 @@ class Utility {
         return $result;
     }
 
+    public function getUserDetailInfo($token, $openId)
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$token.'&openid='.$openId.'&lang=zh_CN';
+
+        return $this->getFileGetContents($url);
+    }
+
     //edit the menu to what u want.
     public function editMenu($token = '')
     {
