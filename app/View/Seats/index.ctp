@@ -34,14 +34,14 @@
                 <!--7.8右上会议室-->
                 <div style="position:relative;">
                     <img class="dayinshi" src="/img/xiuxishi.jpg" style="height:2rem;"/>
-                    <!-- <a href="/seats/rentConference/创新厅"><img class="conference2" src="/img/conferance_2.jpg" style="position:absolute;width:47%;left:2.5%;top:28.2%;" /></a> -->
-                    <a href=#><img class="conference2" src="/img/conferance_2.jpg" style="position:absolute;width:47%;left:2.5%;top:28.2%;" /></a>
+                    <a href="/seats/rentConference/创新厅"><img class="conference2" src="/img/conferance_2.jpg" style="position:absolute;width:47%;left:2.5%;top:28.2%;" /></a>
+                    <!-- <a href=#><img class="conference2" src="/img/conferance_2.jpg" style="position:absolute;width:47%;left:2.5%;top:28.2%;" /></a> -->
                 </div>
                 <div class="home_right_left">
                     <!--7.8右下左会议室-->
                     <img class="qiantai" src="/img/room1.jpg" alt="前台" style="height:10rem;"/>
-                    <!-- <a href="/seats/rentConference/泛态厅"><img src="/img/conferance_1.jpg" class="conference1"></a> -->
-                    <a href=#><img src="/img/conferance_1.jpg" class="conference1"></a>
+                    <a href="/seats/rentConference/泛态厅"><img src="/img/conferance_1.jpg" class="conference1"></a>
+                    <!-- <a href=#><img src="/img/conferance_1.jpg" class="conference1"></a> -->
                 </div>
                 <div class="home_right_right"></div>
             </aside>

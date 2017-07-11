@@ -2,7 +2,9 @@
 class Order extends AppModel {
 	public $belongsTo = [
 		'Seat',
+		'Trade',
 	];
+	const CLOSE_TIME = 300;
 	const NORMAL = 0;
 	const MANUAL = 1;
 	const PENDING_SUBMIT = 2;
@@ -33,14 +35,16 @@ class Order extends AppModel {
 			$startDate = $date['start_date'];
 			$endDate = $date['end_date'];
 
+			//判断当前会议室的时间是否已有订单
 			$checkCurrentOrder = $this->updateAll(
 				[
-					'updated' => date('Y-m-d H:i:s'),
+					'updated' => '"'.date('Y-m-d H:i:s').'"',
 				],
 				[
 					'seat_id' => $conferenceId,
 					'start_date' => $startDate,
 					'end_date' => $endDate,
+					'Order.is_deleted' => 0,
 				]
 			);
 			$rows = $this->getAffectedRows();
@@ -59,6 +63,7 @@ class Order extends AppModel {
 			$this->save($saveData);
 		}
 
+		//边界情况：两个客户同时检查了一个座位的占用之后，同时生成了一个订单，导致订单总数为2
 		if ($needRollBack) {
 			$result['status'] = 0;
 			$dataSource->rollback();
@@ -68,5 +73,70 @@ class Order extends AppModel {
 		}
 
 		return $result;
+	}
+
+	public function genTradeForConference($conferenceId, $totalFee, $dates, $userId, $platformTradeId)
+	{
+		$dataSource = $this->getDataSource();
+		$dataSource->begin();
+		$needRollBack = false;
+
+		$this->Trade->create();
+		$this->Trade->save(['user_id' => $userId, 'total_fee' => $totalFee, 'platform_trade_id' => $platformTradeId]);
+		$tradeId = $this->Trade->getLastInsertId();
+
+		foreach ($dates as $date) {
+			$startDate = $date['start_date'];
+			$endDate = $date['end_date'];
+
+			$setTradeId = $this->updateAll(
+				[
+					'trade_id' => $tradeId,
+				],
+				[
+					'seat_id' => $conferenceId,
+					'start_date' => $startDate,
+					'end_date' => $endDate,
+					'trade_id' => 0,
+				]
+			);
+
+			$rows = $this->getAffectedRows();
+			if ($rows !== 1) {
+				$needRollBack = true;
+				break;
+			}
+		}
+
+		if ($needRollBack) {
+			$dataSource->rollback();
+			$result = [
+				'status' => 0,
+				'msg' => '会议室信息有变更，请刷新页面重试',
+				'tradeId' => 0,
+			];
+		} else {
+			$dataSource->commit();
+			$result = [
+				'status' => 1,
+				'msg' => 'ok',
+				'tradeId' => $tradeId,
+			];
+		}
+
+		return $result;
+	}
+
+	public function disableOrders()
+	{
+		$this->updateAll(
+			[
+				'Order.is_deleted' => 1,
+			],
+			[
+				'Order.trade_id' => 0,
+				'Order.created <' => date('Y-m-d H:i:s', time() - self::CLOSE_TIME),
+			]
+		);
 	}
 }

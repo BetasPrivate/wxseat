@@ -13,6 +13,7 @@ class SeatsController extends AppController {
 		
 		$this->Seat->releaseSeats();
 		$this->Trade->closeTrades();
+		$this->Order->disableOrders();
 
 		$seats = $this->Seat->find('all', [
 			'conditions' => [
@@ -186,11 +187,14 @@ class SeatsController extends AppController {
 			if (!isset($data['arr']) || sizeof($data['arr']) == 0) {
 				$result = [
 					'status' => 0,
-					'msg' => '请选择正确的座位号',
+					'msg' => '请选择正确的预订时间',
 				];
 				echo json_encode($result);
 				exit();
 			}
+			$conferenceName = $data['conferenceName'];
+			$conferenceId = $this->Seat->getConferenceIdByConferenceName($conferenceName);
+
 			if (!$this->Seat->checkConferenceLegal($data)) {
 				$result = [
 					'status' => 0,
@@ -200,7 +204,9 @@ class SeatsController extends AppController {
 				exit();
 			}
 
-			$dates = $this->Seat->parseConferenceRentData($data['arr']);
+			$datesArr = json_decode($data['arr'], true);
+
+			$dates = $this->Seat->parseConferenceRentData($datesArr);
 
 			$saveResult = $this->Order->createPendingOrderForConference($conferenceId, $dates);
 
@@ -213,8 +219,7 @@ class SeatsController extends AppController {
 			} else {
 				$result = [
 					'status' => 0,
-					'dates' => $dates,
-					'conference_id' => $conferenceId,
+					'msg' => '会议室信息有变更，请刷新页面重试',
 				];
 			}
 
@@ -224,5 +229,7 @@ class SeatsController extends AppController {
 
 		//得到当前会议室不可以被租赁的时间段
 		$conferenceRentInfos = $this->Seat->getConferenceRentInfos($conferenceId);
+
+		$this->set(compact('conferenceRentInfos', 'conferenceName'));
 	}
 }

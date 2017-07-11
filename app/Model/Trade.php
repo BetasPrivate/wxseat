@@ -3,8 +3,8 @@ class Trade extends AppModel {
 	const NO_PAY = 0;
 	const PAID = 1;
 	const CLOSED_BY_SYSETM = 2;
-	//超时关闭时间为15分钟
-	const CLOSE_TIME = 900;
+	//超时关闭时间为5分钟
+	const CLOSE_TIME = 300;
 
 	public static $texts = [
 		self::NO_PAY => '待支付',
@@ -141,6 +141,14 @@ class Trade extends AppModel {
 		$this->updateAll(
 		[
 			'status' => self::CLOSED_BY_SYSETM,	
+		],
+		[
+			'Trade.id' => $tradeIds,
+		]);
+
+		$this->Order->updateAll(
+		[
+			'Order.is_deleted' => 1,
 		],
 		[
 			'Trade.id' => $tradeIds,

@@ -67,14 +67,10 @@ class UsersController extends AppController
     public function findPasswd()
     {
         if (!$this->request->is('post')) {
-            $util = new Utility();
             $tools = new JsApiPay();
             $openId = $tools->GetOpenid();
-            $token = $this->Token->getToken(\Token::ACCESS_TOKEN);
-            $userDetail = $util->getUserDetailInfo($token, $openId);
             $result = [
                 'open_id' => $openId,
-                'user_detail' => $userDetail,
             ];
         } else {
             $data = $this->request->data;
@@ -82,7 +78,11 @@ class UsersController extends AppController
             $userName = $data['userName'];
             $openId = $data['open_id'];
             $newKey = $data['newKey'];
-            $nickName = $data['user_detail']['nickname'];
+
+            $util = new Utility();
+            $token = $this->Token->getToken(\Token::ACCESS_TOKEN);
+            $userDetail = $util->getUserDetailInfo($token, $openId);
+            $nickName = isset($userDetail['nickname']) ? $userDetail['nickname'] : false;
 
             $user = $this->User->getUserByName($userName);
             if (!$user) {

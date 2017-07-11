@@ -106,10 +106,24 @@ class OrdersController extends AppController {
 
 	public function createOrderForConference()
 	{
-		//待完善内容，需要判断orders是否可以被update
 		$data = $this->request->data;
-		var_dump($data);
+		$conferenceId = $data['seatInfo'][0];
+		$totalFee = $data['totalFee'];
+		$dates = $data['dates'];
+		$userId = AuthComponent::user('id');
+		$platformTradeId = WxPayConfig::MCHID.$this->Trade->getTradeNo();
+
+		$saveResult = $this->Order->genTradeForConference($conferenceId, $totalFee, $dates, $userId, $platformTradeId);
+
+		$result = [
+			'status' => $saveResult['status'],
+			'msg' => $saveResult['msg'],
+			'tradeId' => $saveResult['tradeId'],
+		];
+
+		echo json_encode($result);
 		exit();
+
 	}
 
 	public function prePay()
@@ -156,6 +170,7 @@ class OrdersController extends AppController {
 		$result['jsApiParameters'] = $jsParams['jsApiParameters'];
 		$result['editAddress'] = $jsParams['editAddress'];
 		$result['totalFee'] = $jsParams['totalFee'];
+		$result['tradeId'] = (String)$tradeId;
 
 		return $result;
 	}

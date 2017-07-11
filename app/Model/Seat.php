@@ -1,4 +1,5 @@
 <?php
+App::uses('Trade', 'Model');
 class Seat extends AppModel {
     var $hasMany = [
         'Order',
@@ -253,13 +254,32 @@ class Seat extends AppModel {
 
     public function getConferenceRentInfos($conferenceId)
     {
-        $seats = $this->Order->find('all', [
+        $conferenceInfos = $this->Order->find('all', [
             'conditions' => [
                 'Seat.id' => $conferenceId,
                 'Order.start_date >' => date('Y-m-d'),
+                'or' => [
+                    'Trade.status' => [\Trade::NO_PAY, \Trade::PAID],
+                    'Order.trade_id' => 0,
+                ]
             ],
         ]);
 
-        return $seats;
+        $infoArr = [];
+
+        foreach ($conferenceInfos as $conferenceInfo) {
+            $order = $conferenceInfo['Order'];
+            $startDate = $order['start_date'];
+            $endDate = $order['end_date'];
+            $year = Date('Y', strtotime($startDate));
+            $month = Date('m', strtotime($startDate));
+            $day = Date('d', strtotime($startDate));
+            $startTime = Date('H:i', strtotime($startDate));
+            $endTime = Date('H:i', strtotime($endDate));
+            $perDateStr = $year.CONFERENCE_DATA_DS.$month.CONFERENCE_DATA_DS.$day.CONFERENCE_DATA_DS.$startTime.CONFERENCE_DATA_DS.$endTime;
+            array_push($infoArr, $perDateStr);
+        }
+
+        return $infoArr;
     }
 }
