@@ -298,11 +298,11 @@ window.onload=function(){
 	//点击遮罩层关闭
 	$(".continue").click(function(){
 		$(".zhezhaoceng").css({display:"none"});
-		$(".layer").css({bottom:-400});
+		$(".layer").css({bottom:-1000});
 		});
 	$(".zhezhaoceng").click(function(){
 		$(this).css({display:"none"});
-		$(".layer").css({bottom:-400});
+		$(".layer").css({bottom:-1000});
 		});
 	//给当前已租用的座位加红框 6.17改动
 	var oimg=$("img");
@@ -352,7 +352,7 @@ window.onload=function(){
 		}
 		$(".layer h2 i").text(green_array.join(" "));
 		if(green_array.length==0){
-			$(".layer").css({bottom:-400});
+			$(".layer").css({bottom:-1000});
 		}
 	}
 //占用位弹出层函数
@@ -671,7 +671,7 @@ $(document).ready(function(e) {
 					    document.body.appendChild(mapForm);
 					    mapForm.submit();
 						$(".zhezhaoceng").css({display:"none"});
-						$(".layer").css({bottom:-400});
+						$(".layer").css({bottom:-1000});
 	            	}
 	            },
 	            error:function (data) {

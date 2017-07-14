@@ -143,10 +143,11 @@
 <script type="text/javascript">
     var seats = <?php echo json_encode($result['seats']);?>;
 </script>
-<script src="js/jquery-3.2.1.min.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
 <script src="js/gongwei.js"></script>
-<script type="text/javascript" src="js/hammer.js"></script>
-<script src="js/scaling.js"></script>
+<script type="text/javascript" src="/js/hammer.js"></script>
+<script src="/js/scaling.js"></script>
+<script src="/js/resize.js"></script>
 <script>
     window.onresize=function(){
         window.location.reload();
