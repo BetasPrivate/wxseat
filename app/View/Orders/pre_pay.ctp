@@ -202,7 +202,7 @@
 	<script>
 	    wx.config({
 
-	        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 
 	        appId: "<?php echo $result['appId'];?>", // 必填，公众号的唯一标识
 
@@ -235,7 +235,7 @@
 	                WeixinJSBridge.log(res.err_msg);
 	                // alert(res.err_code+res.err_desc+res.err_msg);
 	                if (res.err_msg == 'get_brand_wcpay_request:ok') {
-	                	window.location.href = '/orders/paySuccess';
+                        editBuyerInfo();
 	                }
 	            }
 	        );
@@ -390,5 +390,54 @@
         'data': LAreaData //数据源
     });
     area1.value=[27,13,3];//控制初始位置，注意：该方法并不会影响到input的value
+</script>
+<script type="text/javascript">
+    function editBuyerInfo()
+    {
+        var company = $('#company').val();
+        var tax_payer_id = $('#tax_payer_id').val();
+        var recipients = $('#recipients').val();
+        var phone = $('#phone').val();
+        var address = $('#address').val();
+        var country = '中国';
+        var provinceKey = area1.value[0];
+        var cityKey = area1.value[1];
+        var districtKey = area1.value[2] == undefined ? area1.value[1] : area1.value[2];
+        var data = area1.data;
+        var province = data[provinceKey].name;
+        var city = data[provinceKey].child[cityKey].name;
+        if (area1.value[2] != undefined) {
+            var district = data[provinceKey].child[cityKey].child[districtKey].name;
+        } else {
+            var district = city;
+        }
+
+        var data = {
+            invoice_title:company,
+            tax_payer_id:tax_payer_id,
+            receiver_name:recipients,
+            receiver_phone:phone,
+            receiver_country:country,
+            receiver_province:province,
+            receiver_city:city,
+            receiver_district:district,
+            receiver_address:address,
+            trade_id:'<?php echo $result['tradeId'];?>',
+        };
+
+        $.ajax({
+            url:'/trades/editTradeInfo',
+            type:'POST',
+            dataType:'json',
+            data:data,
+            success:function(res){
+                window.location.href = '/orders/paySuccess';
+            },
+            error:function(res){
+                alert(JSON.stringify(res));
+                window.location.href = '/orders/paySuccess';
+            }
+        });
+    }
 </script>
 </html>
