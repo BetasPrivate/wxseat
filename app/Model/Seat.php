@@ -104,15 +104,34 @@ class Seat extends AppModel {
         return $result;
     }
 
-    public function getSeatPrices($ids)
+    public function getSeatPrices($dates, $ids)
     {
         $price = 0;
-        $query = sprintf("select * from seats Seat left join seat_type_price_relations SeatTypePriceRelation on Seat.type = SeatTypePriceRelation.seat_type_id where Seat.real_id in %s", $ids);
+        $startDate = $dates['startDate'];
+        $endDate = $dates['endDate'];
+
+        $query = sprintf("select * from seats Seat left join seat_types SeatType on Seat.type = SeatType.id where Seat.real_id in %s and Seat.is_deleted = 0", $ids);
         $seatInfos = $this->query($query);
 
         foreach ($seatInfos as $seatInfo) {
-            $price += $seatInfo['SeatTypePriceRelation']['price'];
+            $seatPrice = $this->getSeatPriceByDate($startDate, $endDate, $seatInfo);
+            $price += $seatPrice;
         }
+
+        return $price;
+    }
+
+    public function getSeatPriceByDate($startDate, $endDate, $seatInfo)
+    {
+        $dailyPrice = $seatInfo['SeatType']['daily_price'];
+        $monthlyPrice = $seatInfo['SeatType']['monthly_price'];
+        $annualPrice = $seatInfo['SeatType']['annual_price'];
+        $deposit = $seatInfo['SeatType']['deposit'];
+
+        $util = new Utility();
+        $dateDiff = $util->diffDate($startDate, $endDate);
+
+        $price = $annualPrice * $dateDiff['year'] + $monthlyPrice * $dateDiff['month'] + $dailyPrice * $dateDiff['day'];
 
         return $price;
     }
@@ -193,8 +212,15 @@ class Seat extends AppModel {
 
     public function getDeposit($seatIdStr)
     {
-        return round(100,2);
-        //codes to write.
+        $deposit = 0;
+        $query = sprintf("select * from seats Seat left join seat_types SeatType on Seat.type = SeatType.id where Seat.real_id in %s and Seat.is_deleted = 0", $seatIdStr);
+        $seatInfos = $this->query($query);
+
+        foreach ($seatInfos as $seatInfo) {
+            $deposit += $seatInfo['SeatType']['deposit'];
+        }
+
+        return $deposit;
     }
 
     //conference

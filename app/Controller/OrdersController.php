@@ -191,7 +191,7 @@ class OrdersController extends AppController {
 		$trade = $this->Trade->getTradeByTradeId($tradeId);
 		$platformTradeId = $trade['Trade']['platform_trade_id'];
 		$totalFee = $trade['Trade']['total_fee'];
-		$totalFeeWXPay = $totalFee * 100;
+		$totalFeeWXPay = $totalFee;
 		$totalFeeWXPay = 1;
 
 		//②、统一下单

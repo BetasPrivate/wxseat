@@ -113,7 +113,7 @@ class SeatsController extends AppController {
 			$seatIdStr = '('.substr($seatIdStr, 1).')';
 
 			//总金额
-			$price = $this->Seat->getSeatPrices($seatIdStr);
+			$price = $this->Seat->getSeatPrices($dates, $seatIdStr);
 
 			//总押金
 			$deposit = $this->Seat->getDeposit($seatIdStr);
