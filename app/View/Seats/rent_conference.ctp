@@ -517,20 +517,21 @@
 							dataType:'json',
 							data:data,
 							success:function(response){
-								if (response.status == 0) {
-									alert(response.msg);
+								if (response.status == 1) {
+								 	window.location.href = '/orders/paySuccess';
 								} else {
-									response.is_conference = true;
-									var mapForm = document.createElement("form");
-								    mapForm.method = "POST"; // or "post" if appropriate
-								    mapForm.action = "/seats/rentSeats";
-								    var mapInput = document.createElement("input");
-								    mapInput.type = "hidden";
-								    mapInput.name = "seatInfo";
-								    mapInput.value = JSON.stringify(response);
-								    mapForm.appendChild(mapInput);
-								    document.body.appendChild(mapForm);
-								    mapForm.submit();
+									alert(response.msg);
+									// response.is_conference = true;
+									// var mapForm = document.createElement("form");
+								 //    mapForm.method = "POST"; // or "post" if appropriate
+								 //    mapForm.action = "/seats/rentSeats";
+								 //    var mapInput = document.createElement("input");
+								 //    mapInput.type = "hidden";
+								 //    mapInput.name = "seatInfo";
+								 //    mapInput.value = JSON.stringify(response);
+								 //    mapForm.appendChild(mapInput);
+								 //    document.body.appendChild(mapForm);
+								 //    mapForm.submit();
 								}
 							}
 						})

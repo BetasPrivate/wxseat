@@ -39,6 +39,7 @@ class SuController extends AppController{
 			$tradeStatus = $trade['Trade']['status'];
 			$trades[$key]['trade_status_text'] = \Trade::text($tradeStatus);
 			$trades[$key]['class_name'] = \Trade::className($tradeStatus);
+			$trades[$key]['Trade']['total_fee'] = $trade['Trade']['total_fee']/100;
 			$orders = $trade['Order'];
 
 			$seatIds = [];
@@ -47,6 +48,11 @@ class SuController extends AppController{
 				$endDate = $order['end_date'];
 				$seatId = $order['seat_id'];
 				array_push($seatIds, $seatId);
+			}
+
+			if (empty($startDate) || empty($endDate)) {
+				unset($trades[$key]);
+				continue;
 			}
 
 			$seatIdStr = $this->Seat->getSeatStrBySeatIds($seatIds);

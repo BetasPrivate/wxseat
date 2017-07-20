@@ -1,4 +1,7 @@
 <?php
+require_once WX_PAY . "/lib/WxPay.Api.php";
+require_once WX_PAY . "/example/WxPay.JsApiPay.php";
+require_once WX_PAY . "/example/log.php";
 class SeatsController extends AppController {
 	public $uses = [
 		'Seat',
@@ -211,11 +214,22 @@ class SeatsController extends AppController {
 			$saveResult = $this->Order->createPendingOrderForConference($conferenceId, $dates);
 
 			if ($saveResult['status'] == 1) {
+				$totalFee = 0;
+				$userId = AuthComponent::user('id');
+				$platformTradeId = WxPayConfig::MCHID.$this->Trade->getTradeNo();
+
+				$saveResult = $this->Order->genTradeForConference($conferenceId, $totalFee, $dates, $userId, $platformTradeId);
+
 				$result = [
-					'status' => 1,
-					'dates' => $dates,
-					'conference_id' => $conferenceId,
+					'status' => $saveResult['status'],
+					'msg' => $saveResult['msg'],
+					'tradeId' => $saveResult['tradeId'],
 				];
+				// $result = [
+				// 	'status' => 1,
+				// 	'dates' => $dates,
+				// 	'conference_id' => $conferenceId,
+				// ];
 			} else {
 				$result = [
 					'status' => 0,

@@ -292,7 +292,7 @@
 
 <body>
 	<div class="home">
-    	<h2><span>实际支付：</span><em> ¥ <?php echo $result['totalFee'];?></em></h2>
+    	<h2><span>实际支付：</span><em> ¥ <?php echo $result['totalFee']/100;?></em></h2>
         <h3 class="clearfix"><span>温馨提示：</span><em>保证金作为押金以防办公设施破坏，租期结束后五个工作日内线下返还。</em></h3>
         <h4>开具发票<em></em></h4>
         <h4 class="active">
@@ -434,7 +434,7 @@
                 window.location.href = '/orders/paySuccess';
             },
             error:function(res){
-                alert(JSON.stringify(res));
+                // alert(JSON.stringify(res));
                 window.location.href = '/orders/paySuccess';
             }
         });

@@ -80,7 +80,6 @@ class Order extends AppModel {
 		$dataSource = $this->getDataSource();
 		$dataSource->begin();
 		$needRollBack = false;
-		$totalFee = 1;
 
 		$this->Trade->create();
 		$this->Trade->save(['user_id' => $userId, 'total_fee' => $totalFee, 'platform_trade_id' => $platformTradeId]);
@@ -118,6 +117,7 @@ class Order extends AppModel {
 			];
 		} else {
 			$dataSource->commit();
+			$this->Trade->setPaidTradeStatus($platformTradeId);
 			$result = [
 				'status' => 1,
 				'msg' => 'ok',

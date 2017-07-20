@@ -64,7 +64,7 @@ class Trade extends AppModel {
 		}
 	}
 
-	private function setPaidTradeStatus($platformTradeId)
+	public function setPaidTradeStatus($platformTradeId)
 	{
 		$trade = $this->find('first', [
 			'conditions' => [

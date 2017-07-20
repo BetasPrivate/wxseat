@@ -77,7 +77,7 @@ class OrdersController extends AppController {
 			
 			$this->Trade->create();
 			$platformTradeId = WxPayConfig::MCHID.$this->Trade->getTradeNo();
-			$this->Trade->save(['user_id' => $userId, 'total_fee' => $totalFee, 'platform_trade_id' => $platformTradeId]);
+			$this->Trade->save(['user_id' => $userId, 'total_fee' => $totalFee *100, 'platform_trade_id' => $platformTradeId]);
 			$tradeId = $this->Trade->getLastInsertId();
 
 			//生成订单
