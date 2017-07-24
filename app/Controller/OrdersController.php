@@ -10,6 +10,7 @@ class OrdersController extends AppController {
 		'Seat',
 		'Trade',
 		'Token',
+		'WifiConfig',
 	];
 
 	public function index()
@@ -83,9 +84,15 @@ class OrdersController extends AppController {
 			//生成订单
 			foreach ($seatInfos as $seatInfo) {
 				$seatRealId = $seatInfo['seatId'];
+				$seatId = $this->Seat->find('first', [
+					'conditions' => [
+						'Seat.real_id' => $seatRealId,
+						'Seat.is_deleted' => 0,
+					],
+				])['Seat']['id'];
 				$this->Order->create();
 				$saveData = [
-					'seat_id' => $seatRealId,
+					'seat_id' => $seatId,
 					'trade_id' => $tradeId,
 					'start_date' => $startDate,
 					'end_date' => $endDate,
@@ -218,9 +225,42 @@ class OrdersController extends AppController {
 		];
 	}
 
-	public function paySuccess()
+	public function paySuccess($tradeId)
 	{
 		$this->set('title_for_layout', '支付成功！');
+
+		$orders = $this->Order->find('list', [
+			'fields' => [
+				'Order.id',
+				'Order.seat_id',
+			],
+			'conditions' => [
+				'Order.trade_id' => $tradeId,
+				'Order.is_deleted' => 0,
+			],
+		]);
+
+		$seats = $this->Seat->find('list', [
+			'fields' => [
+				'Seat.id',
+				'Seat.real_id',
+			],
+			'conditions' => [
+				'Seat.id' => $orders,
+			],
+		]);
+
+		$seatIdStr = $this->Seat->getSeatStrBySeatIds($seats);
+
+		$sectionId = 1;
+
+		$wifiConfig = $this->WifiConfig->find('first', [
+			'conditions' => [
+				'id' => $sectionId,
+			],
+		]);
+
+		$this->set(compact('wifiConfig', 'seatIdStr'));
 	}
 
 	function printf_info($data)

@@ -92,17 +92,18 @@ ul {
             <ul>
                 <li>
                     <h2>上网账号</h2>
-                    <h3>00000000000</h3>
+                    <h3><?php echo $wifiConfig['WifiConfig']['name'];?></h3>
                 </li>
                 <li>
                     <h2>密码</h2>
-                    <h3>00000000000</h3>
+                    <h3><?php echo $wifiConfig['WifiConfig']['pwd'];?></h3>
                 </li>
             </ul>
         </div>
         <div class="footer">
             <h2>您预定的工位号</h2>
-            <h3>001<span></span>002<span></span>003</h3>
+            <!-- <h3>001<span></span>002<span></span>003</h3> -->
+            <h3><?php echo $seatIdStr;?></h3>
             <h4>门禁二维码</h4>
             <h5><img src="/img/erweima.jpg" alt="门禁二维码"/></h5>
         </div>

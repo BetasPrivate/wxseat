@@ -72,6 +72,8 @@ class Trade extends AppModel {
 			],
 		]);
 
+		$this->Order->setSeatFreeTimeByPaidTradeId($trade['Trade']['id']);
+
 		$this->id = $trade['Trade']['id'];
 		$this->save(['status' => self::PAID]);
 	}
@@ -86,6 +88,9 @@ class Trade extends AppModel {
 			'conditions' => [
 				'User.id' => $userId,
 				'Trade.is_deleted' => 0,
+			],
+			'order' => [
+				'Trade.id DESC',
 			],
 		]);
 

@@ -431,11 +431,11 @@
             dataType:'json',
             data:data,
             success:function(res){
-                window.location.href = '/orders/paySuccess';
+                window.location.href = '/orders/paySuccess/<?php echo $result['tradeId'];?>';
             },
             error:function(res){
                 // alert(JSON.stringify(res));
-                window.location.href = '/orders/paySuccess';
+                window.location.href = '/orders/paySuccess/<?php echo $result['tradeId'];?>';
             }
         });
     }

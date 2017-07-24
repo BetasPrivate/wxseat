@@ -1,4 +1,5 @@
 <?php
+App::uses('Seat', 'Model');
 class Order extends AppModel {
 	public $belongsTo = [
 		'Seat',
@@ -137,6 +138,40 @@ class Order extends AppModel {
 			[
 				'Order.trade_id' => 0,
 				'Order.created <' => date('Y-m-d H:i:s', time() - self::CLOSE_TIME),
+			]
+		);
+	}
+
+	public function setSeatFreeTimeByPaidTradeId($tradeId)
+	{
+		$orders = $this->find('all', [
+			'fields' => [
+				'Order.id',
+				'Order.seat_id',
+				'Order.end_date',
+			],
+			'conditions' => [
+				'Order.trade_id' => $tradeId,
+				'Order.is_deleted' => 0,
+			],
+		]);
+
+		$seatIdArr = [];
+
+		foreach ($orders as $order) {
+			$seatId = $order['Order']['seat_id'];
+			array_push($seatIdArr, $seatId);
+			$endDate = $order['Order']['end_date'];
+		}
+
+		$this->Seat->updateAll(
+			[
+				'Seat.free_time' => "'".$endDate."'",
+				'Seat.status' => \Seat::OCCUPIED,
+			],
+			[
+				'Seat.id' => $seatIdArr,
+				'Seat.is_deleted' => 0,
 			]
 		);
 	}
