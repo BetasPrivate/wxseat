@@ -18,6 +18,29 @@ Class TradesController extends AppController {
 		exit;
 	}
 
+	public function returnDeposit()
+	{
+		$data = $this->request->data;
+
+		$data['has_return_deposit'] = 1;
+
+		$saveRes = $this->Trade->save($data);
+
+		if ($saveRes) {
+			$result = [
+				'status' => 1,
+			];
+		} else {
+			$result = [
+				'status' => 0,
+				'msg' => '系统错误，请重试',
+			];
+		}
+
+		echo json_encode($result);
+		exit();
+	}
+
 	public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.

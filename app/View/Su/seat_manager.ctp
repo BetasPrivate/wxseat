@@ -35,6 +35,42 @@
         <li class="active">座位管理</li>
         <li><a href="/su/userManager">用户管理</a></li>
     </ol>
+    <tr class="row">
+        <td class="col-md-3">上网账号:
+        <input type="text" name="" value="<?php echo $wifiConfig['WifiConfig']['name'];?>" id="wifi_name">
+        </td>
+        <td class="col-md-3">上网密码:
+        <input type="text" name="" value="<?php echo $wifiConfig['WifiConfig']['pwd'];?>" id="wifi_pwd">
+        </td>
+        <td class="col-md-3"><button class="btn btn-info" onclick="updateWifiConfig()">更新</button></td>
+    </tr>
+    <hr class="mini">
+    <table class="table table-hover table-condensed">
+        <caption>座位价格表</caption>
+        <thead class="row">
+            <tr>
+                <th class="col-md-2">类型</th>
+                <th class="col-md-2">日租金</th>
+                <th class="col-md-2">月租金</th>
+                <th class="col-md-2">年租金</th>
+                <th class="col-md-2">保证金</th>
+                <th class="col-md-2">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($seatTypes as $key => $seatType): ?>
+            <tr>
+                <td class="col-md-2"><?php echo $seatType['SeatType']['name'];?></td>
+                <td class="col-md-2"><input type="text" name="" value="<?php echo $seatType['SeatType']['daily_price'];?>" style="width: 50px;" id="daily_price<?php echo $seatType['SeatType']['id'];?>"></td>
+                <td class="col-md-2"><input type="text" name="" value="<?php echo $seatType['SeatType']['monthly_price'];?>" style="width: 50px;" id="monthly_price<?php echo $seatType['SeatType']['id'];?>"></td>
+                <td class="col-md-2"><input type="text" name="" value="<?php echo $seatType['SeatType']['annual_price'];?>" style="width: 50px;" id="annual_price<?php echo $seatType['SeatType']['id'];?>"></td>
+                <td class="col-md-2"><input type="text" name="" value="<?php echo $seatType['SeatType']['deposit'];?>" style="width: 50px;" id="deposit<?php echo $seatType['SeatType']['id'];?>"></td>
+                <td class="col-md-2"><button class="btn btn-info" onclick="updateSeatTypeInfo(<?php echo $seatType['SeatType']['id'];?>)">更新</button></td>
+            </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+    <hr class="mini">
     <table class="table table-hover table-condensed">
         <caption>座位信息表</caption>
         <thead class="row">
@@ -93,6 +129,61 @@
         $( "#price" ).val('');
         $( "#deposit" ).val('');
         $( "#freeTime" ).val('');
+    }
+
+    function updateSeatTypeInfo(typeId) {
+        if (!confirm('确定更新?')) {
+            return;
+        }
+
+        var data =  {
+            id:typeId,
+            daily_price:$('#daily_price'+typeId).val(),
+            monthly_price:$('#monthly_price'+typeId).val(),
+            annual_price:$('#annual_price'+typeId).val(),
+            deposit:$('#deposit'+typeId).val(),
+        };
+
+
+        $.ajax({
+            url:'/su/updateSeatTypeInfo',
+            type:'POST',
+            dataType:'json',
+            data:data,
+            success:function(response) {
+                if (response.status == 1) {
+                    showTips('☺ 修改成功');
+                } else {
+                    showTips(response.msg);
+                }
+            }
+        })
+    }
+
+    function updateWifiConfig(){
+        if (!confirm('确定更新?')) {
+            return;
+        }
+
+        var data = {
+            name:$('#wifi_name').val(),
+            pwd:$('#wifi_pwd').val(),
+        }
+
+        $.ajax({
+            url:'/su/updateWifiConfig',
+            type:'POST',
+            dataType:'json',
+            data:data,
+            success:function(response) {
+                if (response.status == 1) {
+                    showTips('☺ 修改成功');
+                    $( "#PanelSeatDetail" ).modal('hide');
+                } else {
+                    showTips(response.msg);
+                }
+            }
+        })
     }
 
     function showSeatDetailPanel(seatId, index) {

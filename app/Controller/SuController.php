@@ -7,6 +7,8 @@ class SuController extends AppController{
 		'Token',
 		'Seat',
 		'User',
+		'WifiConfig',
+		'SeatType',
 	];
 
 	public function index()
@@ -31,6 +33,8 @@ class SuController extends AppController{
 				'Order',
 			],
 			'order' => [
+				'Trade.status ASC',
+				'Trade.has_return_deposit ASC',
 				'Trade.created DESC',
 			],
 		]);
@@ -84,6 +88,16 @@ class SuController extends AppController{
 			'conditions' => [
 				'Seat.is_deleted' => 0,
 			],
+			'order' => [
+				'Seat.free_time DESC',
+			],
+		]);
+
+		$wifiConfig = $this->WifiConfig->find('first', [
+
+		]);
+
+		$seatTypes = $this->SeatType->find('all', [
 		]);
 
 		foreach ($seats as $key => $seat) {
@@ -92,7 +106,7 @@ class SuController extends AppController{
 			$seats[$key]['seat_type_text'] = $seat['SeatType']['name'];
 		}
 
-		$this->set(compact('seats'));
+		$this->set(compact('seats', 'wifiConfig', 'seatTypes'));
 	}
 
 	public function userManager()
@@ -110,5 +124,49 @@ class SuController extends AppController{
 		}
 
 		$this->set(compact('users'));
+	}
+
+	public function updateWifiConfig()
+	{
+		$data = $this->request->data;
+
+		$data['id'] = 1;
+
+		$result = [
+			'status' => 0,
+			'msg' => '',
+		];
+
+		$saveRes = $this->WifiConfig->save($data);
+
+		if ($saveRes) {
+			$result['status'] = 1;
+		} else {
+			$result['msg'] = '系统错误，请重试';
+		}
+
+		echo json_encode($result);
+		exit();
+	}
+
+	function updateSeatTypeInfo()
+	{
+		$data = $this->request->data;
+
+		$result = [
+			'status' => 0,
+			'msg' => '',
+		];
+
+		$saveRes = $this->SeatType->save($data);
+
+		if ($saveRes) {
+			$result['status'] = 1;
+		} else {
+			$result['msg'] = '系统错误，请重试';
+		}
+
+		echo json_encode($result);
+		exit();
 	}
 }
