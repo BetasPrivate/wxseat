@@ -169,4 +169,12 @@ class SuController extends AppController{
 		echo json_encode($result);
 		exit();
 	}
+
+	function beforeFilter()
+    {
+        parent::beforeFilter();
+        if (AuthComponent::user('role') == 0) {
+            $this->redirect('/users/noAuthentication');
+        }
+    }
 }

@@ -39,6 +39,11 @@ class UsersController extends AppController
         $this->set('title_for_layout', '后台登陆');
     }
 
+    public function noAuthentication()
+    {
+        $this->Flash->error(__('请确保你有足够的权限'));
+    }
+
     public function checkLogin()
     {
         $data = $this->request->data;
