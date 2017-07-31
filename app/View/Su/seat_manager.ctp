@@ -108,8 +108,8 @@
                    <!--  <p><span style="width: 100px;">开始日期: </span><input type="text" id="startDate"></p>
                     <p><span style="width: 100px;">结束日期: </span><input type="text" id="endDate"></p>
                     <p><span style="width: 100px;">使用者：</span><input type="text" id="username"></p> -->
-                    <p><span style="width: 100px;">租金：</span><input type="number" id="price"></p>
-                    <p><span style="width: 100px;">押金：</span><input type="number" id="deposit"></p>
+                    <!-- <p><span style="width: 100px;">租金：</span><input type="number" id="price"></p> -->
+                    <!-- <p><span style="width: 100px;">押金：</span><input type="number" id="deposit"></p> -->
                     <p><span style="width: 100px;">占用到: </span><input type="text" id="freeTime"></p>
                 </div>
                 <div class="modal-footer">

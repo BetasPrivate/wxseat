@@ -518,7 +518,7 @@
 							data:data,
 							success:function(response){
 								if (response.status == 1) {
-								 	window.location.href = '/orders/paySuccess';
+								 	window.location.href = '/orders/paySuccess/' + response.tradeId;
 								} else {
 									alert(response.msg);
 									// response.is_conference = true;
