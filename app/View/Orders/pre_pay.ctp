@@ -319,7 +319,7 @@
             </ul>
         </h3>
     </div>
-    <div class="chengnuo"><em></em>确认<span>“协议”</span>和<span>“承诺书”</span></div>
+    <div class="chengnuo"><em></em>确认<span><a href="/orders/agreement">“协议”</a></span>和<span><a href="/orders/agreement">“承诺书”</a></span></div>
     <a onclick="callpay()" class="submit">立即付款</a>
     <!-- <a href="/orders/payOrder/1">立即付款</a> -->
 </body>

@@ -269,4 +269,9 @@ class OrdersController extends AppController {
 	        echo "<font color='#00ff55;'>$key</font> : $value <br/>";
 	    }
 	}
+
+	function agreement()
+	{
+
+	}
 }

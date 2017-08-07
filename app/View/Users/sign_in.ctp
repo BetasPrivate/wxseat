@@ -94,8 +94,8 @@ input[type=submit]{
 <body>
 	<div class="home">
     	<form>
-        	<input type="text" name="nicheng" id="userName" placeholder="用户名"/>
-            <h2><input type="tel" name="phone" id="phoneNum" placeholder="手机号码"/><!-- <i class="get_number" onclick="getVerficationCode()">获取验证码</i> --></h2>
+        	<input type="text" name="nicheng" id="userName" placeholder="用户名(请使用真实信息)"/>
+            <h2><input type="tel" name="phone" id="phoneNum" placeholder="手机号码(请使用真实信息)"/><!-- <i class="get_number" onclick="getVerficationCode()">获取验证码</i> --></h2>
             <!-- <input type="text" id="verficationCode" placeholder="验证码" class="yanzhengma"/> -->
         </form>
     </div>
@@ -169,6 +169,9 @@ input[type=submit]{
     			userName: userName,
     			openId: '<?php echo $openId;?>',
     		};
+    		if(!confirm('用户名和手机号会用作后续的会员管理，您确认填入的信息无误吗？')){
+    			return;
+    		}
     		var mapForm = document.createElement("form");
     		mapForm.style = 'display:none';
 		    mapForm.method = "POST"; // or "post" if appropriate
