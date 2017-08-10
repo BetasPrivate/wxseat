@@ -45,6 +45,20 @@
         <td class="col-md-3"><button class="btn btn-info" onclick="updateWifiConfig()">更新</button></td>
     </tr>
     <hr class="mini">
+    <tr class="row">
+        <td class="col-md-3">门禁账号:
+        <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_id'];?>" id="dev_id">
+        </td>
+        <td class="col-md-3">门禁密码:
+        <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_pwd'];?>" id="dev_pwd">
+        </td>
+        <td class="col-md-3"><button class="btn btn-info" onclick="updateGuardConfig()">更新</button></td>
+        <br>
+        <button class="btn btn-default" onclick="testEntranceGuard(11)">测试打开门禁</button>
+        <button class="btn btn-default" onclick="testEntranceGuard(12)">测试关闭门禁</button>
+        <button class="btn btn-default" onclick="getEntranceGuardQRCode()">查看门禁二维码</button>
+    </tr>
+    <hr class="mini">
     <table class="table table-hover table-condensed">
         <caption>座位价格表</caption>
         <thead class="row">
@@ -131,6 +145,21 @@
         $( "#freeTime" ).val('');
     }
 
+    function testEntranceGuard(type) {
+        var data = {
+            type:type
+        }
+        $.ajax({
+            url:'/su/testEntranceGuard',
+            type:'POST',
+            dataType:'json',
+            data:data,
+            success:function(response) {
+                alert(response.msg+' 代码：'+ response.code);
+            }
+        })
+    }
+
     function updateSeatTypeInfo(typeId) {
         if (!confirm('确定更新?')) {
             return;
@@ -160,6 +189,21 @@
         })
     }
 
+    function getEntranceGuardQRCode(){
+        $.ajax({
+            url:'/su/getEntranceGuardQRCode',
+            type:'GET',
+            dataType:'json',
+            success:function(response) {
+                if (response.status == 1) {
+                    window.location.href = response.url;
+                } else {
+                    alert(response.msg);
+                }
+            }
+        })
+    }
+
     function updateWifiConfig(){
         if (!confirm('确定更新?')) {
             return;
@@ -172,6 +216,32 @@
 
         $.ajax({
             url:'/su/updateWifiConfig',
+            type:'POST',
+            dataType:'json',
+            data:data,
+            success:function(response) {
+                if (response.status == 1) {
+                    showTips('☺ 修改成功');
+                    $( "#PanelSeatDetail" ).modal('hide');
+                } else {
+                    showTips(response.msg);
+                }
+            }
+        })
+    }
+
+    function updateGuardConfig(){
+        if (!confirm('确定更新?')) {
+            return;
+        }
+
+        var data = {
+            dev_id:$('#dev_id').val(),
+            dev_pwd:$('#dev_pwd').val(),
+        }
+
+        $.ajax({
+            url:'/su/updateGuardConfig',
             type:'POST',
             dataType:'json',
             data:data,

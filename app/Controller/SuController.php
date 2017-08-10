@@ -9,6 +9,7 @@ class SuController extends AppController{
 		'User',
 		'WifiConfig',
 		'SeatType',
+		'EntranceGuardConfig',
 	];
 
 	public function index()
@@ -21,6 +22,15 @@ class SuController extends AppController{
 		// $this->set(compact('result'));
 		$util = new Utility();
         $util->editMenu($this->Token->getToken(\Token::ACCESS_TOKEN));
+	}
+
+	public function testEntranceGuard()
+	{
+		$data = $this->request->data;
+		$util = new Utility();
+		$result = $util->testEntranceGuard($data['type']);
+		echo json_encode($result);
+		exit();
 	}
 
 	public function tradeManager()
@@ -97,6 +107,8 @@ class SuController extends AppController{
 
 		]);
 
+		$guardConfig = $this->EntranceGuardConfig->getConfig();
+
 		$seatTypes = $this->SeatType->find('all', [
 		]);
 
@@ -106,7 +118,7 @@ class SuController extends AppController{
 			$seats[$key]['seat_type_text'] = $seat['SeatType']['name'];
 		}
 
-		$this->set(compact('seats', 'wifiConfig', 'seatTypes'));
+		$this->set(compact('seats', 'wifiConfig', 'seatTypes', 'guardConfig'));
 	}
 
 	public function userManager()
@@ -149,6 +161,59 @@ class SuController extends AppController{
 		exit();
 	}
 
+	public function updateGuardConfig()
+	{
+		$data = $this->request->data;
+
+		$data['id'] = 1;
+
+		$result = [
+			'status' => 0,
+			'msg' => '',
+		];
+
+		$saveRes = $this->EntranceGuardConfig->save($data);
+
+		if ($saveRes) {
+			$result['status'] = 1;
+		} else {
+			$result['msg'] = '系统错误，请重试';
+		}
+
+		echo json_encode($result);
+		exit();
+	}
+
+	function getEntranceGuardQRCode($guardId=1)
+	{
+		$guardConfig = $this->EntranceGuardConfig->find('first', [
+			'conditions' => [
+				'EntranceGuardConfig.id' => $guardId,
+			],
+		]);
+
+		$util = new Utility();
+
+		if (!empty($guardConfig['EntranceGuardConfig']['qr_scene_ticket'])) {
+			$url = $util->getSceneTicketUrl($this->Token->getToken(\Token::ACCESS_TOKEN), null, 'on_scan_entrance_guard1', $isTemp = false, $guardConfig['EntranceGuardConfig']['qr_scene_ticket'])['url'];
+		} else {
+			$res = $util->getSceneTicketUrl($this->Token->getToken(\Token::ACCESS_TOKEN), null, 'on_scan_entrance_guard1', $isTemp = false, '');
+			$ticket = $res['ticket'];
+			$this->EntranceGuardConfig->save(['id' => $guardId, 'qr_scene_ticket' => $ticket]);
+			$url = $res['url'];
+		}
+
+		if (!empty($url)) {
+			$result['status'] = 1;
+			$result['url'] = $url;
+		} else {
+			$result['status'] = 0;
+			$result['msg'] = '系统忙，请重试';
+		}
+		echo json_encode($result);
+		exit();
+	}
+
 	function updateSeatTypeInfo()
 	{
 		$data = $this->request->data;
@@ -173,6 +238,12 @@ class SuController extends AppController{
 	function beforeFilter()
     {
         parent::beforeFilter();
+    }
+
+
+    function afterFilter()
+    {
+        parent::afterFilter();
         if (AuthComponent::user('role') == 0) {
             $this->redirect('/users/noAuthentication');
         }

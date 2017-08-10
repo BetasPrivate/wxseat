@@ -11,6 +11,8 @@ class CallbackController extends AppController
     {
         $postStr = isset($GLOBALS["HTTP_RAW_POST_DATA"]) ? $GLOBALS["HTTP_RAW_POST_DATA"] : null;
         if ($postStr) {
+            $this->WxLog->create();
+            $this->WxLog->save(['data' => $postStr]);
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $eventKey = trim((string)$postObj->EventKey);
             $event = trim((string)$postObj->Event);
@@ -19,6 +21,8 @@ class CallbackController extends AppController
                 $this->sendTextMsg($postObj, $msg);
             } else if ($event == 'CLICK') {
                 $this->dealWithClickEvents($postObj);
+            } else if ($eventKey == 'on_scan_entrance_guard1') {
+                $this->openEntranceGuard($postObj);
             }
         } else {
             $signature = isset($this->request->query['signature']) ? $this->request->query['signature'] : null;
@@ -26,6 +30,13 @@ class CallbackController extends AppController
                 $this->checkSignature($signature);
             }
         }
+    }
+
+    function openEntranceGuard($postObj){
+        $util = new Utility();
+        $res = $util->testEntranceGuard();
+        $msg = $res['msg'];
+        $this->sendTextMsg($postObj, $msg);
     }
 
     function wxPayCallback()

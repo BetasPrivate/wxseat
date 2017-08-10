@@ -1,4 +1,5 @@
 <?php
+App::uses('Seat', 'Model');
 class Utility {
 
 	public function customizeCurl($url, $opt=0, $data=[])
@@ -59,27 +60,43 @@ class Utility {
     {
         $url = sprintf("https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=%s", $token);
         $data = [
-            'expire_seconds' => 604800,
             'action_info' => [
                 'scene' => [
-                    'scene_id' => 1,
+                    'scene_id' => $scendId,
                 ],
             ],
         ];
         if ($isTemp) {
             $data['action_name'] = 'QR_SCENE';
+            $data['expire_seconds'] = $expireSeconds;
         } else {
-            $data['action_name'] = 'QR_LIMIT_SCENE';
+            $data['action_name'] = 'QR_LIMIT_STR_SCENE';
+            unset($data['action_info']['scene']['scene_id']);
+            $data['action_info']['scene']['scene_str'] = $scendId;
         }
 
         $data = json_encode($data);
 
-        $resultStr = $this->postFileGetContents($url, $data);
+        $result = $this->postFileGetContents($url, $data);
 
-        $result = json_decode($resultStr, true);
         $ticket = isset($result['ticket']) ? $result['ticket'] : '';
 
         return $ticket;
+    }
+
+    public function getSceneTicketUrl($token, $expireSeconds = 604800, $scendId, $isTemp = true, $ticket = '')
+    {
+        if ($ticket == '') {
+            $ticket = $this->getSceneTicket($token, $expireSeconds, $scendId, $isTemp);
+        }
+        $url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket;
+
+        $result = [
+            'ticket' => $ticket,
+            'url' => $url,
+        ];
+
+        return $result;
     }
 
     public function getAccessToken()
@@ -193,5 +210,31 @@ class Utility {
             $Y--;
         }
         return array('year'=>$Y,'month'=>$m,'day'=>$d);
+    }
+
+    public function testEntranceGuard($type)
+    {
+        if (extension_loaded('soap')) {
+            $url = "http://mj2vm.cn/SyncWebService.asmx?wsdl";
+            $client = new SoapClient($url);
+            $client->soap_defencoding = 'utf-8';  
+            $client->decode_utf8 = false;   
+            $client->xml_encoding = 'utf-8';
+
+            $guardConfig = ClassRegistry::init('EntranceGuardConfig')->getConfig();
+            $devId = $guardConfig['EntranceGuardConfig']['dev_id'];
+            $devPwd = $guardConfig['EntranceGuardConfig']['dev_pwd'];
+
+            $param = array('devId'=>$devId, 'devPwd'=>$devPwd);
+            $param['devCmd'] = $type;
+            $res = $client->__Call("SendCommand", array( $param ))->SendCommandResult;
+
+            $result['msg'] = \Seat::entranceGuardModeText($res);
+            $result['code'] = $res;
+        } else {
+            $result['msg'] = '当前服务器不支持此操作';
+        }
+
+        return $result;
     }
 }

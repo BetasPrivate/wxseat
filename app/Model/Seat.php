@@ -1,5 +1,6 @@
 <?php
 App::uses('Trade', 'Model');
+App::uses('AppModel', 'Model');
 class Seat extends AppModel {
     var $hasMany = [
         'Order',
@@ -11,6 +12,25 @@ class Seat extends AppModel {
             'foreignKey' => 'type',
         ],
     ];
+
+    public static $modes = [
+        0 => '指令成功发送',
+        4001 => '不支持空指令',
+        4002 => '目标模块不存在',
+        4003 => '前一条指令尚未完成',
+        4004 => '目标模块不在线',
+        4006 => '演示环境',
+    ];
+
+    public static function entranceGuardModeText($mode)
+    {
+        $result = '未知';
+        if (isset(self::$modes[$mode])) {
+            $result = self::$modes[$mode];
+        }
+        
+        return $result;
+    }
 
     //下单后锁定时间为5min
     const PROVISIONAL_TIME = 300;
