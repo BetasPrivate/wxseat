@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,width=device-width,height=device-height" />
@@ -7,16 +7,12 @@
 <title>工位租赁</title>
 <link rel="stylesheet" href="css/common.css" type="text/css"/>
 <link rel="stylesheet" href="css/gongwei.css?1" type="text/css"/>
-<script src="/js/jquery-3.2.1.min.js"></script>
-<script src="/js/gongwei.js"></script>
-<script src="/js/resize.js"></script>
-<script type="text/javascript" src="/js/e-smart-zoom-jquery.min.js" ></script>
 </head>
 
 <body>
 <section class="mobile">
-    <section class="seat" id="imgContainer" style="height:20.1rem;">
-        <section class="home" id="imageFullScreen"  style="width:100%;height:20.1rem;">
+    <section class="seat" id="seat">
+        <section class="home" id="home">
         <!--改动，把header删除-->
         <section class="homeTop"></section>
         <section class="homeMain clearfix">
@@ -147,20 +143,20 @@
 <script type="text/javascript">
     var seats = <?php echo json_encode($result['seats']);?>;
 </script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="js/gongwei.js"></script>
+<script type="text/javascript" src="/js/hammer.js"></script>
+<script src="/js/scaling.js"></script>
+<script src="/js/resize.js"></script>
 <script>
-$(document).ready(function(){
-    var scrollTimer;
-    scrollTimer=setInterval(function(){
-        var oimglen=$("img").length;
-        console.log(oimglen);
-        if(oimglen>=166){
-            clearInterval(scrollTimer);
-            $('#imageFullScreen').smartZoom({
-                'containerClass': 'zoomableContainer'
-            });
-        }
-    },30);
-})  
+    window.onresize=function(){
+        window.location.reload();
+    }
+    //改动
+//  $(".iconfont").click(function(){
+//      $(".zhezhaoceng").css({display:"none"});
+//      $(".layer").css({bottom:-400});
+//  })
 </script>
 </body>
 </html>

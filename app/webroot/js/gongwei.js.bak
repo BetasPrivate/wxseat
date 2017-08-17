@@ -26,7 +26,7 @@ window.onload=function(){
 			$(".homeTop").append(oimg1);
 			}
 		}
-	/*$(".homeTop img").click(function(){
+	$(".homeTop img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
 		if($(this).hasClass("waring")){
@@ -47,45 +47,7 @@ window.onload=function(){
 			add();
 			seatnum();
 			}
-		});*/
-	//新添函数1 8.15
-	function touch1(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				$(".layer h2 span").text("开放工位");
-				$(".layer h3 i").text("");
-				if($(this).hasClass("waring")){
-					$(".layer h2 i").text(this.index);
-					var seat = getSeatFromSeats(this.index);
-					console.log(this.index);
-					if (seat.length != 0) {
-						$('#invalidate_seat_end_time').text(seat.Seat.free_time);
-					}
-					cover();
-				}else if($(this).hasClass("active")){
-					$(this).removeClass("active");
-					$(this).attr("src","/img/one_seat.jpg");
-					seatnum();
-				}else{
-					$(this).addClass("active");
-					$(this).attr("src","/img/checked.jpg");
-					add();
-					seatnum();
-					}
-				}
-			}
-		}
-	for(i=0;i<$(".homeTop img").length;i++){
-		touch1($(".homeTop img")[i]);
-	}
-	//新添函数1 8.15end	
+		});
 	//中左添加座位及点击效果
 	for(var i=0;i<15;i++){
 		switch(i){
@@ -114,7 +76,7 @@ window.onload=function(){
 			$(".homeMain aside.left").append(oimg1);
 			}
 		}
-	/*$(".homeMain aside.left img").click(function(){
+	$(".homeMain aside.left img").click(function(){
 		$(".layer h2 span").text("开放空间");
 		$(".layer h3 i").text("");
 		if($(this).hasClass("waring")){
@@ -135,45 +97,7 @@ window.onload=function(){
 			add();
 			seatnum();
 			}
-		});*/
-	//新添函数2 8.15
-	function touch2(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				$(".layer h2 span").text("开放空间");
-				$(".layer h3 i").text("");
-				if($(this).hasClass("waring")){
-					$(".layer h2 i").text(this.index);
-					var seat = getSeatFromSeats(this.index);
-					console.log(this.index);
-					if (seat.length != 0) {
-						$('#invalidate_seat_end_time').text(seat.Seat.free_time);
-					}
-					cover();
-				}else if($(this).hasClass("active")){
-					$(this).removeClass("active");
-					$(this).attr("src","/img/one_seat.jpg");
-					seatnum();
-				}else{
-					$(this).addClass("active");
-					$(this).attr("src","/img/checked.jpg");
-					add();
-					seatnum();
-				}
-			}
-		}
-	}
-	for(i=0;i<$(".homeMain aside.left img").length;i++){
-		touch2($(".homeMain aside.left img")[i]);
-	}
-	//新添函数2 8.15end
+		});
 	//中上三人间添加及点击效果
 	for(var p=0;p<8;p++){
 		var oimg2=document.createElement("img");
@@ -183,7 +107,7 @@ window.onload=function(){
 		c++;
 		$(".homeMain article .threeOne").append(oimg2);
 		}
-	/*$(".homeMain article .threeOne img").click(function(){
+	$(".homeMain article .threeOne img").click(function(){
 		$(".layer h2 span").text("三人间");
 		$(".layer h3 i").text("");
 		if($(this).hasClass("waring")){
@@ -204,45 +128,7 @@ window.onload=function(){
 			add();
 			seatnum();
 			}
-		});*/
-	//新增函数3 8.15
-	function touch3(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				$(".layer h2 span").text("三人间");
-				$(".layer h3 i").text("");
-				if($(this).hasClass("waring")){
-					$(".layer h2 i").text(this.index);
-					var seat = getSeatFromSeats(this.index);
-					console.log(this.index);
-					if (seat.length != 0) {
-						$('#invalidate_seat_end_time').text(seat.Seat.free_time);
-					}
-					cover();
-				}else if($(this).hasClass("active")){
-					$(this).removeClass("active");
-					$(this).attr("src","/img/three.jpg");
-					seatnum();
-				}else{
-					$(this).addClass("active");
-					$(this).attr("src","/img/three_checked.jpg");
-					add();
-					seatnum();
-				}
-			}
-		}
-	}
-	for(i=0;i<$(".homeMain article .threeOne img").length;i++){
-		touch3($(".homeMain article .threeOne img")[i]);
-	}
-	//新增函数3 8.15end
+		});
 	//中下三人间添加及点击效果
 	for(var p=0;p<6;p++){
 		var oimg2=document.createElement("img");
@@ -252,7 +138,7 @@ window.onload=function(){
 		d++;
 		$(".homeMain article .threeTwo").append(oimg2);
 		}
-	/*$(".homeMain article .threeTwo img").click(function(){
+	$(".homeMain article .threeTwo img").click(function(){
 		if(this.index){
 		$(".layer h2 span").text("三人间");
 		$(".layer h3 i").text("");
@@ -275,47 +161,7 @@ window.onload=function(){
 			seatnum();
 		}
 		}
-		});*/
-	//新增函数4 8.15
-	function touch4(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				if(this.index){
-					$(".layer h2 span").text("三人间");
-					$(".layer h3 i").text("");
-					if($(this).hasClass("waring")){
-						$(".layer h2 i").text(this.index);
-						var seat = getSeatFromSeats(this.index);
-						console.log(this.index);
-						if (seat.length != 0) {
-							$('#invalidate_seat_end_time').text(seat.Seat.free_time);
-						}
-						cover();
-					}else if($(this).hasClass("active")){
-						$(this).removeClass("active");
-						$(this).attr("src","/img/three.jpg");
-						seatnum();
-					}else{
-						$(this).addClass("active");
-						$(this).attr("src","/img/three_checked.jpg");
-						add();
-						seatnum();
-					}
-				}
-			}
-		}
-	}
-	for(i=0;i<$(".homeMain article .threeTwo img").length;i++){
-		touch4($(".homeMain article .threeTwo img")[i]);
-	}
-	//新增函数4 8.15end
+		});
 	//中右改动开始
 	//中右添加工位及点击效果
 	for (var q=0;q<11;q++){
@@ -341,7 +187,7 @@ window.onload=function(){
 			$(".home_right_right").append(oimg1);
 			}
 		}
-	/*$(".home_right_right img").click(function(){
+	$(".home_right_right img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
 		if($(this).hasClass("waring")){
@@ -362,45 +208,7 @@ window.onload=function(){
 			add();
 			seatnum();
 			}
-		});	*/
-	//新增函数5 8.15
-	function touch5(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				$(".layer h2 span").text("开放工位");
-				$(".layer h3 i").text("");
-				if($(this).hasClass("waring")){
-					$(".layer h2 i").text(this.index);
-					var seat = getSeatFromSeats(this.index);
-					console.log(this.index);
-					if (seat.length != 0) {
-						$('#invalidate_seat_end_time').text(seat.Seat.free_time);
-					}
-					cover();
-				}else if($(this).hasClass("active")){
-					$(this).removeClass("active");
-					$(this).attr("src","/img/one_seat.jpg");
-					seatnum();
-				}else{
-					$(this).attr("src","/img/checked.jpg");
-					$(this).addClass("active");
-					add();
-					seatnum();
-				}
-			}
-		}
-	}
-	for(i=0;i<$(".home_right_right img").length;i++){
-		touch5($(".home_right_right img")[i]);
-	}
-	//新增函数5 8.15end
+		});	
 	//中右改动结束
 	//下左开放工位添加及点击效果
 	for (var q=0;q<3;q++){
@@ -418,7 +226,7 @@ window.onload=function(){
 			$(".homeBottom h2").append(oimg1);
 			}
 		}
-	/*$(".homeBottom h2 img").click(function(){
+	$(".homeBottom h2 img").click(function(){
 		$(".layer h2 span").text("开放工位");
 		$(".layer h3 i").text("");
 		if($(this).hasClass("waring")){
@@ -439,51 +247,13 @@ window.onload=function(){
 			add();
 			seatnum();
 			}
-		});*/
-	//新增函数6 8.15
-	function touch6(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				$(".layer h2 span").text("开放工位");
-				$(".layer h3 i").text("");
-				if($(this).hasClass("waring")){
-					$(".layer h2 i").text(this.index);
-					var seat = getSeatFromSeats(this.index);
-					console.log(this.index);
-					if (seat.length != 0) {
-						$('#invalidate_seat_end_time').text(seat.Seat.free_time);
-					}
-					cover();
-				}else if($(this).hasClass("active")){
-					$(this).removeClass("active");
-					$(this).attr("src","/img/one_seat.jpg");
-					seatnum();
-				}else{
-					$(this).addClass("active");
-					$(this).attr("src","/img/checked.jpg");
-					add();
-					seatnum();
-				}
-			}
-		}
-	}
-	for(i=0;i<$(".homeBottom h2 img").length;i++){
-		touch6($(".homeBottom h2 img")[i]);
-	}
-	//新增函数6 8.15end
+		});
 	//下右添加三张图片点击效果
 	for(var i=0;i<3;i++){
 			var m=i+1;
 			$(".homeBottom h3 img")[i].index="s"+m;
 			}
-	/*$(".homeBottom h3 img").click(function(){
+	$(".homeBottom h3 img").click(function(){
 		if(this.index=="s1"){
 			$(".layer h2 span").text("六人间");
 			}
@@ -524,97 +294,7 @@ window.onload=function(){
 			add();
 			seatnum();
 			}
-		});*/
-	//新增函数7 8.15
-	function touch7(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				if(this.index=="s1"){
-					$(".layer h2 span").text("六人间");
-					}
-				if(this.index=="s2"){
-					$(".layer h2 span").text("五人间");
-					}
-				if(this.index=="s3"){
-					$(".layer h2 span").text("八人间");
-					}
-				$(".layer h3 i").text("");
-				if($(this).hasClass("waring")){
-					$(".layer h2 i").text(this.index);
-					var seat = getSeatFromSeats(this.index);
-					console.log(this.index);
-					if (seat.length != 0) {
-						$('#invalidate_seat_end_time').text(seat.Seat.free_time);
-					}
-					cover();
-				}else if($(this).hasClass("active")){
-					$(this).removeClass("active");
-					if(this.index=="s1"){
-						$(this).attr("src","/img/top_six.jpg");
-					}else if(this.index=="s2"){
-						$(this).attr("src","/img/top_five.jpg");
-					}else if(this.index=="s3"){
-						$(this).attr("src","/img/top_eight.jpg");
-					}
-					seatnum();
-				}else{
-					$(this).addClass("active");
-					if(this.index=="s1"){
-						$(this).attr("src","/img/six_checked.jpg");
-					}else if(this.index=="s2"){
-						$(this).attr("src","/img/five_checked.jpg");
-					}else if(this.index=="s3"){
-						$(this).attr("src","/img/eight_checked.jpg");
-					}
-					add();
-					seatnum();
-				}
-			}
-		}
-	}
-	for(i=0;i<$(".homeBottom h3 img").length;i++){
-		touch7($(".homeBottom h3 img")[i]);
-	}
-	//新增函数7 8.15end
-	//新增函数8 8.15
-	function touch8(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				window.location.href="/seats/rentConference/泛态厅";
-			}
-		}
-	}
-	function touch9(obj){
-		obj.ontouchstart=function(e){
-			s=0;
-			timer=setInterval(function(){
-				s++;
-			},10);
-		}
-		obj.ontouchend=function(){
-			clearInterval(timer);
-			if(s<=5){
-				window.location.href="/seats/rentConference/创新厅";
-			}
-		}
-	}
-	touch8($(".conference1")[0]);
-	touch9($(".conference2")[0]);
-	//新增函数8 8.15end
+		});
 	//点击遮罩层关闭
 	$(".continue").click(function(){
 		$(".zhezhaoceng").css({display:"none"});
