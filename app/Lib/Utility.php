@@ -212,7 +212,7 @@ class Utility {
         return array('year'=>$Y,'month'=>$m,'day'=>$d);
     }
 
-    public function testEntranceGuard($type)
+    public function testEntranceGuard($type=11)
     {
         if (extension_loaded('soap')) {
             $url = "http://mj2vm.cn/SyncWebService.asmx?wsdl";

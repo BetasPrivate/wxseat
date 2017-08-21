@@ -299,6 +299,32 @@ class UsersController extends AppController
 
     }
 
+    public function allowUser()
+    {
+        $data = $this->request->data;
+
+        $userId = $data['user_id'];
+        $type = $data['type'];
+
+        $this->User->id = $userId;
+        $saveResult = $this->User->save(['is_allow_enter' => $type]);
+
+        if ($saveResult) {
+            $result = [
+                'status' => 1,
+            ];
+        } else {
+            $result = [
+                'status' => 0,
+                'msg' => '保存失败，请稍后重试',
+            ];
+        }
+
+        echo json_encode($result);
+        exit();
+
+    }
+
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.

@@ -107,4 +107,27 @@ class User extends AppModel {
             ]
         );
     }
+
+    public function isAllowEnterUser($openId)
+    {
+        $user = $this->find('first', [
+            'conditions' => [
+                'User.open_id' => $openId,
+            ],
+        ]);
+        $result = [
+            'status' => 0,
+            'msg' => '',
+        ];
+
+        if (!$user) {
+            $result['msg'] = '您需要先注册才能拥有扫码开门权限';
+        } elseif($user['User']['is_allow_enter'] == 1) {
+            $result['status'] = 1;
+        } else {
+            $result['msg'] = '您需要找管理员开通扫码开门权限';
+        }
+
+        return $result;
+    }
 }

@@ -33,9 +33,16 @@ class CallbackController extends AppController
     }
 
     function openEntranceGuard($postObj){
-        $util = new Utility();
-        $res = $util->testEntranceGuard();
-        $msg = $res['msg'];
+        echo 'success';
+        $userOpenId = trim((string)$postObj->FromUserName);
+        $checkRes = $this->User->isAllowEnterUser($userOpenId);
+        if ($checkRes['status'] == 1) {
+            $util = new Utility();
+            $res = $util->testEntranceGuard();
+            $msg = $res['msg'];
+        } else {
+            $msg = $checkRes['msg'];
+        }
         $this->sendTextMsg($postObj, $msg);
     }
 
