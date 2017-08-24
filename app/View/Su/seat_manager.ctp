@@ -45,19 +45,47 @@
         <td class="col-md-3"><button class="btn btn-info" onclick="updateWifiConfig()">更新</button></td>
     </tr>
     <hr class="mini">
-    <tr class="row">
-        <td class="col-md-3">门禁账号:
-        <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_id'];?>" id="dev_id">
-        </td>
-        <td class="col-md-3">门禁密码:
-        <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_pwd'];?>" id="dev_pwd">
-        </td>
-        <td class="col-md-3"><button class="btn btn-info" onclick="updateGuardConfig()">更新</button></td>
-        <br>
+    <div class="container-fluid">
+    <table class="table table-condensed">
+        <thead  class="row">
+            <tr>
+                <th class="col-md-3">门禁账号</th>
+                <th class="col-md-3">门禁密码</th>
+                <th class="col-md-1">开门指令</th>
+                <th class="col-md-1">关门指令</th>
+                <th class="col-md-2">开门后关门延时秒数</th>
+                <th class="col-md-2">操作</th>
+            </tr>
+        </thead>
+        <tbody class="row">
+            <tr>
+                <td class="col-md-3">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_id'];?>" id="dev_id">
+                </td>
+                <td class="col-md-3">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_pwd'];?>" id="dev_pwd">
+                </td>
+                <td class="col-md-1">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['open_cmd'];?>" id="open_cmd">
+                </td>
+                <td class="col-md-1">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['close_cmd'];?>" id="close_cmd">
+                </td>
+                <td class="col-md-2">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['close_interval'];?>" id="close_interval">
+                </td>
+                <td class="col-md-2">
+                    <button class="btn btn-info" onclick="updateGuardConfig()">更新</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <div>
         <button class="btn btn-default" onclick="testEntranceGuard(11)">测试打开门禁</button>
         <button class="btn btn-default" onclick="testEntranceGuard(12)">测试关闭门禁</button>
         <button class="btn btn-default" onclick="getEntranceGuardQRCode()">查看门禁二维码</button>
-    </tr>
+    </div>
     <hr class="mini">
     <table class="table table-hover table-condensed">
         <caption>座位价格表</caption>
@@ -238,6 +266,9 @@
         var data = {
             dev_id:$('#dev_id').val(),
             dev_pwd:$('#dev_pwd').val(),
+            open_cmd:$('#open_cmd').val(),
+            close_cmd:$('#close_cmd').val(),
+            close_interval:$('#close_interval').val(),
         }
 
         $.ajax({

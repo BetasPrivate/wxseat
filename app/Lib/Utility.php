@@ -224,6 +224,18 @@ class Utility {
             $guardConfig = ClassRegistry::init('EntranceGuardConfig')->getConfig();
             $devId = $guardConfig['EntranceGuardConfig']['dev_id'];
             $devPwd = $guardConfig['EntranceGuardConfig']['dev_pwd'];
+            $devInterval = $guardConfig['EntranceGuardConfig']['close_interval'];
+            $openCmd = $guardConfig['EntranceGuardConfig']['open_cmd'];
+            $closeCmd = $guardConfig['EntranceGuardConfig']['close_cmd'];
+
+            if ($type == 11) {
+                $type = $openCmd;
+                if ((Int)$devInterval > 0) {
+                    $type = $openCmd.':'.$devInterval;
+                }
+            } else {
+                $type = $closeCmd;
+            }
 
             $param = array('devId'=>$devId, 'devPwd'=>$devPwd);
             $param['devCmd'] = $type;
