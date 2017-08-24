@@ -11,6 +11,7 @@ class OrdersController extends AppController {
 		'Trade',
 		'Token',
 		'WifiConfig',
+		'Protocol',
 	];
 
 	public function index()
@@ -270,8 +271,16 @@ class OrdersController extends AppController {
 	    }
 	}
 
-	function agreement()
+	function agreement($id=1)
 	{
+		$protocol = $this->Protocol->find('first', [
+			'conditions' => [
+				'Protocol.id' => $id,
+			],
+		]);
+
+		$protocol['Protocol']['text'] = str_replace("\n",'<br>',$protocol['Protocol']['text']);
+		$this->set(compact('protocol'));
 
 	}
 }

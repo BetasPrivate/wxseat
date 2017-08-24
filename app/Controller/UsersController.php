@@ -69,6 +69,35 @@ class UsersController extends AppController
         $this->set(compact('openId'));
     }
 
+    public function bindOpenId()
+    {
+        $tools = new JsApiPay();
+        $openId = $tools->GetOpenid();
+
+        $this->set(compact('openId'));
+    }
+
+    public function setOpenId()
+    {
+        $data = $this->request->data;
+        $data['id'] = AuthComponent::user('id');
+        $saveRes = $this->User->save($data);
+
+        $result = [
+            'status' => 0,
+            'msg' => '',
+        ];
+
+        if ($saveRes) {
+            $result['status'] = 1;
+        } else {
+            $result['msg'] = '保存失败，请稍后重试';
+        }
+
+        echo json_encode($result);
+        exit();
+    }
+
     public function findPasswd()
     {
        if (!$this->request->is('post')) {

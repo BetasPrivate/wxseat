@@ -10,6 +10,7 @@ class SuController extends AppController{
 		'WifiConfig',
 		'SeatType',
 		'EntranceGuardConfig',
+		'Protocol',
 	];
 
 	public function index()
@@ -22,6 +23,33 @@ class SuController extends AppController{
 		// $this->set(compact('result'));
 		$util = new Utility();
         $util->editMenu($this->Token->getToken(\Token::ACCESS_TOKEN));
+	}
+
+	public function updateProtocols()
+	{
+		if (!$this->request->is('post')) {
+			$protocols = $this->Protocol->find('all', [
+			]);
+			foreach ($protocols as &$protocol) {
+				$protocol['Protocol']['text'] = str_replace("\n",'<br>',$protocol['Protocol']['text']);;
+			}
+		} else {
+			$data = $this->request->data;
+			$saveRes = $this->Protocol->save($data);
+			$result = [
+				'status' => 0,
+				'msg' => '',
+			];
+			if ($saveRes) {
+				$result['status'] = 1;
+			} else {
+				$result['msg'] = '保存失败，请稍后重试';
+			}
+			echo json_encode($result);
+			exit();
+		}
+
+		$this->set(compact('protocols'));
 	}
 
 	public function testEntranceGuard()

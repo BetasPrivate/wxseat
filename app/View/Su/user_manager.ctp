@@ -50,7 +50,13 @@
         <tbody>
             <?php foreach($users as $user): ?>
             <tr class="<?php echo $user['clz_name'];?>">
-                <td class="col-md-1"><?php echo $user['User']['username'];?></td>
+                <td class="col-md-1">
+                    <?php echo $user['User']['username'];?>
+                    <?php if (empty($user['User']['open_id'])):?>
+                        <br>
+                    <label class="label label-warning">未绑微信</label>
+                    <?php endif;?>
+                </td>
                 <td class="col-md-2"><?php echo $user['User']['phone'];?></td>
                 <td class="col-md-2"><?php echo $user['User']['role_name'];?></td>
                 <td class="col-md-2"><?php echo $user['User']['created'];?></td>

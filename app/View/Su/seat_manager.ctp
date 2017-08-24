@@ -87,6 +87,10 @@
         <button class="btn btn-default" onclick="getEntranceGuardQRCode()">查看门禁二维码</button>
     </div>
     <hr class="mini">
+    <div>
+        <a class="btn btn-info" target="_blank" href="/su/updateProtocols">修改协议及承诺书</a>
+    </div>
+    <hr class="mini">
     <table class="table table-hover table-condensed">
         <caption>座位价格表</caption>
         <thead class="row">
