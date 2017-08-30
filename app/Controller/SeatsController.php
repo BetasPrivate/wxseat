@@ -143,8 +143,8 @@ class SeatsController extends AppController {
 		// $startDate = $data['start_date'];
 		// $endDate = $data['end_date'];
 		// $username = $data['username'];
-		$price = $data['price'];
-		$deposit = $data['deposit'];
+		$price = isset($data['price']) ? $data['price']:null;
+		$deposit = isset($data['deposit']) ? $data['deposit']:null;
 		$seatId = $data['seat_id'];
 		$freeTime = isset($data['free_time']) ? $data['free_time'] : null;
 

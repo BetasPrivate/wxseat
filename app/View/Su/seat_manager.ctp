@@ -339,10 +339,10 @@
         var deposit = $( "#deposit" ).val();
         var freeTime = $( "#freeTime" ).val();
 
-        if (!price || !deposit) {
-            alert('信息不完整！');
-            return;
-        }
+        // if (!price || !deposit) {
+        //     alert('信息不完整！');
+        //     return;
+        // }
         var data = {
             // start_date: startDate,
             // end_date: endDate,
