@@ -101,7 +101,7 @@ require('../Lib/Utility.php');
 define("ROOT_URL", isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'rentoffice.zhanshen1.com');
 
 //选择当前环境
-if (ROOT_URL == 'enhancing.com') {
+if (ROOT_URL == 'seats.com') {
 	define("ENV_OPT", "dev");
 	define("DB_LOGIN", "cary");
 	define("DB_PWD", "1");
