@@ -98,7 +98,7 @@ require('../Lib/Utility.php');
 //dev
 // define('APP_ID', 'wx59ba851ee8a8feb0');
 // define('APP_SECRET', '461f3b9bce3fe284d8d7ead55f0d846a');
-define("ROOT_URL", isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'rentoffice.zhanshen1.com');
+define("ROOT_URL", isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'fts.chuangrongtong.cn');
 
 //选择当前环境
 if (ROOT_URL == 'enhancing.com') {

@@ -136,12 +136,12 @@ class Utility {
                         0 => [
                             'name' => urlencode('选座页面'),
                             'type' => 'view',
-                            'url' => 'http://rentoffice.zhanshen1.com',
+                            'url' => 'http://'.ROOT_URL,
                         ],
                         1 => [
                             'name' => urlencode('个人中心'),
                             'type' => 'view',
-                            'url' => 'http://rentoffice.zhanshen1.com/users/',
+                            'url' => 'http://'.ROOT_URL.'/users/',
                         ],
                     ],
                 ],

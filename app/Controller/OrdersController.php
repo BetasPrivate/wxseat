@@ -211,7 +211,7 @@ class OrdersController extends AppController {
 		$input->SetTime_start(date("YmdHis"));
 		$input->SetTime_expire(date("YmdHis", time() + 600));
 		$input->SetGoods_tag("test");
-		$input->SetNotify_url("http://rentoffice.zhanshen1.com/callback/wxPayCallback");
+		$input->SetNotify_url("http://".ROOT_URL."/callback/wxPayCallback");
 		$input->SetTrade_type("JSAPI");
 		$input->SetOpenid($openId);
 		$order = WxPayApi::unifiedOrder($input);
