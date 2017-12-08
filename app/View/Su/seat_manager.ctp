@@ -49,7 +49,8 @@
     <table class="table table-condensed">
         <thead  class="row">
             <tr>
-                <th class="col-md-3">门禁账号</th>
+                <th class="col-md-1">门禁编号</th>
+                <th class="col-md-2">门禁账号</th>
                 <th class="col-md-3">门禁密码</th>
                 <th class="col-md-1">开门指令</th>
                 <th class="col-md-1">关门指令</th>
@@ -58,8 +59,12 @@
             </tr>
         </thead>
         <tbody class="row">
+            <?php foreach($guardConfigs as $key => $guardConfig): ?>
             <tr>
-                <td class="col-md-3">
+                <td class="col-md-1">
+                    <?php echo $guardConfig['EntranceGuardConfig']['id'];?>
+                </td>
+                <td class="col-md-2">
                 <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_id'];?>" id="dev_id">
                 </td>
                 <td class="col-md-3">
@@ -78,13 +83,14 @@
                     <button class="btn btn-info" onclick="updateGuardConfig()">更新</button>
                 </td>
             </tr>
+            <div>
+                <button class="btn btn-default" onclick="testEntranceGuard(11,  <?php echo $guardConfig['EntranceGuardConfig']['id'];?>)">测试打开门禁 <?php echo $guardConfig['EntranceGuardConfig']['id'];?></button>
+                <button class="btn btn-default" onclick="testEntranceGuard(12,  <?php echo $guardConfig['EntranceGuardConfig']['id'];?>)">测试关闭门禁 <?php echo $guardConfig['EntranceGuardConfig']['id'];?></button>
+                <button class="btn btn-default" onclick="getEntranceGuardQRCode( <?php echo $guardConfig['EntranceGuardConfig']['id'];?>)">查看门禁 <?php echo $guardConfig['EntranceGuardConfig']['id'];?>二维码</button>
+            </div>
+            <?php endforeach;?>
         </tbody>
     </table>
-    </div>
-    <div>
-        <button class="btn btn-default" onclick="testEntranceGuard(11)">测试打开门禁</button>
-        <button class="btn btn-default" onclick="testEntranceGuard(12)">测试关闭门禁</button>
-        <button class="btn btn-default" onclick="getEntranceGuardQRCode()">查看门禁二维码</button>
     </div>
     <hr class="mini">
     <div>
@@ -177,9 +183,10 @@
         $( "#freeTime" ).val('');
     }
 
-    function testEntranceGuard(type) {
+    function testEntranceGuard(type, id) {
         var data = {
-            type:type
+            type:type,
+            id: id,
         }
         $.ajax({
             url:'/su/testEntranceGuard',
@@ -221,9 +228,9 @@
         })
     }
 
-    function getEntranceGuardQRCode(){
+    function getEntranceGuardQRCode(id){
         $.ajax({
-            url:'/su/getEntranceGuardQRCode',
+            url:'/su/getEntranceGuardQRCode' + id,
             type:'GET',
             dataType:'json',
             success:function(response) {

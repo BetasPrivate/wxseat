@@ -212,7 +212,7 @@ class Utility {
         return array('year'=>$Y,'month'=>$m,'day'=>$d);
     }
 
-    public function testEntranceGuard($type=11)
+    public function testEntranceGuard($type=11, $id=1)
     {
         if (extension_loaded('soap')) {
             $url = "http://mj2vm.cn/SyncWebService.asmx?wsdl";
@@ -221,7 +221,7 @@ class Utility {
             $client->decode_utf8 = false;   
             $client->xml_encoding = 'utf-8';
 
-            $guardConfig = ClassRegistry::init('EntranceGuardConfig')->getConfig();
+            $guardConfig = ClassRegistry::init('EntranceGuardConfig')->getConfig($id=1);
             $devId = $guardConfig['EntranceGuardConfig']['dev_id'];
             $devPwd = $guardConfig['EntranceGuardConfig']['dev_pwd'];
             $devInterval = $guardConfig['EntranceGuardConfig']['close_interval'];

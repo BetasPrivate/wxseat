@@ -56,7 +56,7 @@ class SuController extends AppController{
 	{
 		$data = $this->request->data;
 		$util = new Utility();
-		$result = $util->testEntranceGuard($data['type']);
+		$result = $util->testEntranceGuard($data['type'], $data['id']);
 		echo json_encode($result);
 		exit();
 	}
@@ -135,7 +135,8 @@ class SuController extends AppController{
 
 		]);
 
-		$guardConfig = $this->EntranceGuardConfig->getConfig();
+		$guardConfigs = $this->EntranceGuardConfig->find('all', [
+		]);
 
 		$seatTypes = $this->SeatType->find('all', [
 		]);
@@ -146,7 +147,7 @@ class SuController extends AppController{
 			$seats[$key]['seat_type_text'] = $seat['SeatType']['name'];
 		}
 
-		$this->set(compact('seats', 'wifiConfig', 'seatTypes', 'guardConfig'));
+		$this->set(compact('seats', 'wifiConfig', 'seatTypes', 'guardConfigs'));
 	}
 
 	public function userManager()
@@ -223,9 +224,9 @@ class SuController extends AppController{
 		$util = new Utility();
 
 		if (!empty($guardConfig['EntranceGuardConfig']['qr_scene_ticket'])) {
-			$url = $util->getSceneTicketUrl($this->Token->getToken(\Token::ACCESS_TOKEN), null, 'on_scan_entrance_guard1', $isTemp = false, $guardConfig['EntranceGuardConfig']['qr_scene_ticket'])['url'];
+			$url = $util->getSceneTicketUrl($this->Token->getToken(\Token::ACCESS_TOKEN), null, 'on_scan_entrance_guard'.$guardId, $isTemp = false, $guardConfig['EntranceGuardConfig']['qr_scene_ticket'])['url'];
 		} else {
-			$res = $util->getSceneTicketUrl($this->Token->getToken(\Token::ACCESS_TOKEN), null, 'on_scan_entrance_guard1', $isTemp = false, '');
+			$res = $util->getSceneTicketUrl($this->Token->getToken(\Token::ACCESS_TOKEN), null, 'on_scan_entrance_guard'.$guardId, $isTemp = false, '');
 			$ticket = $res['ticket'];
 			$this->EntranceGuardConfig->save(['id' => $guardId, 'qr_scene_ticket' => $ticket]);
 			$url = $res['url'];
