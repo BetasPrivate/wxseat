@@ -21,8 +21,8 @@ class CallbackController extends AppController
                 $this->sendTextMsg($postObj, $msg);
             } else if ($event == 'CLICK') {
                 $this->dealWithClickEvents($postObj);
-            } else if ($eventKey == 'on_scan_entrance_guard1') {
-                $this->openEntranceGuard($postObj);
+            } else if ($eventKey == 'on_scan_entrance_guard1' || $eventKey == 'on_scan_entrance_guard2') {
+                $this->openEntranceGuard($postObj, $eventKey);
             }
         } else {
             $signature = isset($this->request->query['signature']) ? $this->request->query['signature'] : null;
@@ -32,13 +32,13 @@ class CallbackController extends AppController
         }
     }
 
-    function openEntranceGuard($postObj){
+    function openEntranceGuard($postObj, $eventKey){
         echo 'success';
         $userOpenId = trim((string)$postObj->FromUserName);
         $checkRes = $this->User->isAllowEnterUser($userOpenId);
         if ($checkRes['status'] == 1) {
             $util = new Utility();
-            $res = $util->testEntranceGuard();
+            $res = $util->testEntranceGuard(11, substr($eventKey, -1));
             $msg = $res['msg'];
         } else {
             $msg = $checkRes['msg'];

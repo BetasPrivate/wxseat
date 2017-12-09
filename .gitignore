@@ -1,3 +1,4 @@
 app/tmp/*
 app/Lib/Wxpay/cert/*
 app/webroot/test/*
+lib/Cake/Console/Templates/skel/tmp/*
