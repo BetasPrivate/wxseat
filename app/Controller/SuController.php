@@ -106,6 +106,19 @@ class SuController extends AppController{
 		$this->set(compact('trades'));
 	}
 
+	public function addEntranceConfig()
+	{
+		$guardConfig = $this->EntranceGuardConfig->find('first', [
+		]);
+		$saveData = $guardConfig['EntranceGuardConfig'];
+		unset($saveData['id']);
+		unset($saveData['qr_scene_ticket']);
+		$this->EntranceGuardConfig->create();
+		$this->EntranceGuardConfig->save($saveData);
+		var_dump($saveData);
+		exit();
+	}
+
 	public function seatManager()
 	{
 		$this->set('title_for_layout', '座位管理');

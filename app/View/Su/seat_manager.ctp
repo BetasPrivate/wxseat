@@ -86,7 +86,7 @@
             <div>
                 <button class="btn btn-default" onclick="testEntranceGuard(11,  <?php echo $guardConfig['EntranceGuardConfig']['id'];?>)">测试打开门禁 <?php echo $guardConfig['EntranceGuardConfig']['id'];?></button>
                 <button class="btn btn-default" onclick="testEntranceGuard(12,  <?php echo $guardConfig['EntranceGuardConfig']['id'];?>)">测试关闭门禁 <?php echo $guardConfig['EntranceGuardConfig']['id'];?></button>
-                <button class="btn btn-default" onclick="getEntranceGuardQRCode( <?php echo $guardConfig['EntranceGuardConfig']['id'];?>)">查看门禁 <?php echo $guardConfig['EntranceGuardConfig']['id'];?>二维码</button>
+                <button class="btn btn-default" onclick="getEntranceGuardQRCode(<?php echo $guardConfig['EntranceGuardConfig']['id'];?>)">查看门禁 <?php echo $guardConfig['EntranceGuardConfig']['id'];?>二维码</button>
             </div>
             <?php endforeach;?>
         </tbody>
@@ -230,7 +230,7 @@
 
     function getEntranceGuardQRCode(id){
         $.ajax({
-            url:'/su/getEntranceGuardQRCode' + id,
+            url:'/su/getEntranceGuardQRCode/' + id,
             type:'GET',
             dataType:'json',
             success:function(response) {
