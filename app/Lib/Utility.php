@@ -221,7 +221,7 @@ class Utility {
             $client->decode_utf8 = false;   
             $client->xml_encoding = 'utf-8';
 
-            $guardConfig = ClassRegistry::init('EntranceGuardConfig')->getConfig($id=1);
+            $guardConfig = ClassRegistry::init('EntranceGuardConfig')->getConfig($id);
             $devId = $guardConfig['EntranceGuardConfig']['dev_id'];
             $devPwd = $guardConfig['EntranceGuardConfig']['dev_pwd'];
             $devInterval = $guardConfig['EntranceGuardConfig']['close_interval'];

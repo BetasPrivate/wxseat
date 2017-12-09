@@ -65,22 +65,22 @@
                     <?php echo $guardConfig['EntranceGuardConfig']['id'];?>
                 </td>
                 <td class="col-md-2">
-                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_id'];?>" id="dev_id">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_id'];?>" id="dev_id<?php echo $guardConfig['EntranceGuardConfig']['id'];?>">
                 </td>
                 <td class="col-md-3">
-                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_pwd'];?>" id="dev_pwd">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['dev_pwd'];?>" id="dev_pwd<?php echo $guardConfig['EntranceGuardConfig']['id'];?>">
                 </td>
                 <td class="col-md-1">
-                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['open_cmd'];?>" id="open_cmd">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['open_cmd'];?>" id="open_cmd<?php echo $guardConfig['EntranceGuardConfig']['id'];?>">
                 </td>
                 <td class="col-md-1">
-                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['close_cmd'];?>" id="close_cmd">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['close_cmd'];?>" id="close_cmd<?php echo $guardConfig['EntranceGuardConfig']['id'];?>">
                 </td>
                 <td class="col-md-2">
-                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['close_interval'];?>" id="close_interval">
+                <input type="text" name="" value="<?php echo $guardConfig['EntranceGuardConfig']['close_interval'];?>" id="close_interval<?php echo $guardConfig['EntranceGuardConfig']['id'];?>">
                 </td>
                 <td class="col-md-2">
-                    <button class="btn btn-info" onclick="updateGuardConfig()">更新</button>
+                    <button class="btn btn-info" onclick="updateGuardConfig(<?php echo $guardConfig['EntranceGuardConfig']['id'];?>)">更新</button>
                 </td>
             </tr>
             <div>
@@ -269,17 +269,18 @@
         })
     }
 
-    function updateGuardConfig(){
+    function updateGuardConfig(id){
         if (!confirm('确定更新?')) {
             return;
         }
 
         var data = {
-            dev_id:$('#dev_id').val(),
-            dev_pwd:$('#dev_pwd').val(),
-            open_cmd:$('#open_cmd').val(),
-            close_cmd:$('#close_cmd').val(),
-            close_interval:$('#close_interval').val(),
+            dev_id:$('#dev_id'+id).val(),
+            dev_pwd:$('#dev_pwd'+id).val(),
+            open_cmd:$('#open_cmd'+id).val(),
+            close_cmd:$('#close_cmd'+id).val(),
+            close_interval:$('#close_interval'+id).val(),
+            id:id,
         }
 
         $.ajax({

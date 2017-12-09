@@ -207,8 +207,6 @@ class SuController extends AppController{
 	{
 		$data = $this->request->data;
 
-		$data['id'] = 1;
-
 		$result = [
 			'status' => 0,
 			'msg' => '',
